@@ -19,9 +19,21 @@ public class TimeEntry {
                      String endDateTime, BillingCategory category) {
         this.name = name;
         this.description = description;
-        this.startDateTime = DateTimeParser.parseDateTime(startDateTime);
-        this.endDateTime = DateTimeParser.parseDateTime(endDateTime);
+        this.startDateTime = DateTimeParser.parseDateTimeFromString(startDateTime);
+        this.endDateTime = DateTimeParser.parseDateTimeFromString(endDateTime);
         this.timeSpentMinutes = ChronoUnit.MINUTES.between(this.startDateTime, this.endDateTime);
+    }
+
+    //For debugging
+    @Override
+    public String toString() {
+        return String.format("Name: " + name + ";" + "Description" + description + ";"
+                + "Start " + DateTimeParser.parseDateTimeToString(startDateTime) + ";"
+                + "End " + DateTimeParser.parseDateTimeToString(endDateTime) + ";"
+                + "Time Spent " + Long.toString(timeSpentMinutes) + ";"
+                + "Billing Category" + category.getName()
+                + "at Rate " + Double.toString(category.getRatePerHour())
+        );
     }
 
     public String getName() {

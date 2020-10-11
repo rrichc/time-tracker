@@ -11,12 +11,17 @@ public class BillingCategories {
 
     //requires ratePerHour to be non-negative
     public void createBillingCategory(String name, String ratePerHour, Client client) {
-        this.billingCategories.add(new BillingCategory(name, ratePerHour, client));
+        boolean nameAlreadyExists = duplicateNameCheck(name);
+        if (!nameAlreadyExists) {
+            this.billingCategories.add(new BillingCategory(name, ratePerHour, client));
+        } else {
+            return; //Return a code to indicate user needs to re-pick?
+        }
     }
 
     public void removeBillingCategory(String name) {
         for (BillingCategory category : billingCategories) {
-            if (category.getName() == name) {
+            if (category.getName().equals(name)) {
                 this.billingCategories.remove(category);
             }
         }
@@ -24,11 +29,16 @@ public class BillingCategories {
 
     //requires ratePerHour to be non-negative
     public void editBillingCategory(String oldName, String name, String ratePerHour) {
-        for (BillingCategory category : billingCategories) {
-            if (category.getName() == oldName) {
-                category.setName(name);
-                category.setRatePerHour(ratePerHour);
+        boolean nameAlreadyExists = duplicateNameCheck(name);
+        if (!nameAlreadyExists) {
+            for (BillingCategory category : billingCategories) {
+                if (category.getName().equals(oldName)) {
+                    category.setName(name);
+                    category.setRatePerHour(ratePerHour);
+                }
             }
+        } else {
+            return; //Return a code to indicate user needs to re-pick?
         }
     }
 
@@ -36,6 +46,16 @@ public class BillingCategories {
 //        createBillingCategory(name, ratePerHour, client);
 //        removeBillingCategory(oldName);
 //    }
+
+    public boolean duplicateNameCheck(String name) {
+        boolean nameAlreadyExists = false;
+        for (BillingCategory category : billingCategories) {
+            if (category.getName().equals(name)) {
+                nameAlreadyExists = true;
+            }
+        }
+        return nameAlreadyExists;
+    }
 
     public ArrayList<BillingCategory> getBillingCategories() {
         return this.billingCategories;

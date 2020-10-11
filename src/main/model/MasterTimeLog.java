@@ -16,7 +16,7 @@ public class MasterTimeLog {
 
     public void removeTimeEntry(String name) {
         for (TimeLog log : masterTimeLog) {
-            if (log.getClient().getName() == name) {
+            if (log.getClient().getName().equals(name)) {
                 masterTimeLog.remove(log);
             }
         }

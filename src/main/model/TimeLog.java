@@ -21,23 +21,29 @@ public class TimeLog {
         this.timeLog.add(new TimeEntry(name, description, startDateTime, endDateTime, category));
     }
 
-    public void removeTimeEntry(String name) {
+    //Make sure to test both orders of the && for full coverage
+    public boolean removeTimeEntry(String name, BillingCategory category) {
         for (TimeEntry entry : timeLog) {
-            if (entry.getName() == name) {
+            if (entry.getName().equals(name) && entry.getCategory().getName().equals(category.getName())) {
                 timeLog.remove(entry);
+                return true;
             }
         }
+        return false;
     }
 
-//    public void removeTimeEntry(int position) {
-//        timeLog.remove(position);
-//    }
-
     //requires date strings to be in the right format
-    public void editTimeEntry(String oldName, String name, String description, String startDateTime,
+    //Make sure to test both orders of the && for full coverage
+    public boolean editTimeEntry(String oldName, String name, String description, String startDateTime,
                               String endDateTime, BillingCategory category) {
-        createTimeEntry(name, description, startDateTime, endDateTime, category);
-        removeTimeEntry(oldName);
+        for (TimeEntry entry : timeLog) {
+            if (entry.getName().equals(oldName) && entry.getCategory().getName().equals(category.getName())) {
+                createTimeEntry(name, description, startDateTime, endDateTime, category);
+                removeTimeEntry(oldName, category);
+                return true;
+            }
+        }
+        return false;
     }
 
     public ArrayList<TimeEntry> getTimeEntries() {
@@ -46,5 +52,15 @@ public class TimeLog {
 
     public Client getClient() {
         return client;
+    }
+
+    public ArrayList<TimeEntry> getTimeEntriesForBillingCategory(BillingCategory category) {
+        ArrayList<TimeEntry> entriesForUser = new ArrayList<TimeEntry>();
+        for (TimeEntry entry : timeLog) {
+            if (entry.getCategory().getName().equals(category.getName())) {
+                entriesForUser.add(entry);
+            }
+        }
+        return entriesForUser;
     }
 }

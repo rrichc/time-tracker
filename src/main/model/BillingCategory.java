@@ -30,4 +30,8 @@ public class BillingCategory {
     public void setRatePerHour(String ratePerHour) {
         this.ratePerHour = Double.parseDouble(ratePerHour);
     }
+
+    public Client getClient() {
+        return client;
+    }
 }

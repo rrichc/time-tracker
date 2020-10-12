@@ -22,6 +22,7 @@ public class TimeEntry {
         this.startDateTime = DateTimeParser.parseDateTimeFromString(startDateTime);
         this.endDateTime = DateTimeParser.parseDateTimeFromString(endDateTime);
         this.timeSpentMinutes = ChronoUnit.MINUTES.between(this.startDateTime, this.endDateTime);
+        this.category = category;
     }
 
     //For debugging
@@ -54,5 +55,9 @@ public class TimeEntry {
 
     public long getTimeSpentMinutes() {
         return timeSpentMinutes;
+    }
+
+    public BillingCategory getCategory() {
+        return category;
     }
 }

@@ -61,4 +61,13 @@ public class ClientBook {
     public ArrayList<Client> getClients() {
         return this.clients;
     }
+
+    public Client getAClient(String name) {
+        for (Client client : clients) {
+            if (client.getName().equals(name)) {
+                return client;
+            }
+        }
+        return null;
+    }
 }

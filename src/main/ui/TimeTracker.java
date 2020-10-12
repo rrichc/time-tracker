@@ -398,9 +398,9 @@ public class TimeTracker {
         System.out.println("Please enter a description.");
         String desc = input.nextLine();
 
-        System.out.println("Please enter a start date and time in the format: yyyy-MM-dd HH:mm with 24 hour time.");
+        System.out.println("Please enter a start date and 24 hour time in the format: yyyy-MM-dd HH:mm");
         String startDateTime = input.nextLine();
-        System.out.println("Please enter a end date and time in the format: yyyy-MM-dd HH:mm with 24 hour time.");
+        System.out.println("Please enter a end date and 24 hour time in the format: yyyy-MM-dd HH:mm");
         String endDateTime = input.nextLine();
 
         currentTimeLog.createTimeEntry(nameSelected, desc,
@@ -439,11 +439,9 @@ public class TimeTracker {
             String newName = input.nextLine();
             System.out.println("Please enter a new description for the time entry.");
             String description = input.nextLine();
-            System.out.println("Please enter a new start date and time in the format: "
-                    + "yyyy-MM-dd HH:mm with 24 hour time.");
+            System.out.println("Enter a start date and 24 hour time in the format: yyyy-MM-dd HH:mm");
             String startDateTime = input.nextLine();
-            System.out.println("Please enter a new end date and time in the format: "
-                    + "yyyy-MM-dd HH:mm with 24 hour time.");
+            System.out.println("Enter a end date and 24 hour time in the format: yyyy-MM-dd HH:mm");
             String endDateTime = input.nextLine();
             if (currentTimeLog.editTimeEntry(nameSelected, newName, description,
                     startDateTime, endDateTime, this.currentSelectedBillingCategory)) {
@@ -455,15 +453,6 @@ public class TimeTracker {
         }
     }
 
-//    private boolean timeEntryIsInCategory(String name) {
-//        for (BillingCategory category : billingCategories.getBillingCategoriesForClient(this.currentSelectedClient)) {
-//            if (category.getName().equals(name)) {
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-
-    //END OF BILLING MENU METHODS
+    //END OF TIME TRACKING MENU METHODS
 
 }

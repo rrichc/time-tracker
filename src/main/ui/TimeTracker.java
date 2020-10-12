@@ -284,7 +284,7 @@ public class TimeTracker {
         while (!removalSuccess) {
             System.out.println("Please enter a billing category to remove or type 'q' to quit. ");
             nameSelected = input.nextLine();
-            if (billingCategories.removeBillingCategory(nameSelected, this.currentSelectedClient)) { //if successful
+            if (billingCategories.removeBillingCategory(nameSelected, this.currentSelectedClient)) {
                 removalSuccess = true;
                 System.out.println(nameSelected + " has been removed.");
             } else if (nameSelected.equals("q")) {

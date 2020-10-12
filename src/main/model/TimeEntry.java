@@ -28,12 +28,13 @@ public class TimeEntry {
     //For debugging
     @Override
     public String toString() {
-        return String.format("Name: " + name + ";" + "Description" + description + ";"
-                + "Start " + DateTimeParser.parseDateTimeToString(startDateTime) + ";"
-                + "End " + DateTimeParser.parseDateTimeToString(endDateTime) + ";"
-                + "Time Spent " + Long.toString(timeSpentMinutes) + ";"
-                + "Billing Category" + category.getName()
-                + "at Rate " + Double.toString(category.getRatePerHour())
+        return String.format("Name: " + name + "; "
+                + "Description:" + description + "; "
+                + "Start: " + DateTimeParser.parseDateTimeToString(startDateTime) + "; "
+                + "End: " + DateTimeParser.parseDateTimeToString(endDateTime) + "; "
+                + "Time Spent: " + Long.toString(timeSpentMinutes) + "; "
+                + "Billing Category: " + category.getName() + "; "
+                + "Rate: " + Double.toString(category.getRatePerHour())
         );
     }
 

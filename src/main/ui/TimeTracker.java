@@ -4,9 +4,6 @@ import model.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
 
 //This UI class is based on the UI class in the example CPSC 210 TellerApp provided by Paul Carter
 //https://github.students.cs.ubc.ca/CPSC210/TellerApp
@@ -45,7 +42,7 @@ public class TimeTracker {
 
         while (keepClientMenuGoing) {
             displayClientMenuOptions();
-            command = input.next();
+            command = input.nextLine();
             command = command.toLowerCase();
 
             if (command.equals("q")) {
@@ -90,7 +87,7 @@ public class TimeTracker {
         while (!selectedClientIsInList) {
             System.out.println("Please select one of the clients below or type 'q' to quit:");
             displayClients();
-            nameSelected = input.next();
+            nameSelected = input.nextLine();
             if (clientIsInClientBook(nameSelected)) {
                 selectedClientIsInList = true;
                 this.currentSelectedClient = clientBook.getAClient(nameSelected);
@@ -121,7 +118,7 @@ public class TimeTracker {
         while (!creationSuccess) {
             System.out.println("Please enter a name for the new client or type 'q' to quit. "
                     + "Please ensure the name does not already exist.");
-            nameSelected = input.next();
+            nameSelected = input.nextLine();
             if (clientBook.createClient(nameSelected)) { //if successful
                 creationSuccess = true;
                 masterTimeLog.createTimeLog(clientBook.getAClient(nameSelected));
@@ -139,7 +136,7 @@ public class TimeTracker {
         String nameSelected = "";
         while (!removalSuccess) {
             System.out.println("Please enter a client name to remove or type 'q' to quit. ");
-            nameSelected = input.next();
+            nameSelected = input.nextLine();
             if (clientBook.removeClient(nameSelected)) { //if successful
                 removalSuccess = true;
                 masterTimeLog.removeTimeLog(nameSelected);
@@ -157,9 +154,9 @@ public class TimeTracker {
         String nameSelected = "";
         while (!editSuccess) {
             System.out.println("Please enter a client name to edit or type 'q' to quit. ");
-            nameSelected = input.next();
+            nameSelected = input.nextLine();
             System.out.println("Please enter a new client name.");
-            String newName = input.next();
+            String newName = input.nextLine();
             if (clientBook.editClient(nameSelected, newName)) { //if successful
                 editSuccess = true;
                 System.out.println(nameSelected + " has been changed to " + newName + ".");
@@ -189,7 +186,7 @@ public class TimeTracker {
 
         while (keepBillingMenuGoing) {
             displayBillingMenuOptions();
-            command = input.next();
+            command = input.nextLine();
             command = command.toLowerCase();
 
             if (command.equals("b")) {
@@ -234,7 +231,7 @@ public class TimeTracker {
         while (!selectedCategoryIsInList) {
             System.out.println("Please select one of the categories below or type 'q' to quit:");
             displayBillingCategories();
-            nameSelected = input.next();
+            nameSelected = input.nextLine();
             if (categoryIsInBillingCategories(nameSelected)) {
                 selectedCategoryIsInList = true;
                 this.currentSelectedBillingCategory = billingCategories.getABillingCategory(nameSelected);
@@ -266,12 +263,12 @@ public class TimeTracker {
         while (!creationSuccess) {
             System.out.println("Please enter a name for the new category or type 'q' to quit. "
                     + "Please ensure the name does not already exist.");
-            nameSelected = input.next();
+            nameSelected = input.nextLine();
             if (nameSelected.equals("q")) {
                 break;
             }
             System.out.println("Please enter a rate per hour in dollars. E.g. 16.50 ");
-            String ratePerHour = input.next();
+            String ratePerHour = input.nextLine();
             if (billingCategories.createBillingCategory(nameSelected, ratePerHour, this.currentSelectedClient)) {
                 creationSuccess = true;
                 System.out.println(nameSelected + " has been created.");
@@ -286,7 +283,7 @@ public class TimeTracker {
         String nameSelected = "";
         while (!removalSuccess) {
             System.out.println("Please enter a billing category to remove or type 'q' to quit. ");
-            nameSelected = input.next();
+            nameSelected = input.nextLine();
             if (billingCategories.removeBillingCategory(nameSelected, this.currentSelectedClient)) { //if successful
                 removalSuccess = true;
                 System.out.println(nameSelected + " has been removed.");
@@ -303,14 +300,14 @@ public class TimeTracker {
         String nameSelected = "";
         while (!editSuccess) {
             System.out.println("Please enter a billing category to edit or type 'q' to quit. ");
-            nameSelected = input.next();
+            nameSelected = input.nextLine();
             if (nameSelected.equals("q")) {
                 break;
             }
             System.out.println("Please enter a new billing category name.");
-            String newName = input.next();
+            String newName = input.nextLine();
             System.out.println("Please enter a new rate per hour. E.g. 16.50");
-            String newRatePerHour = input.next();
+            String newRatePerHour = input.nextLine();
             if (billingCategories.editBillingCategory(nameSelected, newName,
                     newRatePerHour, this.currentSelectedClient)) {
                 editSuccess = true;
@@ -340,7 +337,7 @@ public class TimeTracker {
 
         while (keepTimeEntryMenuGoing) {
             displayTimeEntryMenuOptions();
-            command = input.next();
+            command = input.nextLine();
             command = command.toLowerCase();
 
             if (command.equals("b")) {
@@ -382,7 +379,7 @@ public class TimeTracker {
         ArrayList<TimeEntry> timeEntriesForBillingCategory =
                 clientTimeLog.getTimeEntriesForBillingCategory(this.currentSelectedBillingCategory);
         if (timeEntriesForBillingCategory.isEmpty()) {
-            System.out.println("There are no time entries for this billing category "
+            System.out.println("There are no time entries for this billing category. "
                     + "Please return to the time tracking menu and add an entry.");
         } else {
             for (TimeEntry entry
@@ -401,9 +398,9 @@ public class TimeTracker {
         System.out.println("Please enter a description.");
         String desc = input.nextLine();
 
-        System.out.println("Enter a start date");
+        System.out.println("Please enter a start date and time in the format: yyyy-MM-dd HH:mm with 24 hour time.");
         String startDateTime = input.nextLine();
-        System.out.println("Enter an end date");
+        System.out.println("Please enter a end date and time in the format: yyyy-MM-dd HH:mm with 24 hour time.");
         String endDateTime = input.nextLine();
 
         currentTimeLog.createTimeEntry(nameSelected, desc,
@@ -418,7 +415,7 @@ public class TimeTracker {
         String nameSelected = "";
         while (!removalSuccess) {
             System.out.println("Please enter a time entry to remove or type 'q' to quit. ");
-            nameSelected = input.next();
+            nameSelected = input.nextLine();
             if (currentTimeLog.removeTimeEntry(nameSelected, this.currentSelectedBillingCategory)) { //if successful
                 removalSuccess = true;
                 System.out.println(nameSelected + " has been removed.");
@@ -442,9 +439,11 @@ public class TimeTracker {
             String newName = input.nextLine();
             System.out.println("Please enter a new description for the time entry.");
             String description = input.nextLine();
-            System.out.println("Please enter a new start date and time in the format: yyyy-MM-dd HH:mm");
+            System.out.println("Please enter a new start date and time in the format: "
+                    + "yyyy-MM-dd HH:mm with 24 hour time.");
             String startDateTime = input.nextLine();
-            System.out.println("Please enter a new end date and time in the format: yyyy-MM-dd HH:mm");
+            System.out.println("Please enter a new end date and time in the format: "
+                    + "yyyy-MM-dd HH:mm with 24 hour time.");
             String endDateTime = input.nextLine();
             if (currentTimeLog.editTimeEntry(nameSelected, newName, description,
                     startDateTime, endDateTime, this.currentSelectedBillingCategory)) {

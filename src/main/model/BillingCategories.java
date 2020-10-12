@@ -47,11 +47,6 @@ public class BillingCategories {
         return false;
     }
 
-//    public void editBillingCategory(String oldName, String name, String ratePerHour, Client client) {
-//        createBillingCategory(name, ratePerHour, client);
-//        removeBillingCategory(oldName);
-//    }
-
     public boolean duplicateNameCheck(String name, Client client) {
         boolean nameAlreadyExists = false;
         for (BillingCategory category : getBillingCategoriesForClient(client)) {

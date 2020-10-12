@@ -2,6 +2,7 @@ package ui;
 
 import model.*;
 
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,8 +13,8 @@ public class TimeTracker {
     private MasterTimeLog masterTimeLog;
     private BillingCategories billingCategories;
     private ClientBook clientBook;
-    private Client currentSelectedClient;
-    private BillingCategory currentSelectedBillingCategory;
+    private Client currentClient;
+    private BillingCategory currentBillingCategory;
     private TimeLog currentTimeLog;
 
     public TimeTracker() {
@@ -30,8 +31,8 @@ public class TimeTracker {
         this.masterTimeLog = new MasterTimeLog();
         this.billingCategories = new BillingCategories();
         this.clientBook = new ClientBook();
-        this.currentSelectedClient = null;
-        this.currentSelectedBillingCategory = null;
+        this.currentClient = null;
+        this.currentBillingCategory = null;
         this.currentTimeLog = null;
     }
 
@@ -82,16 +83,14 @@ public class TimeTracker {
     // EFFECTS:
     private void selectClient() {
         boolean selectedClientIsInList = false;
-        String nameSelected = "";
-
         while (!selectedClientIsInList) {
             System.out.println("Please select one of the clients below or type 'q' to quit:");
             displayClients();
-            nameSelected = input.nextLine();
+            String nameSelected = input.nextLine();
             if (clientIsInClientBook(nameSelected)) {
                 selectedClientIsInList = true;
-                this.currentSelectedClient = clientBook.getAClient(nameSelected);
-                this.currentTimeLog = masterTimeLog.getTimeLogForClient(this.currentSelectedClient);
+                this.currentClient = clientBook.getAClient(nameSelected);
+                this.currentTimeLog = masterTimeLog.getTimeLogForClient(this.currentClient);
                 System.out.println(nameSelected + " has been selected.");
                 displayBillingMenu(); //code to continue to BillingCategory
             } else if (nameSelected.equals("q")) {
@@ -114,17 +113,16 @@ public class TimeTracker {
 
     private void createClientOption() {
         boolean creationSuccess = false;
-        String nameSelected = "";
         while (!creationSuccess) {
-            System.out.println("Please enter a name for the new client or type 'q' to quit. "
-                    + "Please ensure the name does not already exist.");
-            nameSelected = input.nextLine();
+            System.out.println("Please enter a name for the new client or type 'q' to quit.");
+            String nameSelected = input.nextLine();
+            if (nameSelected.equals("q")) {
+                break;
+            }
             if (clientBook.createClient(nameSelected)) { //if successful
                 creationSuccess = true;
                 masterTimeLog.createTimeLog(clientBook.getAClient(nameSelected));
                 System.out.println(nameSelected + " has been created.");
-            } else if (nameSelected.equals("q")) {
-                break;
             } else {
                 System.out.println("Client name already exists. Please enter a unique name.");
             }
@@ -133,16 +131,17 @@ public class TimeTracker {
 
     private void removeClientOption() {
         boolean removalSuccess = false;
-        String nameSelected = "";
+
         while (!removalSuccess) {
             System.out.println("Please enter a client name to remove or type 'q' to quit. ");
-            nameSelected = input.nextLine();
+            String nameSelected = input.nextLine();
+            if (nameSelected.equals("q")) {
+                break;
+            }
             if (clientBook.removeClient(nameSelected)) { //if successful
                 removalSuccess = true;
                 masterTimeLog.removeTimeLog(nameSelected);
                 System.out.println(nameSelected + " has been removed.");
-            } else if (nameSelected.equals("q")) {
-                break;
             } else {
                 System.out.println("Client name does not exist. Please type the exact name.");
             }
@@ -151,17 +150,17 @@ public class TimeTracker {
 
     private void editClientOption() {
         boolean editSuccess = false;
-        String nameSelected = "";
         while (!editSuccess) {
             System.out.println("Please enter a client name to edit or type 'q' to quit. ");
-            nameSelected = input.nextLine();
+            String nameSelected = input.nextLine();
+            if (nameSelected.equals("q")) {
+                break;
+            }
             System.out.println("Please enter a new client name.");
             String newName = input.nextLine();
             if (clientBook.editClient(nameSelected, newName)) { //if successful
                 editSuccess = true;
                 System.out.println(nameSelected + " has been changed to " + newName + ".");
-            } else if (nameSelected.equals("q")) {
-                break;
             } else {
                 System.out.println("Client name does not exist. Please type the exact name.");
             }
@@ -226,19 +225,18 @@ public class TimeTracker {
     // EFFECTS: prompts user to select chequing or savings account and returns it
     private void selectBillingCategory() {
         boolean selectedCategoryIsInList = false;
-        String nameSelected = "";
-
         while (!selectedCategoryIsInList) {
             System.out.println("Please select one of the categories below or type 'q' to quit:");
             displayBillingCategories();
-            nameSelected = input.nextLine();
+            String nameSelected = input.nextLine();
+            if (nameSelected.equals("q")) {
+                break;
+            }
             if (categoryIsInBillingCategories(nameSelected)) {
                 selectedCategoryIsInList = true;
-                this.currentSelectedBillingCategory = billingCategories.getABillingCategory(nameSelected);
+                this.currentBillingCategory = billingCategories.getABillingCategory(nameSelected);
                 System.out.println(nameSelected + " has been selected.");
                 displayTimeEntryMenu(); //continue to Time Entry menu
-            } else if (nameSelected.equals("q")) {
-                break;
             } else {
                 System.out.println("Please make a valid selection by entering the exact billing category name.");
             }
@@ -246,12 +244,12 @@ public class TimeTracker {
     }
 
     private void displayBillingCategories() {
-        if (billingCategories.getBillingCategoriesForClient(this.currentSelectedClient).isEmpty()) {
+        if (billingCategories.getBillingCategoriesForClient(this.currentClient).isEmpty()) {
             System.out.println("The list of billing categories is empty. "
                     + "Please return to the billing menu and add a category.");
         } else {
             for (BillingCategory category
-                    : billingCategories.getBillingCategoriesForClient(this.currentSelectedClient)) {
+                    : billingCategories.getBillingCategoriesForClient(this.currentClient)) {
                 System.out.println(category.getName());
             }
         }
@@ -259,67 +257,80 @@ public class TimeTracker {
 
     private void createBillingCategoryOption() {
         boolean creationSuccess = false;
-        String nameSelected = "";
         while (!creationSuccess) {
-            System.out.println("Please enter a name for the new category or type 'q' to quit. "
-                    + "Please ensure the name does not already exist.");
-            nameSelected = input.nextLine();
+            System.out.println("Please enter a name for the new category or type 'q' to quit. ");
+            String nameSelected = input.nextLine();
             if (nameSelected.equals("q")) {
                 break;
             }
             System.out.println("Please enter a rate per hour in dollars. E.g. 16.50 ");
-            String ratePerHour = input.nextLine();
-            if (billingCategories.createBillingCategory(nameSelected, ratePerHour, this.currentSelectedClient)) {
-                creationSuccess = true;
-                System.out.println(nameSelected + " has been created.");
-            } else {
-                System.out.println("Billing category already exists. Please enter a unique name.");
+            try {
+                String ratePerHour = input.nextLine();
+                checkNegativeRate(Double.parseDouble(ratePerHour));
+                if (billingCategories.createBillingCategory(nameSelected, ratePerHour, this.currentClient)) {
+                    creationSuccess = true;
+                    System.out.println(nameSelected + " has been created.");
+                } else {
+                    System.out.println("Billing category already exists. Please enter a unique name.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid non-negative number.");
             }
         }
     }
 
     private void removeBillingCategoryOption() {
         boolean removalSuccess = false;
-        String nameSelected = "";
         while (!removalSuccess) {
             System.out.println("Please enter a billing category to remove or type 'q' to quit. ");
-            nameSelected = input.nextLine();
-            if (billingCategories.removeBillingCategory(nameSelected, this.currentSelectedClient)) {
+            String nameSelected = input.nextLine();
+            if (nameSelected.equals("q")) {
+                break;
+            }
+            if (billingCategories.removeBillingCategory(nameSelected, this.currentClient)) {
                 removalSuccess = true;
                 System.out.println(nameSelected + " has been removed.");
-            } else if (nameSelected.equals("q")) {
-                break;
             } else {
                 System.out.println("Billing category does not exist. Please type the exact name.");
             }
         }
     }
 
+    //TODO: Refactor the rate check into another method for the edit and create option
     private void editBillingCategoryOption() {
         boolean editSuccess = false;
-        String nameSelected = "";
         while (!editSuccess) {
             System.out.println("Please enter a billing category to edit or type 'q' to quit. ");
-            nameSelected = input.nextLine();
+            String nameSelected = input.nextLine();
             if (nameSelected.equals("q")) {
                 break;
             }
             System.out.println("Please enter a new billing category name.");
             String newName = input.nextLine();
             System.out.println("Please enter a new rate per hour. E.g. 16.50");
-            String newRatePerHour = input.nextLine();
-            if (billingCategories.editBillingCategory(nameSelected, newName,
-                    newRatePerHour, this.currentSelectedClient)) {
-                editSuccess = true;
-                System.out.println(nameSelected + " has been updated.");
-            } else {
-                System.out.println("Billing category does not exist. Please type the exact name.");
+            try {
+                String newRatePerHour = input.nextLine();
+                checkNegativeRate(Double.parseDouble(newRatePerHour));
+                if (billingCategories.editBillingCategory(nameSelected, newName, newRatePerHour, this.currentClient)) {
+                    editSuccess = true;
+                    System.out.println(nameSelected + " has been updated.");
+                } else {
+                    System.out.println("Billing category does not exist. Please type the exact name.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid non-negative number.");
             }
         }
     }
 
+    public void checkNegativeRate(double ratePerHour) {
+        if (ratePerHour < 0) {
+            throw new NumberFormatException();
+        }
+    }
+
     private boolean categoryIsInBillingCategories(String name) {
-        for (BillingCategory category : billingCategories.getBillingCategoriesForClient(this.currentSelectedClient)) {
+        for (BillingCategory category : billingCategories.getBillingCategoriesForClient(this.currentClient)) {
             if (category.getName().equals(name)) {
                 return true;
             }
@@ -375,9 +386,9 @@ public class TimeTracker {
     }
 
     private void displayTimeEntriesForCategory() {
-        TimeLog clientTimeLog = masterTimeLog.getTimeLogForClient(this.currentSelectedClient);
+        TimeLog clientTimeLog = masterTimeLog.getTimeLogForClient(this.currentClient);
         ArrayList<TimeEntry> timeEntriesForBillingCategory =
-                clientTimeLog.getTimeEntriesForBillingCategory(this.currentSelectedBillingCategory);
+                clientTimeLog.getTimeEntriesForBillingCategory(this.currentBillingCategory);
         if (timeEntriesForBillingCategory.isEmpty()) {
             System.out.println("There are no time entries for this billing category. "
                     + "Please return to the time tracking menu and add an entry.");
@@ -389,44 +400,47 @@ public class TimeTracker {
         }
     }
 
+    //TODO: Handle any date exceptions (format & end date before start date)
     private void createTimeEntryOption() {
         System.out.println("Please enter a name for the time entry or type 'q' to quit.");
         String nameSelected = input.nextLine();
-//        if (nameSelected.equals("q")) {
-//            return;
-//        }
+        if (nameSelected.equals("q")) {
+            return;
+        }
         System.out.println("Please enter a description.");
         String desc = input.nextLine();
 
-        System.out.println("Please enter a start date and 24 hour time in the format: yyyy-MM-dd HH:mm");
+        System.out.println("Please enter a start date and 24 hour time formatted as: yyyy-MM-dd HH:mm");
         String startDateTime = input.nextLine();
-        System.out.println("Please enter a end date and 24 hour time in the format: yyyy-MM-dd HH:mm");
+        System.out.println("Please enter a end date and 24 hour time formatted as: yyyy-MM-dd HH:mm");
         String endDateTime = input.nextLine();
-
-        currentTimeLog.createTimeEntry(nameSelected, desc,
-                startDateTime, endDateTime, this.currentSelectedBillingCategory);
-        System.out.println(nameSelected + " has been created.");
-//      currentTimeLog.createTimeEntry("Test", "Test Description",
-//      "2020-10-10 10:30", "2020-10-10 11:30", this.currentSelectedBillingCategory);
+        try {
+            currentTimeLog.createTimeEntry(nameSelected, desc,
+                    startDateTime, endDateTime, this.currentBillingCategory);
+            System.out.println(nameSelected + " has been created.");
+        } catch (DateTimeParseException e) {
+            System.out.println("Entry not created. Please enter the dates in the correct format.");
+        }
     }
 
     private void removeTimeEntryOption() {
         boolean removalSuccess = false;
-        String nameSelected = "";
         while (!removalSuccess) {
             System.out.println("Please enter a time entry to remove or type 'q' to quit. ");
-            nameSelected = input.nextLine();
-            if (currentTimeLog.removeTimeEntry(nameSelected, this.currentSelectedBillingCategory)) { //if successful
+            String nameSelected = input.nextLine();
+            if (nameSelected.equals("q")) {
+                break;
+            }
+            if (currentTimeLog.removeTimeEntry(nameSelected, this.currentBillingCategory)) { //if successful
                 removalSuccess = true;
                 System.out.println(nameSelected + " has been removed.");
-            } else if (nameSelected.equals("q")) {
-                break;
             } else {
                 System.out.println("Time entry does not exist. Please type the exact name.");
             }
         }
     }
 
+    //TODO: Handle any date exceptions (format & end date before start date)
     private void editTimeEntryOption() {
         boolean editSuccess = false;
         while (!editSuccess) {
@@ -439,16 +453,20 @@ public class TimeTracker {
             String newName = input.nextLine();
             System.out.println("Please enter a new description for the time entry.");
             String description = input.nextLine();
-            System.out.println("Enter a start date and 24 hour time in the format: yyyy-MM-dd HH:mm");
+            System.out.println("Enter a start date and 24 hour time formatted as: yyyy-MM-dd HH:mm");
             String startDateTime = input.nextLine();
-            System.out.println("Enter a end date and 24 hour time in the format: yyyy-MM-dd HH:mm");
+            System.out.println("Enter a end date and 24 hour time formatted as: yyyy-MM-dd HH:mm");
             String endDateTime = input.nextLine();
-            if (currentTimeLog.editTimeEntry(nameSelected, newName, description,
-                    startDateTime, endDateTime, this.currentSelectedBillingCategory)) {
-                editSuccess = true;
-                System.out.println(nameSelected + " has been updated.");
-            } else {
-                System.out.println("Time entry does not exist. Please type the exact name.");
+            try {
+                if (currentTimeLog.editTimeEntry(nameSelected, newName, description,
+                        startDateTime, endDateTime, this.currentBillingCategory)) {
+                    editSuccess = true;
+                    System.out.println(nameSelected + " has been updated.");
+                } else {
+                    System.out.println("Time entry does not exist. Please type the exact name.");
+                }
+            } catch (DateTimeParseException e) {
+                System.out.println("Entry not created. Please enter the dates in the correct format.");
             }
         }
     }

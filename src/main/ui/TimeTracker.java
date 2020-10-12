@@ -222,7 +222,7 @@ public class TimeTracker {
         }
     }
 
-    // EFFECTS: prompts user to select chequing or savings account and returns it
+    // EFFECTS:
     private void selectBillingCategory() {
         boolean selectedCategoryIsInList = false;
         while (!selectedCategoryIsInList) {

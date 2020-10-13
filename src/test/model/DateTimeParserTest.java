@@ -1,5 +1,6 @@
 package model;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
@@ -11,6 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DateTimeParserTest {
 
+    @BeforeEach
+    void runBefore(){
+        DateTimeParser parser = new DateTimeParser();
+    }
 
     @Test
     void testParseDateTimeFromString(){

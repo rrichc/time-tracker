@@ -29,10 +29,18 @@ class MasterTimeLogTest {
     }
 
     @Test
-    void testRemoveTimeLog() {
+    void testRemoveTimeLogNameMatch() {
         masterTimeLog.createTimeLog(client);
         masterTimeLog.removeTimeLog(clientName);
         assertEquals(0, masterTimeLog.getMasterTimeLog().size());
+    }
+
+    @Test
+    void testRemoveTimeLogNoNameMatch() {
+        String client2Name = "Sally";
+        masterTimeLog.createTimeLog(client);
+        masterTimeLog.removeTimeLog(client2Name);
+        assertEquals(1, masterTimeLog.getMasterTimeLog().size());
     }
 
     @Test

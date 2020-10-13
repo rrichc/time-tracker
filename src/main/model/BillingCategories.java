@@ -31,7 +31,6 @@ public class BillingCategories {
         }
     }
 
-    //TODO: make sure to test both cases in the && for full coverage
     /*
      * REQUIRES: name must be a non-empty String, client must have non-empty fields
      * MODIFIES: this
@@ -49,8 +48,6 @@ public class BillingCategories {
         return false;
     }
 
-
-    //TODO: make sure to test both cases in the && for full coverage
     /*
      * REQUIRES: oldName and name must be a non-empty String, ratePerHour must a non-negative integer,
      *           client must have non-empty fields

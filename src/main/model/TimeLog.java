@@ -3,18 +3,26 @@ package model;
 import java.util.ArrayList;
 
 
-//TODO: Add a class description for TimeLog
+//TimeLog represents a collection of time entries associated with a specific client
 public class TimeLog {
     private Client client;
     private ArrayList<TimeEntry> timeLog;
 
+    /*
+     * REQUIRES: client must have non-empty fields
+     * EFFECTS: initializes an empty ArrayList holding BillingCategory objects
+     */
     public TimeLog(Client client) {
         this.timeLog = new ArrayList<TimeEntry>();
         this.client = client;
 
     }
 
-    //requires date strings to be in the right format
+    /*
+     * REQUIRES: BillingCategory must have non-empty fields,
+     * MODIFIES: this
+     * EFFECTS:
+     */
     public void createTimeEntry(String name, String description, String startDateTime,
                                 String endDateTime, BillingCategory category) {
         this.timeLog.add(new TimeEntry(name, description, startDateTime, endDateTime, category));

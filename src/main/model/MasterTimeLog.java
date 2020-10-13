@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 //TODO: Add a class description for MasterTimeLog
 public class MasterTimeLog {
+
     private ArrayList<TimeLog> masterTimeLog;
 
     public MasterTimeLog() {
@@ -17,11 +18,13 @@ public class MasterTimeLog {
 
     //created when a client is deleted
     public void removeTimeLog(String name) {
+        ArrayList toRemove = new ArrayList();
         for (TimeLog log : masterTimeLog) {
             if (log.getClient().getName().equals(name)) {
-                masterTimeLog.remove(log);
+                toRemove.add(log);
             }
         }
+        masterTimeLog.removeAll(toRemove);
     }
 
     public TimeLog getTimeLogForClient(Client client) {
@@ -32,5 +35,9 @@ public class MasterTimeLog {
 
         }
         return null;
+    }
+
+    public ArrayList<TimeLog> getMasterTimeLog() {
+        return masterTimeLog;
     }
 }

@@ -4,6 +4,8 @@ import model.*;
 
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 //This UI class is based on the UI class in the example CPSC 210 TellerApp provided by Paul Carter
@@ -440,6 +442,19 @@ public class TimeTracker {
         }
     }
 
+    private List<String> editTimeEntryGetInput() {
+
+        System.out.println("Please enter a new time entry name.");
+        String newName = input.nextLine();
+        System.out.println("Please enter a new description for the time entry.");
+        String description = input.nextLine();
+        System.out.println("Enter a start date and 24 hour time formatted as: yyyy-MM-dd HH:mm");
+        String startDateTime = input.nextLine();
+        System.out.println("Enter a end date and 24 hour time formatted as: yyyy-MM-dd HH:mm");
+        String endDateTime = input.nextLine();
+        return Arrays.asList(newName, description, startDateTime, endDateTime);
+    }
+
     //TODO: Handle any date exceptions (format & end date before start date)
     private void editTimeEntryOption() {
         boolean editSuccess = false;
@@ -449,17 +464,10 @@ public class TimeTracker {
             if (nameSelected.equals("q")) {
                 break;
             }
-            System.out.println("Please enter a new time entry name.");
-            String newName = input.nextLine();
-            System.out.println("Please enter a new description for the time entry.");
-            String description = input.nextLine();
-            System.out.println("Enter a start date and 24 hour time formatted as: yyyy-MM-dd HH:mm");
-            String startDateTime = input.nextLine();
-            System.out.println("Enter a end date and 24 hour time formatted as: yyyy-MM-dd HH:mm");
-            String endDateTime = input.nextLine();
+            List<String> input = editTimeEntryGetInput();
             try {
-                if (currentTimeLog.editTimeEntry(nameSelected, newName, description,
-                        startDateTime, endDateTime, this.currentBillingCategory)) {
+                if (currentTimeLog.editTimeEntry(nameSelected, input.get(0), input.get(1),
+                        input.get(2), input.get(3), this.currentBillingCategory)) {
                     editSuccess = true;
                     System.out.println(nameSelected + " has been updated.");
                 } else {
@@ -470,6 +478,10 @@ public class TimeTracker {
             }
         }
     }
+
+    //                if (currentTimeLog.editTimeEntry(nameSelected, newName, description,
+    //                        startDateTime, endDateTime, this.currentBillingCategory)) {
+    //                    editSuccess = true;
 
     //END OF TIME TRACKING MENU METHODS
 

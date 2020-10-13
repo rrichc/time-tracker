@@ -5,12 +5,12 @@ import java.util.ArrayList;
 
 //TimeLog represents a collection of time entries associated with a specific client
 public class TimeLog {
-    private Client client;
-    private ArrayList<TimeEntry> timeLog;
+    private Client client;                  //the client associated with a TimeLog
+    private ArrayList<TimeEntry> timeLog;   //collection of time entries
 
     /*
      * REQUIRES: client must have non-empty fields
-     * EFFECTS: initializes an empty ArrayList holding BillingCategory objects
+     * EFFECTS: initializes an empty ArrayList holding TimeEntry objects
      */
     public TimeLog(Client client) {
         this.timeLog = new ArrayList<TimeEntry>();
@@ -19,16 +19,23 @@ public class TimeLog {
     }
 
     /*
-     * REQUIRES: BillingCategory must have non-empty fields,
+     * REQUIRES: category must have non-empty fields, name and description must be non-empty strings.
+     *           startDateTime and endDateTime String must be in the format "1986-04-08 12:30"
+     *           where the year, month, and day must be greater than 1, and the month must be less than 13,
+     *           and day must be less than 31. startDateTime must be before endDateTime.
      * MODIFIES: this
-     * EFFECTS:
+     * EFFECTS:  Adds a new time entry to the collection of entries
      */
     public void createTimeEntry(String name, String description, String startDateTime,
                                 String endDateTime, BillingCategory category) {
         this.timeLog.add(new TimeEntry(name, description, startDateTime, endDateTime, category));
     }
 
-    //Make sure to test both orders of the && for full coverage
+    /*
+     * REQUIRES: category must have non-empty fields, and name must be a non-empty string
+     * MODIFIES: this
+     * EFFECTS:  Removes a new time entry to the collection of entries
+     */
     public boolean removeTimeEntry(String name, BillingCategory category) {
         for (TimeEntry entry : timeLog) {
             if (entry.getName().equals(name) && entry.getCategory().getName().equals(category.getName())) {
@@ -39,8 +46,14 @@ public class TimeLog {
         return false;
     }
 
-    //requires date strings to be in the right format
-    //Make sure to test both orders of the && for full coverage
+    /*
+     * REQUIRES: category must have non-empty fields, oldName & name & description must be non-empty strings.
+     *           startDateTime and endDateTime String must be in the format "1986-04-08 12:30"
+     *           where the year, month, and day must be greater than 1, and the month must be less than 13,
+     *           and day must be less than 31. startDateTime must be before endDateTime.
+     * MODIFIES: this
+     * EFFECTS:  Edits an existing time entry
+     */
     public boolean editTimeEntry(String oldName, String name, String description, String startDateTime,
                               String endDateTime, BillingCategory category) {
         for (TimeEntry entry : timeLog) {
@@ -53,14 +66,24 @@ public class TimeLog {
         return false;
     }
 
+    /*
+     * EFFECTS:  Returns the time log of entries
+     */
     public ArrayList<TimeEntry> getTimeEntries() {
         return timeLog;
     }
 
+    /*
+     * EFFECTS:  Returns the client associated with the time log
+     */
     public Client getClient() {
         return client;
     }
 
+    /*
+     * REQUIRES: category must have non-empty fields
+     * EFFECTS:  Returns the time entries for a particular billing category
+     */
     public ArrayList<TimeEntry> getTimeEntriesForBillingCategory(BillingCategory category) {
         ArrayList<TimeEntry> entriesForUser = new ArrayList<TimeEntry>();
         for (TimeEntry entry : timeLog) {

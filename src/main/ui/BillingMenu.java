@@ -4,6 +4,8 @@ import model.*;
 
 import java.util.Scanner;
 
+//BillingMenu represents the second menu users will encounter after they have selected a client,
+//to add/edit/remove billing categories
 public class BillingMenu {
 
     private Scanner input;
@@ -13,9 +15,12 @@ public class BillingMenu {
     private Client currentClient;
     private BillingCategory currentBillingCategory;
     private TimeLog currentTimeLog;
+    private TimeEntryMenu timeEntryMenu;
 
-    TimeEntryMenu timeEntryMenu;
-
+    /*
+     * REQUIRES: currentClient and currentTimeLog must not be empty
+     * EFFECTS: Gets the dependencies passed from the ClientMenu and assigns them to itself
+     */
     public BillingMenu(Scanner input, MasterTimeLog masterTimeLog, BillingCategories billingCategories,
                        ClientBook clientBook, Client currentClient,
                        TimeLog currentTimeLog) {
@@ -27,6 +32,9 @@ public class BillingMenu {
         this.currentTimeLog = currentTimeLog;
     }
 
+    /*
+     * EFFECTS: Gets user input for the billing menu action desired and process that command
+     */
     public void displayBillingMenu() {
         boolean keepBillingMenuGoing = true;
         String command = null;
@@ -45,6 +53,9 @@ public class BillingMenu {
         System.out.println("\nReturning to client menu");
     }
 
+    /*
+     * EFFECTS: Displays the billing menu options for desired actions
+     */
     private void displayBillingMenuOptions() {
         System.out.println("\nBilling Menu:");
         System.out.println("\ts -> select billing category");
@@ -54,8 +65,9 @@ public class BillingMenu {
         System.out.println("\tb -> back");
     }
 
-    // MODIFIES: this
-    // EFFECTS: processes user command
+    /*
+     * EFFECTS: Executes the desired client action according to user's input
+     */
     private void processBillingCommand(String command) {
         if (command.equals("s")) {
             selectBillingCategory();
@@ -70,7 +82,12 @@ public class BillingMenu {
         }
     }
 
-    // EFFECTS:
+    /*
+     * MODIFIES: this
+     * EFFECTS: Sets the category that the user has selected according to user input,
+     *          and assigns it as the current active billing category.
+     *          Proceeds to the TimeEntryMenu based on the currently selected billing category
+     */
     private void selectBillingCategory() {
         boolean selectedCategoryIsInList = false;
         while (!selectedCategoryIsInList) {
@@ -93,6 +110,10 @@ public class BillingMenu {
         }
     }
 
+    /*
+     * EFFECTS: Displays the categories the user has in their billing categories collection.
+     *          Otherwise displays a message stating their billing categories collection is empty.
+     */
     private void displayBillingCategories() {
         if (billingCategories.getBillingCategoriesForClient(this.currentClient).isEmpty()) {
             System.out.println("The list of billing categories is empty. "
@@ -105,6 +126,11 @@ public class BillingMenu {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a new billing category in the billing categories collection
+     *          based on the name the user has entered
+     */
     private void createBillingCategoryOption() {
         boolean creationSuccess = false;
         while (!creationSuccess) {
@@ -129,6 +155,11 @@ public class BillingMenu {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Removes a billing category in the billing categories collection
+     *          based on the name the user has entered
+     */
     private void removeBillingCategoryOption() {
         boolean removalSuccess = false;
         while (!removalSuccess) {
@@ -146,7 +177,11 @@ public class BillingMenu {
         }
     }
 
-    //TODO: Refactor the rate check into another method for the edit and create option
+    /*
+     * MODIFIES: this
+     * EFFECTS: Edits a billing category in the categories collection based on the name the user has entered,
+     *          and new category name, and rate entered.
+     */
     private void editBillingCategoryOption() {
         boolean editSuccess = false;
         while (!editSuccess) {
@@ -173,12 +208,19 @@ public class BillingMenu {
         }
     }
 
+    /*
+     * EFFECTS: Checks if a rate is negative, and throw an Number format exception if it is
+     */
     public void checkNegativeRate(double ratePerHour) {
         if (ratePerHour < 0) {
             throw new NumberFormatException();
         }
     }
 
+    /*
+     * EFFECTS: Checks if a category is in the categories collection depending on the name provided
+     *          and returns true if it is, false if not
+     */
     private boolean categoryIsInBillingCategories(String name) {
         for (BillingCategory category : billingCategories.getBillingCategoriesForClient(this.currentClient)) {
             if (category.getName().equals(name)) {
@@ -187,7 +229,4 @@ public class BillingMenu {
         }
         return false;
     }
-
-    //END OF BILLING MENU METHODS
-
 }

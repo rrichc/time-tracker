@@ -4,6 +4,8 @@ import model.*;
 
 import java.util.Scanner;
 
+//ClientMenu represents the first menu users see when they open the application
+//to add/edit/remove and select clients to perform actions on
 public class ClientMenu {
 
     private Scanner input;
@@ -14,6 +16,9 @@ public class ClientMenu {
     private TimeLog currentTimeLog;
     private BillingMenu billingMenu;
 
+    /*
+     * EFFECTS: Gets the dependencies initialized in TimeTracker and assigns it to class fields
+     */
     public ClientMenu(Scanner input, MasterTimeLog masterTimeLog, BillingCategories billingCategories,
                       ClientBook clientBook) {
         this.input = input;
@@ -22,14 +27,15 @@ public class ClientMenu {
         this.clientBook = clientBook;
     }
 
-    //START OF CLIENT MENU METHODS
+    /*
+     * EFFECTS: Gets user input for the client action desired and process that command
+     */
     public void displayClientMenu() {
         boolean keepClientMenuGoing = true;
-        String command = null;
 
         while (keepClientMenuGoing) {
             displayClientMenuOptions();
-            command = input.nextLine();
+            String command = input.nextLine();
             command = command.toLowerCase();
 
             if (command.equals("q")) {
@@ -41,6 +47,9 @@ public class ClientMenu {
         System.out.println("\nThank you for using Time Tracker.");
     }
 
+    /*
+     * EFFECTS: Displays the client menu options for desired actions
+     */
     private void displayClientMenuOptions() {
         System.out.println("\nClient Menu:");
         System.out.println("\ts -> select client");
@@ -50,8 +59,9 @@ public class ClientMenu {
         System.out.println("\tq -> quit");
     }
 
-    // MODIFIES: this
-    // EFFECTS: processes user command
+    /*
+     * EFFECTS: Executes the desired client action according to user's input
+     */
     private void processClientCommand(String command) {
         if (command.equals("s")) {
             selectClient();
@@ -66,7 +76,12 @@ public class ClientMenu {
         }
     }
 
-    // EFFECTS:
+    /*
+     * MODIFIES: this
+     * EFFECTS: Sets the client that the user has selected according to user input,
+     *          and assigns it as the current active client.
+     *          Proceeds to the BillingMenu based on the currently selected client
+     */
     private void selectClient() {
         boolean selectedClientIsInList = false;
         while (!selectedClientIsInList) {
@@ -89,6 +104,10 @@ public class ClientMenu {
         }
     }
 
+    /*
+     * EFFECTS: Displays the clients the user has in their client book. Otherwise displays a message
+     *          stating their client book is empty.
+     */
     private void displayClients() {
         if (clientBook.getClients().isEmpty()) {
             System.out.println("The client book is empty. Please return to the main menu and add a client.");
@@ -99,6 +118,10 @@ public class ClientMenu {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a new client in the client book based on the name the user has entered
+     */
     private void createClientOption() {
         boolean creationSuccess = false;
         while (!creationSuccess) {
@@ -107,7 +130,7 @@ public class ClientMenu {
             if (nameSelected.equals("q")) {
                 break;
             }
-            if (clientBook.createClient(nameSelected)) { //if successful
+            if (clientBook.createClient(nameSelected)) {
                 creationSuccess = true;
                 masterTimeLog.createTimeLog(clientBook.getAClient(nameSelected));
                 System.out.println(nameSelected + " has been created.");
@@ -117,6 +140,10 @@ public class ClientMenu {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Removes a client in the client book based on the name the user has entered
+     */
     private void removeClientOption() {
         boolean removalSuccess = false;
 
@@ -126,7 +153,7 @@ public class ClientMenu {
             if (nameSelected.equals("q")) {
                 break;
             }
-            if (clientBook.removeClient(nameSelected)) { //if successful
+            if (clientBook.removeClient(nameSelected)) {
                 removalSuccess = true;
                 masterTimeLog.removeTimeLog(nameSelected);
                 System.out.println(nameSelected + " has been removed.");
@@ -136,6 +163,10 @@ public class ClientMenu {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Edits a client in the client book based on the name the user has entered, and new name entered
+     */
     private void editClientOption() {
         boolean editSuccess = false;
         while (!editSuccess) {
@@ -155,6 +186,10 @@ public class ClientMenu {
         }
     }
 
+    /*
+     * EFFECTS: Checks if a client is in the client book depending on the name provided
+     *          and returns true if it is, false if not
+     */
     private boolean clientIsInClientBook(String name) {
         for (Client client : clientBook.getClients()) {
             if (client.getName().equals(name)) {
@@ -163,5 +198,4 @@ public class ClientMenu {
         }
         return false;
     }
-    //END OF CLIENT MENU METHODS
 }

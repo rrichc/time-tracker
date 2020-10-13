@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
+//TimeEntryMenu represents the third menu the user will encounter after selecting a client and billing category
+//to perform time entry operations
 public class TimeEntryMenu {
 
     private Scanner input;
@@ -18,6 +20,10 @@ public class TimeEntryMenu {
     private BillingCategory currentBillingCategory;
     private TimeLog currentTimeLog;
 
+    /*
+     * REQUIRES: currentClient and currentTimeLog and currentBillingCategory must not be empty
+     * EFFECTS: Gets the dependencies passed from the BillingMenu and assigns them to itself
+     */
     public TimeEntryMenu(Scanner input, MasterTimeLog masterTimeLog, BillingCategories billingCategories,
                          ClientBook clientBook, Client currentClient, BillingCategory currentBillingCategory,
                          TimeLog currentTimeLog) {
@@ -30,6 +36,9 @@ public class TimeEntryMenu {
         this.currentTimeLog = currentTimeLog;
     }
 
+    /*
+     * EFFECTS: Gets user input for the time entry menu action desired and process that command
+     */
     public void displayTimeEntryMenu() {
         boolean keepTimeEntryMenuGoing = true;
         String command = null;
@@ -48,6 +57,9 @@ public class TimeEntryMenu {
         System.out.println("\nReturning to billing menu");
     }
 
+    /*
+     * EFFECTS: Displays the time entry menu options for desired actions
+     */
     private void displayTimeEntryMenuOptions() {
         System.out.println("\nTime Entry Menu:");
         System.out.println("\ts -> see time entries");
@@ -57,8 +69,9 @@ public class TimeEntryMenu {
         System.out.println("\tb -> back");
     }
 
-    // MODIFIES: this
-    // EFFECTS: processes user command
+    /*
+     * EFFECTS: Executes the desired time entry action according to user's input
+     */
     private void processTimeEntryCommand(String command) {
         if (command.equals("s")) {
             displayTimeEntriesForCategory();
@@ -73,6 +86,10 @@ public class TimeEntryMenu {
         }
     }
 
+    /*
+     * EFFECTS: Displays the time entries the user has for that particular client and billing category
+     *          Otherwise displays a message stating their are no current time entries
+     */
     private void displayTimeEntriesForCategory() {
         TimeLog clientTimeLog = masterTimeLog.getTimeLogForClient(this.currentClient);
         ArrayList<TimeEntry> timeEntriesForBillingCategory =
@@ -89,6 +106,11 @@ public class TimeEntryMenu {
     }
 
     //TODO: Handle any date exceptions (format & end date before start date)
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a new time entry in the time log collection
+     *          based on the details the user has entered
+     */
     private void createTimeEntryOption() {
         System.out.println("Please enter a name for the time entry or type 'q' to quit.");
         String nameSelected = input.nextLine();
@@ -111,6 +133,11 @@ public class TimeEntryMenu {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Remove a time entry in the time log collection
+     *          based on the details the user has entered
+     */
     private void removeTimeEntryOption() {
         boolean removalSuccess = false;
         while (!removalSuccess) {
@@ -128,8 +155,10 @@ public class TimeEntryMenu {
         }
     }
 
+    /*
+     * EFFECTS: Returns an Array of the user's input
+     */
     private List<String> editTimeEntryGetInput() {
-
         System.out.println("Please enter a new time entry name.");
         String newName = input.nextLine();
         System.out.println("Please enter a new description for the time entry.");
@@ -142,6 +171,11 @@ public class TimeEntryMenu {
     }
 
     //TODO: Handle any date exceptions (format & end date before start date)
+    /*
+     * MODIFIES: this
+     * EFFECTS: Edit a time entry in the time log collection
+     *          based on the details the user has entered
+     */
     private void editTimeEntryOption() {
         boolean editSuccess = false;
         while (!editSuccess) {
@@ -168,6 +202,4 @@ public class TimeEntryMenu {
     //                if (currentTimeLog.editTimeEntry(nameSelected, newName, description,
     //                        startDateTime, endDateTime, this.currentBillingCategory)) {
     //                    editSuccess = true;
-
-    //END OF TIME TRACKING MENU METHODS
 }

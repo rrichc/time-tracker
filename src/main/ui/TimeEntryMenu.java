@@ -105,7 +105,6 @@ public class TimeEntryMenu {
         }
     }
 
-    //TODO: Handle any date exceptions (format & end date before start date)
     /*
      * MODIFIES: this
      * EFFECTS: Creates a new time entry in the time log collection
@@ -170,7 +169,6 @@ public class TimeEntryMenu {
         return Arrays.asList(newName, description, startDateTime, endDateTime);
     }
 
-    //TODO: Handle any date exceptions (format & end date before start date)
     /*
      * MODIFIES: this
      * EFFECTS: Edit a time entry in the time log collection
@@ -198,8 +196,4 @@ public class TimeEntryMenu {
             }
         }
     }
-
-    //                if (currentTimeLog.editTimeEntry(nameSelected, newName, description,
-    //                        startDateTime, endDateTime, this.currentBillingCategory)) {
-    //                    editSuccess = true;
 }

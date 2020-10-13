@@ -93,6 +93,7 @@ class ClientBookTest {
         assertEquals(newName, clientBook.getClients().get(1).getName());
     }
 
+    @Test
     void editClientNoDupeNoNameMatch() {
         String differentName1 = "Different Name 1";
         String differentName2 = "Different Name 2";
@@ -101,9 +102,7 @@ class ClientBookTest {
         clientBook.createClient(differentName1);
         clientBook.createClient(differentName2);
         boolean editSuccess = clientBook.editClient(differentName3, newName);
-        assertTrue(editSuccess);
-        assertEquals(differentName1, clientBook.getClients().get(0).getName());
-        assertEquals(newName, clientBook.getClients().get(1).getName());
+        assertFalse(editSuccess);
     }
 
     @Test

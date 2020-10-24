@@ -15,7 +15,6 @@ public class TimeLog {
     public TimeLog(Client client) {
         this.timeLog = new ArrayList<TimeEntry>();
         this.client = client;
-
     }
 
     /*

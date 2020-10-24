@@ -1,0 +1,14 @@
+{
+    "clients": [
+        {
+            "clientName": "Client1"
+        },
+        {
+            "clientName": "Client2"
+        },
+        {
+            "clientName": "Client3"
+
+        }
+    ]
+}

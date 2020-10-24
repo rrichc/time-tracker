@@ -1,0 +1,19 @@
+{
+    "billingCategories": [
+        {
+            "category": "Category1",
+            "ratePerHour": "18.00",
+            "client": "Client1"
+        },
+        {
+            "category": "Category2",
+            "ratePerHour": "14.00",
+            "client": "Client1"
+        },
+        {
+            "category": "Category1",
+            "ratePerHour": "11.00",
+            "client": "Client2"
+        }
+    ]
+}

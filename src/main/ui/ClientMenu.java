@@ -1,7 +1,9 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 //ClientMenu represents the first menu users see when they open the application
@@ -15,16 +17,18 @@ public class ClientMenu {
     private Client currentClient;
     private TimeLog currentTimeLog;
     private BillingMenu billingMenu;
+    private JsonReader jsonReader;
 
     /*
      * EFFECTS: Gets the dependencies initialized in TimeTracker and assigns it to class fields
      */
     public ClientMenu(Scanner input, MasterTimeLog masterTimeLog, BillingCategories billingCategories,
-                      ClientBook clientBook) {
+                      ClientBook clientBook, JsonReader jsonReader) {
         this.input = input;
         this.masterTimeLog = masterTimeLog;
         this.billingCategories = billingCategories;
         this.clientBook = clientBook;
+        this.jsonReader = jsonReader;
     }
 
     /*
@@ -56,6 +60,8 @@ public class ClientMenu {
         System.out.println("\tc -> create new client");
         System.out.println("\te -> edit client");
         System.out.println("\tr -> remove client");
+        System.out.println("\tsa -> save to file");
+        System.out.println("\tl -> load from file");
         System.out.println("\tq -> quit");
     }
 
@@ -71,6 +77,10 @@ public class ClientMenu {
             editClientOption();
         } else if (command.equals("r")) {
             removeClientOption();
+        } else if (command.equals("sa")) {
+            //TODO: save function
+        } else if (command.equals("l")) {
+            loadSave();
         } else {
             System.out.println("Please make a valid selection by entering the corresponding letter for your action.");
         }
@@ -197,5 +207,33 @@ public class ClientMenu {
             }
         }
         return false;
+    }
+
+    //TODO: Load save for ClientBook, BillingCategories, and MasterTimeLog
+    private void loadSave() {
+        loadClientBook();
+        loadBillingCategories();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads ClientBook from file
+    private void loadClientBook() {
+        try {
+            this.clientBook = jsonReader.readClientBook(TimeTracker.CLIENT_JSON_STORE);
+            System.out.println("Loaded client book from last save.");
+        } catch (IOException e) {
+            System.out.println("Unable to read client book from file.");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads BillingCategories from file
+    private void loadBillingCategories() {
+        try {
+            this.billingCategories = jsonReader.readBillingCategories(TimeTracker.BILLING_JSON_STORE);
+            System.out.println("Loaded billing categories from last save.");
+        } catch (IOException e) {
+            System.out.println("Unable to read billing categories from file.");
+        }
     }
 }

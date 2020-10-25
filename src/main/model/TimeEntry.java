@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -8,7 +11,7 @@ import java.time.temporal.ChronoUnit;
  *This class represents a single time entry with a name, description, start and end Date & Time,
  *time spent between start and end in minutes, and associated billing category
 */
-public class TimeEntry {
+public class TimeEntry implements Writable {
 
     private String name;
     private String description;
@@ -94,5 +97,17 @@ public class TimeEntry {
      */
     public BillingCategory getCategory() {
         return category;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("timeEntry", name);
+        json.put("description", description);
+        json.put("startDateTime", DateTimeParser.parseDateTimeToString(startDateTime));
+        json.put("endDateTime", DateTimeParser.parseDateTimeToString(endDateTime));
+        json.put("category", category.getName());
+
+        return json;
     }
 }

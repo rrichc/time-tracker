@@ -1,10 +1,14 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 
 //TimeLog represents a collection of time entries associated with a specific client
-public class TimeLog {
+public class TimeLog implements Writable {
     private Client client;                  //the client associated with a TimeLog
     private ArrayList<TimeEntry> timeLog;   //collection of time entries
 
@@ -91,5 +95,17 @@ public class TimeLog {
             }
         }
         return entriesForUser;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        for (TimeEntry timeEntry : timeLog) {
+            jsonArray.put(timeEntry.toJson());
+        }
+        json.put("clientTimeLog", client.getName());
+        json.put("timeEntries", jsonArray);
+        return json;
     }
 }

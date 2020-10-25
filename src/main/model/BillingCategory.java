@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 //Represents a billing category that has a name, rate per hour (in dollars), and a client associated with the category
-public class BillingCategory {
+public class BillingCategory implements Writable {
 
     private String name;        //name of the billing category
     private double ratePerHour; //the rate per hour in dollar associated with the category
@@ -55,5 +58,14 @@ public class BillingCategory {
      */
     public Client getClient() {
         return client;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("category", name);
+        json.put("ratePerHour", String.valueOf(ratePerHour));
+        json.put("client", client.getName());
+        return json;
     }
 }

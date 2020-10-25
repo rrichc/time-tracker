@@ -1,6 +1,9 @@
 package persistence;
 
+import model.BillingCategories;
+import model.BillingCategory;
 import model.ClientBook;
+import model.MasterTimeLog;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -21,13 +24,27 @@ public class JsonWriter {
     // EFFECTS: opens writer; throws FileNotFoundException if destination file cannot
     // be opened for writing
     public void open(String destination) throws FileNotFoundException {
-       writer = new PrintWriter(new File(destination));
+        writer = new PrintWriter(new File(destination));
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of clientBook to file
     public void write(ClientBook clientBook) {
         JSONObject json = clientBook.toJson();
+        saveToFile(json.toString(TAB));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: writes JSON representation of billingCategories to file
+    public void write(BillingCategories billingCategories) {
+        JSONObject json = billingCategories.toJson();
+        saveToFile(json.toString(TAB));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: writes JSON representation of masterTimeLog to file
+    public void write(MasterTimeLog masterTimeLog) {
+        JSONObject json = masterTimeLog.toJson();
         saveToFile(json.toString(TAB));
     }
 

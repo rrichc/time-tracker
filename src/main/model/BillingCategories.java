@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 //BillingCategories represents a collection of billing categories
-public class BillingCategories {
+public class BillingCategories implements Writable {
     private ArrayList<BillingCategory> billingCategories;   //collection of individual BillingCategory objects
 
     /*
@@ -118,5 +122,16 @@ public class BillingCategories {
             }
         }
         return null;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        for (BillingCategory billingCategory : billingCategories) {
+            jsonArray.put(billingCategory.toJson());
+        }
+        json.put("billingCategories", jsonArray);
+        return json;
     }
 }

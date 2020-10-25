@@ -259,6 +259,12 @@ public class ClientMenu {
             jsonWriter.open(TimeTracker.CLIENT_JSON_STORE);
             jsonWriter.write(this.clientBook);
             jsonWriter.close();
+            jsonWriter.open(TimeTracker.BILLING_JSON_STORE);
+            jsonWriter.write(this.billingCategories);
+            jsonWriter.close();
+            jsonWriter.open(TimeTracker.TIME_JSON_STORE);
+            jsonWriter.write(this.masterTimeLog);
+            jsonWriter.close();
             System.out.println("Saved");
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file.");

@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 //MasterTimeLog represents a collection of TimeLogs
-public class MasterTimeLog {
+public class MasterTimeLog implements Writable {
 
     private ArrayList<TimeLog> masterTimeLog;   //represents the collection of TimeLogs
 
@@ -55,5 +59,16 @@ public class MasterTimeLog {
      */
     public ArrayList<TimeLog> getMasterTimeLog() {
         return masterTimeLog;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        for (TimeLog timeLog : masterTimeLog) {
+            jsonArray.put(timeLog.toJson());
+        }
+        json.put("masterTimeLog", jsonArray);
+        return json;
     }
 }

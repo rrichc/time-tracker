@@ -1,0 +1,22 @@
+{"masterTimeLog": [
+    {
+        "timeEntries": [{
+            "startDateTime": "2020-10-08 12:30",
+            "description": "Task1 Desc",
+            "timeEntry": "Task1",
+            "endDateTime": "2020-10-08 13:30",
+            "category": "Category1"
+        }],
+        "clientTimeLog": "Client1"
+    },
+    {
+        "timeEntries": [{
+            "startDateTime": "2020-10-14 12:30",
+            "description": "Task3 Desc",
+            "timeEntry": "Task3",
+            "endDateTime": "2020-10-14 13:30",
+            "category": "Category2"
+        }],
+        "clientTimeLog": "Client2"
+    }
+]}

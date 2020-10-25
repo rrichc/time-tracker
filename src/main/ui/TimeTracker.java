@@ -10,9 +10,9 @@ import java.util.Scanner;
 //https://github.students.cs.ubc.ca/CPSC210/TellerApp
 //TimeTracker starts the Time Tracking Application
 public class TimeTracker {
-    public static final String CLIENT_JSON_STORE = "./data/clientbook.json";
-    public static final String BILLING_JSON_STORE = "./data/billingcategories.json";
-    public static final String TIME_JSON_STORE = "./data/mastertimelog.json";
+    public static final String CLIENT_JSON_STORE = "./data/clientBook.json";
+    public static final String BILLING_JSON_STORE = "./data/billingCategories.json";
+    public static final String TIME_JSON_STORE = "./data/masterTimeLog.json";
     private Scanner input;
     private MasterTimeLog masterTimeLog;
     private BillingCategories billingCategories;

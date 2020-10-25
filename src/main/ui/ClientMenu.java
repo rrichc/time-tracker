@@ -8,8 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-//ClientMenu represents the first menu users see when they open the application
-//to add/edit/remove and select clients to perform actions on
+//ClientMenu represents the first menu users see when they open the application to add, edit, remove
+//and select clients to perform actions on. They can also choose to save and load the time tracking environment
 public class ClientMenu {
 
     private Scanner input;

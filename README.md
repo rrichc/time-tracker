@@ -29,6 +29,7 @@ Tracking time was very tedious and time-consuming itself, and I've always wanted
 
 
 ## User Stories
+Phase 1
 - As a user, I want to be able to create clients I want to track time entries for.
 - As a user, I want to be able to view the clients I have created.
 - As a user, I want to be able to edit clients I have already created.
@@ -41,3 +42,11 @@ Tracking time was very tedious and time-consuming itself, and I've always wanted
 - As a user, I want to be able to view the time entries I have created for each billing category.
 - As a user, I want to be able to modify time entries I have already created.
 - As a user, I want to be able to remove time entries I have created.
+
+Phase 2
+- As a user, I want to be able to save my client book.
+- As a user, I want to be able to save my billing categories.
+- As a user, I want to be able to save my time entries.
+- As a user, I want to be able to load my client book.
+- As a user, I want to be able to load my billing categories.
+- As a user, I want to be able to load my time entries.

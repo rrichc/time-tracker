@@ -2,7 +2,9 @@ package ui;
 
 import model.*;
 import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -18,17 +20,19 @@ public class ClientMenu {
     private TimeLog currentTimeLog;
     private BillingMenu billingMenu;
     private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
     /*
      * EFFECTS: Gets the dependencies initialized in TimeTracker and assigns it to class fields
      */
     public ClientMenu(Scanner input, MasterTimeLog masterTimeLog, BillingCategories billingCategories,
-                      ClientBook clientBook, JsonReader jsonReader) {
+                      ClientBook clientBook, JsonReader jsonReader, JsonWriter jsonWriter) {
         this.input = input;
         this.masterTimeLog = masterTimeLog;
         this.billingCategories = billingCategories;
         this.clientBook = clientBook;
         this.jsonReader = jsonReader;
+        this.jsonWriter = jsonWriter;
     }
 
     /*
@@ -78,7 +82,7 @@ public class ClientMenu {
         } else if (command.equals("r")) {
             removeClientOption();
         } else if (command.equals("sa")) {
-            //TODO: save function
+            saveWorkRoom();
         } else if (command.equals("l")) {
             loadSave();
         } else {
@@ -209,10 +213,10 @@ public class ClientMenu {
         return false;
     }
 
-    //TODO: Load save for ClientBook, BillingCategories, and MasterTimeLog
     private void loadSave() {
         loadClientBook();
         loadBillingCategories();
+        loadMasterTimeLog();
     }
 
     // MODIFIES: this
@@ -230,10 +234,34 @@ public class ClientMenu {
     // EFFECTS: loads BillingCategories from file
     private void loadBillingCategories() {
         try {
-            this.billingCategories = jsonReader.readBillingCategories(TimeTracker.BILLING_JSON_STORE);
+            this.billingCategories = jsonReader.readBillingCategories(TimeTracker.BILLING_JSON_STORE, this.clientBook);
             System.out.println("Loaded billing categories from last save.");
         } catch (IOException e) {
             System.out.println("Unable to read billing categories from file.");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads MasterTimeLog from file
+    private void loadMasterTimeLog() {
+        try {
+            this.masterTimeLog = jsonReader.readMasterTimeLog(TimeTracker.TIME_JSON_STORE,
+                    this.clientBook, this.billingCategories);
+            System.out.println("Loaded time entries from last save.");
+        } catch (IOException e) {
+            System.out.println("Unable to read time entries from file.");
+        }
+    }
+
+    // EFFECTS: saves the workroom to file
+    private void saveWorkRoom() {
+        try {
+            jsonWriter.open(TimeTracker.CLIENT_JSON_STORE);
+            jsonWriter.write(this.clientBook);
+            jsonWriter.close();
+            System.out.println("Saved");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file.");
         }
     }
 }

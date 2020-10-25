@@ -99,7 +99,7 @@ public class BillingMenu {
             }
             if (categoryIsInBillingCategories(nameSelected)) {
                 selectedCategoryIsInList = true;
-                this.currentBillingCategory = billingCategories.getABillingCategory(nameSelected);
+                this.currentBillingCategory = billingCategories.getABillingCategory(nameSelected, currentClient);
                 System.out.println(nameSelected + " has been selected.");
                 this.timeEntryMenu = new TimeEntryMenu(this.input, this.masterTimeLog, this.billingCategories,
                         this.clientBook, this.currentClient, this.currentBillingCategory, this.currentTimeLog);

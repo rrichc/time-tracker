@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 //Client represents a client that billing categories and time logs will be associated with
-public class Client {
+public class Client implements Writable {
 
     private String name;    //the client's name
 
@@ -27,5 +30,12 @@ public class Client {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("clientName", name);
+        return json;
     }
 }

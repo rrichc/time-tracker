@@ -1,14 +1,5 @@
-{
-    "clients": [
-        {
-            "clientName": "Client1"
-        },
-        {
-            "clientName": "Client2"
-        },
-        {
-            "clientName": "Client3"
-
-        }
-    ]
-}
+{"clients": [
+    {"clientName": "Client1"},
+    {"clientName": "Client2"},
+    {"clientName": "Client3"}
+]}

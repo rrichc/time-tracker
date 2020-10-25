@@ -2,6 +2,7 @@ package ui;
 
 import model.*;
 import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.util.Scanner;
 
@@ -11,12 +12,14 @@ import java.util.Scanner;
 public class TimeTracker {
     public static final String CLIENT_JSON_STORE = "./data/clientbook.json";
     public static final String BILLING_JSON_STORE = "./data/billingcategories.json";
+    public static final String TIME_JSON_STORE = "./data/mastertimelog.json";
     private Scanner input;
     private MasterTimeLog masterTimeLog;
     private BillingCategories billingCategories;
     private ClientBook clientBook;
     private ClientMenu clientMenu;
     private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
     /*
      * EFFECTS: Starts the Time Tracking Application
@@ -44,7 +47,8 @@ public class TimeTracker {
         this.billingCategories = new BillingCategories();
         this.clientBook = new ClientBook();
         this.jsonReader = new JsonReader();
+        this.jsonWriter = new JsonWriter();
         this.clientMenu = new ClientMenu(this.input, this.masterTimeLog, this.billingCategories,
-                this.clientBook, this.jsonReader);
+                this.clientBook, this.jsonReader, this.jsonWriter);
     }
 }

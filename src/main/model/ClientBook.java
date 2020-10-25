@@ -1,9 +1,13 @@
 package model;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.util.ArrayList;
 
 //ClientBook represents a collection of individual Client objects
-public class ClientBook {
+public class ClientBook implements Writable {
     private ArrayList<Client> clients;
 
     /*
@@ -97,5 +101,16 @@ public class ClientBook {
             }
         }
         return null;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        for (Client client : clients) {
+            jsonArray.put(client.toJson());
+        }
+        json.put("clients", jsonArray);
+        return json;
     }
 }

@@ -111,9 +111,9 @@ public class BillingCategories {
      * REQUIRES: name must be non-empty String
      * EFFECTS: Returns a BillingCategory with the matching name, otherwise returns null
      */
-    public BillingCategory getABillingCategory(String name) {
+    public BillingCategory getABillingCategory(String name, Client client) {
         for (BillingCategory category : billingCategories) {
-            if (category.getName().equals(name)) {
+            if (category.getName().equals(name) && category.getClient().getName().equals(client.getName())) {
                 return category;
             }
         }

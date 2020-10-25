@@ -1,0 +1,46 @@
+{
+    "masterTimeLog": [
+        {
+            "clientTimeLog": "Client1",
+            "timeEntries": [
+              {
+                "timeEntry": "Task1",
+                "description": "Task1 Desc",
+                "startDateTime": "2020-10-08 12:30",
+                "endDateTime": "2020-10-08 13:30",
+                "timeSpentMinutes": "60",
+                "category": "Category1"
+              },
+              {
+                "timeEntry": "Task2",
+                "description": "Task2 Desc",
+                "startDateTime": "2020-10-09 14:30",
+                "endDateTime": "2020-10-09 15:30",
+                "timeSpentMinutes": "60",
+                "category": "Category2"
+              }
+            ]
+        },
+        {
+          "clientTimeLog": "Client2",
+          "timeEntries": [
+            {
+              "timeEntry": "Task1",
+              "description": "Task1 Desc",
+              "startDateTime": "2020-10-08 12:30",
+              "endDateTime": "2020-10-08 13:30",
+              "timeSpentMinutes": "60",
+              "category": "Category1"
+            },
+            {
+              "timeEntry": "Task2",
+              "description": "Task2 Desc",
+              "startDateTime": "2020-10-09 14:30",
+              "endDateTime": "2020-10-09 15:30",
+              "timeSpentMinutes": "60",
+              "category": "Category1"
+            }
+          ]
+        }
+    ]
+}

@@ -1,11 +1,8 @@
 package persistence;
 
-import model.BillingCategories;
-import model.Client;
-import model.ClientBook;
+import model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import ui.TimeTracker;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -16,6 +13,8 @@ import java.util.stream.Stream;
 //This class is based heavily off of the https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo provided as an example
 // Represents a reader that reads workroom from JSON data stored in file
 public class JsonReader {
+    private ClientBook clientBook;
+    private BillingCategories billingCategories;
 
     // EFFECTS: constructs reader
     public JsonReader() {
@@ -31,10 +30,22 @@ public class JsonReader {
 
     // EFFECTS: reads BillCategories from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public BillingCategories readBillingCategories(String source) throws IOException {
+    public BillingCategories readBillingCategories(String source, ClientBook clientBook) throws IOException {
+        this.clientBook = clientBook;
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseBillingCategories(jsonObject);
+    }
+
+    // EFFECTS: reads MasterTimeLog from file and returns it;
+    // throws IOException if an error occurs reading data from file
+    public MasterTimeLog readMasterTimeLog(String source, ClientBook clientBook,
+                                           BillingCategories billingCategories) throws IOException {
+        this.clientBook = clientBook;
+        this.billingCategories = billingCategories;
+        String jsonData = readFile(source);
+        JSONObject jsonObject = new JSONObject(jsonData);
+        return parseMasterTimeLog(jsonObject);
     }
 
     // EFFECTS: reads source file as string and returns it
@@ -99,13 +110,55 @@ public class JsonReader {
     private void addCategory(BillingCategories billingCategories, JSONObject jsonObject) {
         String name = jsonObject.getString("category");
         String ratePerHour = jsonObject.getString("ratePerHour");
-        Client client = new Client(jsonObject.getString("client"));
+        String clientName = jsonObject.getString("client");
+        Client client = clientBook.getAClient(clientName); //TODO: Double check
         billingCategories.createBillingCategory(name, ratePerHour, client);
     }
     //End of BillingCategories loading methods
 
     //__________________________________________________________________________________________
 
+    //Start of MasterTimeLog loading methods
+    // EFFECTS: parses BillingCategories from JSON object and returns it
+    private MasterTimeLog parseMasterTimeLog(JSONObject jsonObject) {
+        MasterTimeLog masterTimeLog = new MasterTimeLog();
+        addTimeLogs(masterTimeLog, jsonObject);
+        return masterTimeLog;
+    }
+
+    // MODIFIES: billingCategories
+    // EFFECTS: parses BillingCategories from JSON object and adds them to BillingCategories
+    private void addTimeLogs(MasterTimeLog masterTimeLog, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("masterTimeLog");
+        for (Object json : jsonArray) {
+            JSONObject nextTimeLog = (JSONObject) json;
+            addTimeLog(masterTimeLog, nextTimeLog);
+        }
+    }
+
+    // MODIFIES: billingCategories
+    // EFFECTS: parses individual categories from JSON object and adds it to BillingCategories
+    private void addTimeLog(MasterTimeLog masterTimeLog, JSONObject jsonObject) {
+        String clientName = jsonObject.getString("clientTimeLog");
+        Client client = clientBook.getAClient(clientName); //TODO check
+        masterTimeLog.createTimeLog(client);
+        JSONArray jsonArray = jsonObject.getJSONArray("timeEntries");
+        for (Object json : jsonArray) {
+            JSONObject nextTimeEntry = (JSONObject) json;
+            addTimeEntry(masterTimeLog.getTimeLogForClient(client), nextTimeEntry, client);
+        }
+    }
+
+    private void addTimeEntry(TimeLog timeLog, JSONObject jsonObject, Client client) {
+        String entryName = jsonObject.getString("timeEntry");
+        String description = jsonObject.getString("description");
+        String startDateTime = jsonObject.getString("startDateTime");
+        String endDateTime = jsonObject.getString("endDateTime");
+        String categoryName = jsonObject.getString("category");
+        BillingCategory category = billingCategories.getABillingCategory(categoryName, client);
+        timeLog.createTimeEntry(entryName, description, startDateTime, endDateTime, category);
+    }
+    //End of MasterTimeLog loading methods
 
 
 }

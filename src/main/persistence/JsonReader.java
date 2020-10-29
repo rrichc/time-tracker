@@ -111,7 +111,7 @@ public class JsonReader {
         String name = jsonObject.getString("category");
         String ratePerHour = jsonObject.getString("ratePerHour");
         String clientName = jsonObject.getString("client");
-        Client client = clientBook.getAClient(clientName); //TODO: Double check
+        Client client = clientBook.getAClient(clientName);
         billingCategories.createBillingCategory(name, ratePerHour, client);
     }
     //End of BillingCategories loading methods
@@ -140,7 +140,7 @@ public class JsonReader {
     // EFFECTS: parses individual categories from JSON object and adds it to BillingCategories
     private void addTimeLog(MasterTimeLog masterTimeLog, JSONObject jsonObject) {
         String clientName = jsonObject.getString("clientTimeLog");
-        Client client = clientBook.getAClient(clientName); //TODO check
+        Client client = clientBook.getAClient(clientName);
         masterTimeLog.createTimeLog(client);
         JSONArray jsonArray = jsonObject.getJSONArray("timeEntries");
         for (Object json : jsonArray) {

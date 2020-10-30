@@ -97,6 +97,9 @@ public class TimeLog implements Writable {
         return entriesForUser;
     }
 
+    /*
+     * EFFECTS:  Returns an representation of the timeLog array as a JSONObject
+     */
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

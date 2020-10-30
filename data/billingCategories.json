@@ -1,1 +1,5 @@
-{"billingCategories": []}
+{"billingCategories": [{
+    "ratePerHour": "10.0",
+    "client": "Richard",
+    "category": "Coding"
+}]}

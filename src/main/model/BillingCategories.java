@@ -124,6 +124,9 @@ public class BillingCategories implements Writable {
         return null;
     }
 
+    /*
+     * EFFECTS:  Returns an representation of the BillingCategories array as a JSONObject
+     */
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

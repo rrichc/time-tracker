@@ -60,6 +60,9 @@ public class BillingCategory implements Writable {
         return client;
     }
 
+    /*
+     * EFFECTS:  Returns an representation of the BillingCategory as a JSONObject
+     */
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

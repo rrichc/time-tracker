@@ -32,6 +32,9 @@ public class Client implements Writable {
         this.name = name;
     }
 
+    /*
+     * EFFECTS:  Returns an representation of the Client object as a JSONObject
+     */
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

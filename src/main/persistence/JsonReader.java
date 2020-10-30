@@ -119,15 +119,15 @@ public class JsonReader {
     //__________________________________________________________________________________________
 
     //Start of MasterTimeLog loading methods
-    // EFFECTS: parses BillingCategories from JSON object and returns it
+    // EFFECTS: parses the MasterTimeLog from JSON object and returns it
     private MasterTimeLog parseMasterTimeLog(JSONObject jsonObject) {
         MasterTimeLog masterTimeLog = new MasterTimeLog();
         addTimeLogs(masterTimeLog, jsonObject);
         return masterTimeLog;
     }
 
-    // MODIFIES: billingCategories
-    // EFFECTS: parses BillingCategories from JSON object and adds them to BillingCategories
+    // MODIFIES: masterTimeLog
+    // EFFECTS: parses TimeLogs from JSON object and adds them to MasterTimeLog
     private void addTimeLogs(MasterTimeLog masterTimeLog, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("masterTimeLog");
         for (Object json : jsonArray) {
@@ -136,8 +136,8 @@ public class JsonReader {
         }
     }
 
-    // MODIFIES: billingCategories
-    // EFFECTS: parses individual categories from JSON object and adds it to BillingCategories
+    // MODIFIES: masterTimeLog
+    // EFFECTS: parses individual TimeLog objects from JSON object and adds it to MasterTimeLog
     private void addTimeLog(MasterTimeLog masterTimeLog, JSONObject jsonObject) {
         String clientName = jsonObject.getString("clientTimeLog");
         Client client = clientBook.getAClient(clientName);
@@ -149,6 +149,8 @@ public class JsonReader {
         }
     }
 
+    // MODIFIES: timeLog
+    // EFFECTS: parses individual TimeEntry objects from JSON object and adds it to TimeLog
     private void addTimeEntry(TimeLog timeLog, JSONObject jsonObject, Client client) {
         String entryName = jsonObject.getString("timeEntry");
         String description = jsonObject.getString("description");

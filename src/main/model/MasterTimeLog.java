@@ -61,6 +61,9 @@ public class MasterTimeLog implements Writable {
         return masterTimeLog;
     }
 
+    /*
+     * EFFECTS:  Returns an representation of the MasterTimeLog as a JSONObject
+     */
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

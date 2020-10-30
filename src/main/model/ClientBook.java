@@ -103,6 +103,9 @@ public class ClientBook implements Writable {
         return null;
     }
 
+    /*
+     * EFFECTS:  Returns an representation of the ClientBook as a JSONObject
+     */
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -99,6 +99,9 @@ public class TimeEntry implements Writable {
         return category;
     }
 
+    /*
+     * EFFECTS:  Returns an representation of a TimeEntry object as a JSONObject
+     */
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

@@ -213,6 +213,7 @@ public class ClientMenu {
         return false;
     }
 
+    // EFFECTS: loads ClientBook, BillingCategories, MasterTimeLog from JSON file
     private void loadSave() {
         loadClientBook();
         loadBillingCategories();

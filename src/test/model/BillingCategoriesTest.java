@@ -243,7 +243,7 @@ class BillingCategoriesTest {
     }
 
     @Test
-    void getBillingACategoryNoMatchExists() {
+    void getBillingACategoryNoMatchExistsNotAClientMatch() {
         String categoryName1 = "Name 1";
         String ratePerHour1 = "3.50";
         billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);

@@ -88,7 +88,7 @@ public class TimeTracker {
 
         //Create and set up the content pane.
         MenuTabs demo = new MenuTabs();
-        demo.addComponentToPane(frame.getContentPane());
+        demo.addMenuTabsToPane(frame.getContentPane());
 
         //Display the window.
         frame.pack();

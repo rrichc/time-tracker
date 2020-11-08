@@ -37,17 +37,21 @@ package ui;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class MenuTabs {
+public class MenuTabs implements ActionListener {
     static final String CLIENTMENU = "Client Menu";
     static final String TEXTPANEL = "Placeholder";
     static final int extraWindowWidth = 100;
+    JPanel clientMenuTab;
+    //TODO: Also need to keep track in here what is the global (ie. active client, category, timeEntry)
 
 
-    public void addComponentToPane(Container pane) {
+    public void addMenuTabsToPane(Container pane) {
         JTabbedPane tabbedPane = new JTabbedPane();
         //Create the "cards".
-        JPanel clientMenuTab = new ClientMenuTab().getTab();
+        clientMenuTab = new ClientMenuTab(this).getClientMenuOptions();
 
         JPanel card2 = new JPanel();
         card2.add(new JTextField("TextField", 20));
@@ -56,5 +60,11 @@ public class MenuTabs {
         tabbedPane.addTab(TEXTPANEL, card2);
 
         pane.add(tabbedPane, BorderLayout.CENTER);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+//        System.out.println("test");
+//        System.out.println(e.getActionCommand());
     }
 }

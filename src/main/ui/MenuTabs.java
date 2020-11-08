@@ -45,18 +45,29 @@ public class MenuTabs implements ActionListener {
     static final String TEXTPANEL = "Placeholder";
     static final int extraWindowWidth = 100;
     JPanel clientMenuTab;
+    JSplitPane clientSplitPane;
     //TODO: Also need to keep track in here what is the global (ie. active client, category, timeEntry)
-
+    CardLayout cardLayout;
+    JPanel clientMainPanel;
 
     public void addMenuTabsToPane(Container pane) {
         JTabbedPane tabbedPane = new JTabbedPane();
+
+        cardLayout = new CardLayout();
+        clientMainPanel = new JPanel(cardLayout);
+
         //Create the "cards".
-        clientMenuTab = new ClientMenuTab(this).getClientMenuOptions();
+        clientMenuTab = new ClientMenuOptions(this).getClientMenuOptions();
+        clientSplitPane = new ClientListFormSplitPane().getClientSplitPane();
+
+        clientMainPanel.add(clientMenuTab, "clientMenuOptions");
+        clientMainPanel.add(clientSplitPane, "clientSplitPane");
+
 
         JPanel card2 = new JPanel();
         card2.add(new JTextField("TextField", 20));
 
-        tabbedPane.addTab(CLIENTMENU, clientMenuTab);
+        tabbedPane.addTab(CLIENTMENU, clientMainPanel);
         tabbedPane.addTab(TEXTPANEL, card2);
 
         pane.add(tabbedPane, BorderLayout.CENTER);
@@ -66,5 +77,6 @@ public class MenuTabs implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 //        System.out.println("test");
 //        System.out.println(e.getActionCommand());
+        cardLayout.show(clientMainPanel, "clientSplitPane");
     }
 }

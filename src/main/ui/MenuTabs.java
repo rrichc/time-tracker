@@ -35,10 +35,17 @@ package ui;
  * Class modified from https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html
  */
 
+import model.BillingCategories;
+import model.ClientBook;
+import model.MasterTimeLog;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Scanner;
 
 public class MenuTabs implements ActionListener {
     static final String CLIENTMENU = "Client Menu";
@@ -50,7 +57,18 @@ public class MenuTabs implements ActionListener {
     CardLayout cardLayout;
     JPanel clientMainPanel;
 
+    public static final String CLIENT_JSON_STORE = "./data/clientBook.json";
+    public static final String BILLING_JSON_STORE = "./data/billingCategories.json";
+    public static final String TIME_JSON_STORE = "./data/masterTimeLog.json";
+    private Scanner input;
+    private MasterTimeLog masterTimeLog;
+    private BillingCategories billingCategories;
+    private ClientBook clientBook;
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
+
     public void addMenuTabsToPane(Container pane) {
+        init();
         JTabbedPane tabbedPane = new JTabbedPane();
 
         cardLayout = new CardLayout();
@@ -58,7 +76,7 @@ public class MenuTabs implements ActionListener {
 
         //Create the "cards".
         clientMenuTab = new ClientMenuOptions(this).getClientMenuOptions();
-        clientSplitPane = new ClientListFormSplitPane().getClientSplitPane();
+        clientSplitPane = new ClientListFormSplitPane(this, this.clientBook).getClientSplitPane();
 
         clientMainPanel.add(clientMenuTab, "clientMenuOptions");
         clientMainPanel.add(clientSplitPane, "clientSplitPane");
@@ -73,10 +91,23 @@ public class MenuTabs implements ActionListener {
         pane.add(tabbedPane, BorderLayout.CENTER);
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Initializes dependencies needed by the Client, Billing, and Time Entry menu down the line
+     */
+    private void init() {
+        this.input = new Scanner(System.in);
+        this.masterTimeLog = new MasterTimeLog();
+        this.billingCategories = new BillingCategories();
+        this.clientBook = new ClientBook();
+        this.jsonReader = new JsonReader();
+        this.jsonWriter = new JsonWriter();
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 //        System.out.println("test");
-//        System.out.println(e.getActionCommand());
+        System.out.println(e.getActionCommand());
         cardLayout.show(clientMainPanel, "clientSplitPane");
     }
 }

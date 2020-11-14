@@ -224,7 +224,7 @@ public class ClientMenu {
     // EFFECTS: loads ClientBook from file
     private void loadClientBook() {
         try {
-            this.clientBook = jsonReader.readClientBook(TimeTracker.CLIENT_JSON_STORE);
+            this.clientBook = jsonReader.readClientBook(MenuTabs.CLIENT_JSON_STORE);
             System.out.println("Loaded client book from last save.");
         } catch (IOException e) {
             System.out.println("Unable to read client book from file.");
@@ -235,7 +235,7 @@ public class ClientMenu {
     // EFFECTS: loads BillingCategories from file
     private void loadBillingCategories() {
         try {
-            this.billingCategories = jsonReader.readBillingCategories(TimeTracker.BILLING_JSON_STORE, this.clientBook);
+            this.billingCategories = jsonReader.readBillingCategories(MenuTabs.BILLING_JSON_STORE, this.clientBook);
             System.out.println("Loaded billing categories from last save.");
         } catch (IOException e) {
             System.out.println("Unable to read billing categories from file.");
@@ -246,7 +246,7 @@ public class ClientMenu {
     // EFFECTS: loads MasterTimeLog from file
     private void loadMasterTimeLog() {
         try {
-            this.masterTimeLog = jsonReader.readMasterTimeLog(TimeTracker.TIME_JSON_STORE,
+            this.masterTimeLog = jsonReader.readMasterTimeLog(MenuTabs.TIME_JSON_STORE,
                     this.clientBook, this.billingCategories);
             System.out.println("Loaded time entries from last save.");
         } catch (IOException e) {
@@ -257,13 +257,13 @@ public class ClientMenu {
     // EFFECTS: saves the workroom to file
     private void saveWorkRoom() {
         try {
-            jsonWriter.open(TimeTracker.CLIENT_JSON_STORE);
+            jsonWriter.open(MenuTabs.CLIENT_JSON_STORE);
             jsonWriter.write(this.clientBook);
             jsonWriter.close();
-            jsonWriter.open(TimeTracker.BILLING_JSON_STORE);
+            jsonWriter.open(MenuTabs.BILLING_JSON_STORE);
             jsonWriter.write(this.billingCategories);
             jsonWriter.close();
-            jsonWriter.open(TimeTracker.TIME_JSON_STORE);
+            jsonWriter.open(MenuTabs.TIME_JSON_STORE);
             jsonWriter.write(this.masterTimeLog);
             jsonWriter.close();
             System.out.println("Saved");

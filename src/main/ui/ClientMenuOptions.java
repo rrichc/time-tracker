@@ -7,7 +7,7 @@ import java.awt.event.ActionEvent;
 //Class modified from https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html
 public class ClientMenuOptions extends JPanel {
     static final int extraWindowWidth = 100;
-    MenuTabs menuTabs;
+    private MenuTabs menuTabs;
     protected JPanel clientMenuOptions;
 
     //actionPerformed syntax from https://stackoverflow.com/questions/5911565/how-to-add-multiple-actionlisteners-for-multiple-buttons-in-java-swing

@@ -31,77 +31,68 @@
 
 package ui;
 
+import model.Client;
+import model.ClientBook;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.util.ArrayList;
 
 //SplitPaneDemo itself is not a visible component.
 //Class based off the https://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html sample project provided
 public class ClientListFormSplitPane extends JPanel
                           implements ListSelectionListener {
-    private JLabel picture;
     private JList list;
     private JSplitPane splitPane;
-    private String[] imageNames = { "Bird", "Cat", "Dog", "Rabbit", "Pig", "dukeWaveRed",
-        "kathyCosmo", "lainesTongue", "left", "middle", "right", "stickerface"};
+    private ClientBook clientBook;
+    private MenuTabs menuTabs;
+    private DefaultListModel clientNames;
 
-    public ClientListFormSplitPane() {
-        //Create the list of images and put it in a scroll pane.
-        list = new JList(imageNames);
+    public ClientListFormSplitPane(MenuTabs menuTabs, ClientBook clientBook) {
+        this.menuTabs = menuTabs;
+        this.clientBook = clientBook;
+        clientNames = new DefaultListModel();
+        if (clientBook.getClients().isEmpty()) {
+            this.clientNames.addElement("Empty");
+            this.clientNames.addElement("Empty 2"); //TODO: Remove later
+        } else {
+            for (Client client : clientBook.getClients()) {
+                this.clientNames.addElement(client.getName());
+            }
+        }
+
+        //Create the list of client names and put it in a scroll pane.
+        list = new JList(this.clientNames);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
         JScrollPane listScrollPane = new JScrollPane(list);
 
-        picture = new JLabel();
-        picture.setFont(picture.getFont().deriveFont(Font.ITALIC));
-        picture.setHorizontalAlignment(JLabel.CENTER);
-        
-        JScrollPane pictureScrollPane = new JScrollPane(picture); //TODO: Replace this with a Form
+        String[] labels = {"Client Name: ", "Remove: "};
+        JPanel springForm = new SpringForm(labels).getSpringForm();
 
         //Create a split pane with the two scroll panes in it.
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                                   listScrollPane, pictureScrollPane);
+                                   listScrollPane, springForm);
         splitPane.setOneTouchExpandable(true);
         splitPane.setDividerLocation(150);
 
         //Provide minimum sizes for the two components in the split pane.
         Dimension minimumSize = new Dimension(100, 50);
         listScrollPane.setMinimumSize(minimumSize);
-        pictureScrollPane.setMinimumSize(minimumSize);
+        springForm.setMinimumSize(minimumSize);
 
         //Provide a preferred size for the split pane.
         splitPane.setPreferredSize(new Dimension(400, 200));
-        updateLabel(imageNames[list.getSelectedIndex()]);
+//        updateLabel(imageNames[list.getSelectedIndex()]);
     }
     
     //Listens to the list
     public void valueChanged(ListSelectionEvent e) {
         JList list = (JList)e.getSource();
-        updateLabel(imageNames[list.getSelectedIndex()]);
-    }
-    
-    //Renders the selected image
-    protected void updateLabel(String name) {
-        ImageIcon icon = createImageIcon("images/" + name + ".gif");
-        picture.setIcon(icon);
-        if  (icon != null) {
-            picture.setText(null);
-        } else {
-            picture.setText("Image not found");
-        }
-    }
-
-    /** Returns an ImageIcon, or null if the path was invalid. */
-    protected static ImageIcon createImageIcon(String path) {
-        java.net.URL imgURL = ClientListFormSplitPane.class.getResource(path);
-        if (imgURL != null) {
-            return new ImageIcon(imgURL);
-        } else {
-            System.err.println("Couldn't find file: " + path);
-            return null;
-        }
+        System.out.println(list.getSelectedIndex());
     }
 
     public JSplitPane getClientSplitPane() {

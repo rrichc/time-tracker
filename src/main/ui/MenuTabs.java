@@ -43,6 +43,8 @@ import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -76,14 +78,8 @@ public class MenuTabs implements ActionListener {
     public void addMenuTabsToPane(Container pane) {
         init();
         JTabbedPane tabbedPane = new JTabbedPane();
-
         cardLayout = new CardLayout();
-        clientMainPanel = new JPanel(cardLayout);
-        clientMainPanel.add(clientMenuTab, "clientMenuOptions");
-        clientMainPanel.add(selectClientSplitPane.getClientSplitPane(), "selectClientSplitPane");
-        clientMainPanel.add(addClientSplitPane.getClientSplitPane(), "addClientSplitPane");
-        clientMainPanel.add(editClientSplitPane.getClientSplitPane(), "editClientSplitPane");
-        clientMainPanel.add(removeClientSplitPane.getClientSplitPane(), "removeClientSplitPane");
+        clientPanelSetUp();
 
         //TODO: Temp - Add the Billing and TimeEntry Tabs here later
         JPanel card2 = new JPanel();
@@ -92,8 +88,20 @@ public class MenuTabs implements ActionListener {
         tabbedPane.addTab(CLIENTMENU, clientMainPanel);
         tabbedPane.addTab(TEXTPANEL, card2);
 
+        //TODO: Tab change listener code - use this to refresh all client, billing, time entry splitplanes with updateListModel
+        //http://www.java2s.com/Tutorial/Java/0240__Swing/ListeningforSelectedTabChanges.htm
+        ChangeListener changeListener = new ChangeListener() {
+            public void stateChanged(ChangeEvent changeEvent) {
+                JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+                int index = sourceTabbedPane.getSelectedIndex();
+                System.out.println("Tab changed to: " + sourceTabbedPane.getTitleAt(index));
+            }
+        };
+        tabbedPane.addChangeListener(changeListener);
+
         pane.add(tabbedPane, BorderLayout.CENTER);
     }
+
 
     /*
      * MODIFIES: this
@@ -108,7 +116,7 @@ public class MenuTabs implements ActionListener {
         this.jsonWriter = new JsonWriter();
 
         initMenuOptions();
-        initSplitPanes();
+        initClientSplitPanes();
     }
 
     private void initMenuOptions() {
@@ -116,7 +124,7 @@ public class MenuTabs implements ActionListener {
     }
 
     //Create the "cards".
-    private void initSplitPanes() {
+    private void initClientSplitPanes() {
         selectClientSplitPane = new ClientSplitPane(this,
                 this.clientBook, this.masterTimeLog, ActionState.SELECT);
         addClientSplitPane = new ClientSplitPane(this,
@@ -127,10 +135,23 @@ public class MenuTabs implements ActionListener {
                 this.clientBook, this.masterTimeLog, ActionState.REMOVE);
     }
 
+    private void clientPanelSetUp() {
+        clientMainPanel = new JPanel(cardLayout);
+        clientMainPanel.add(clientMenuTab, "clientMenuOptions");
+        clientMainPanel.add(selectClientSplitPane.getClientSplitPane(), "selectClientSplitPane");
+        clientMainPanel.add(addClientSplitPane.getClientSplitPane(), "addClientSplitPane");
+        clientMainPanel.add(editClientSplitPane.getClientSplitPane(), "editClientSplitPane");
+        clientMainPanel.add(removeClientSplitPane.getClientSplitPane(), "removeClientSplitPane");
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println(e.getActionCommand());
-        switch (e.getActionCommand()) {
+        clientActions(e.getActionCommand());
+    }
+
+    private void clientActions(String command) {
+        switch (command) {
             case "Select client":
                 cardLayout.show(clientMainPanel, "selectClientSplitPane");
                 selectClientSplitPane.updateListModel();

@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-public class SpringForm {
+public class ClientForm {
     private JPanel springForm;
     private ActionState state;
     private ClientBook clientBook;
@@ -18,7 +18,7 @@ public class SpringForm {
     private String[] labels;
     private JTextField[] textField;
 
-    public SpringForm(String[] labels, ActionState state, ClientSplitPane splitPane) {
+    public ClientForm(String[] labels, ActionState state, ClientSplitPane splitPane) {
         this.state = state;
         this.splitPane = splitPane;
         this.clientBook = splitPane.getClientBook();

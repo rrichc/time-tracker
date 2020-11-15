@@ -96,10 +96,10 @@ public class ClientSplitPane implements ListSelectionListener {
                 secondPanel = new SelectClientButtonPane(this).getPanel();
                 break;
             case ADD:
-                secondPanel = new SpringForm(this.labels, ActionState.ADD, this).getSpringForm();
+                secondPanel = new ClientForm(this.labels, ActionState.ADD, this).getSpringForm();
                 break;
             case EDIT:
-                secondPanel = new SpringForm(labels, ActionState.EDIT, this).getSpringForm();
+                secondPanel = new ClientForm(labels, ActionState.EDIT, this).getSpringForm();
                 break;
             case REMOVE:
                 secondPanel = new RemoveClientButtonPane(this).getPanel();

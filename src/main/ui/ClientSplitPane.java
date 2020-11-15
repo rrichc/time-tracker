@@ -53,7 +53,7 @@ public class ClientSplitPane implements ListSelectionListener {
     private ActionState state;
     private JScrollPane listScrollPane;
     private String[] labels = {"Client Name: ", "Remove: "}; //TODO: Fix fields
-    private String currentSelectedClient;
+    private String listSelectedClient;
 
 
     public ClientSplitPane(MenuTabs menuTabs, ClientBook clientBook, MasterTimeLog masterTimeLog, ActionState state) {
@@ -74,7 +74,7 @@ public class ClientSplitPane implements ListSelectionListener {
         if (clientBook.getClients().isEmpty()) {
             this.clientNames.addElement("Empty");
         } else {
-            currentSelectedClient = clientBook.getClients().get(0).getName(); //TODO: Change to Client object instead of just name string?
+            listSelectedClient = clientBook.getClients().get(0).getName(); //TODO: Change to Client object instead of just name string?
             for (Client client : clientBook.getClients()) {
                 this.clientNames.addElement(client.getName());
             }
@@ -92,11 +92,17 @@ public class ClientSplitPane implements ListSelectionListener {
 
     private void createSecondPanel() {
         switch (state) {
+            case SELECT:
+                secondPanel = new SelectClientButtonPane(this).getPanel();
+                break;
             case ADD:
                 secondPanel = new SpringForm(this.labels, ActionState.ADD, this).getSpringForm();
                 break;
             case EDIT:
                 secondPanel = new SpringForm(labels, ActionState.EDIT, this).getSpringForm();
+                break;
+            case REMOVE:
+                secondPanel = new RemoveClientButtonPane(this).getPanel();
                 break;
         }
     }
@@ -122,8 +128,8 @@ public class ClientSplitPane implements ListSelectionListener {
         if (!e.getValueIsAdjusting()) { //This line prevents double events
             JList list = (JList)e.getSource();
             if (list.getSelectedValue() != null) {
-                currentSelectedClient =  list.getSelectedValue().toString();
-                System.out.println(currentSelectedClient);
+                listSelectedClient =  list.getSelectedValue().toString();
+                System.out.println(listSelectedClient);
             }
         }
     }
@@ -132,8 +138,8 @@ public class ClientSplitPane implements ListSelectionListener {
         return splitPane;
     }
 
-    public String getCurrentSelectedClient() {
-        return currentSelectedClient;
+    public String getListSelectedClient() {
+        return listSelectedClient;
     }
 
     public ClientBook getClientBook() {
@@ -151,6 +157,10 @@ public class ClientSplitPane implements ListSelectionListener {
 
     public void showClientMenuOptions() {
         menuTabs.displayClientMenuOptions();
+    }
+
+    public void setCurrentClient(String currentClient) {
+        menuTabs.setCurrentClient(clientBook.getAClient(currentClient));
     }
 }
 

@@ -28,7 +28,15 @@ public class ClientMenuOptions {
     }
 
     private void initMenuButtons() {
-        clientMenuOptions.add(new JButton("Select client"));
+        JButton selectClientButton = new JButton(new AbstractAction("Select client") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // switch panels
+                menuTabs.actionPerformed(e);
+            }
+        });
+        clientMenuOptions.add(selectClientButton);
+
         JButton addClientButton = new JButton(new AbstractAction("Add client") {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,6 +45,7 @@ public class ClientMenuOptions {
             }
         });
         clientMenuOptions.add(addClientButton);
+
         JButton editClientButton = new JButton(new AbstractAction("Edit client") {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -45,6 +54,15 @@ public class ClientMenuOptions {
             }
         });
         clientMenuOptions.add(editClientButton);
+
+        JButton removeClientButton = new JButton(new AbstractAction("Remove client") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // switch panels
+                menuTabs.actionPerformed(e);
+            }
+        });
+        clientMenuOptions.add(removeClientButton);
     }
 
     public JPanel getClientMenuOptions() {

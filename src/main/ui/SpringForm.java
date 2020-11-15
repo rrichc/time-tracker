@@ -71,8 +71,8 @@ public class SpringForm {
                         System.out.println(clientName);
                         break;
                     case EDIT: //TODO: Add pop-up/checking for duplicate name
-                        clientBook.editClient(splitPane.getCurrentSelectedClient(), clientName);
-                        System.out.println(splitPane.getCurrentSelectedClient());
+                        clientBook.editClient(splitPane.getListSelectedClient(), clientName);
+                        System.out.println(splitPane.getListSelectedClient());
                         System.out.println(clientName);
                         break;
                 }

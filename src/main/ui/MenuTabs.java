@@ -52,8 +52,8 @@ public class MenuTabs implements ActionListener {
     static final String TEXTPANEL = "Placeholder";
     static final int extraWindowWidth = 100;
     JPanel clientMenuTab;
-    JSplitPane addClientSplitPane;
-    JSplitPane editClientSplitPane;
+    ClientSplitPane addClientSplitPane;
+    ClientSplitPane editClientSplitPane;
     //TODO: Also need to keep track in here what is the global (ie. active client, category, timeEntry)
     CardLayout cardLayout;
     JPanel clientMainPanel;
@@ -75,8 +75,8 @@ public class MenuTabs implements ActionListener {
         cardLayout = new CardLayout();
         clientMainPanel = new JPanel(cardLayout);
         clientMainPanel.add(clientMenuTab, "clientMenuOptions");
-        clientMainPanel.add(addClientSplitPane, "addClientSplitPane");
-        clientMainPanel.add(editClientSplitPane, "editClientSplitPane");
+        clientMainPanel.add(addClientSplitPane.getClientSplitPane(), "addClientSplitPane");
+        clientMainPanel.add(editClientSplitPane.getClientSplitPane(), "editClientSplitPane");
 
         //TODO: Temp - remove later
         JPanel card2 = new JPanel();
@@ -111,9 +111,9 @@ public class MenuTabs implements ActionListener {
     //Create the "cards".
     private void initSplitPanes() {
         addClientSplitPane = new ClientSplitPane(this,
-                this.clientBook, this.masterTimeLog, ActionState.ADD).getClientSplitPane();
+                this.clientBook, this.masterTimeLog, ActionState.ADD);
         editClientSplitPane = new ClientSplitPane(this,
-                this.clientBook, this.masterTimeLog, ActionState.EDIT).getClientSplitPane();
+                this.clientBook, this.masterTimeLog, ActionState.EDIT);
     }
 
     @Override
@@ -122,11 +122,11 @@ public class MenuTabs implements ActionListener {
         switch (e.getActionCommand()) {
             case "Add client":
                 cardLayout.show(clientMainPanel, "addClientSplitPane");
-//                addClientSplitPane.updateListModel();
+                addClientSplitPane.updateListModel();
                 break;
             case "Edit client":
                 cardLayout.show(clientMainPanel, "editClientSplitPane");
-
+                editClientSplitPane.updateListModel();
                 break;
         }
     }

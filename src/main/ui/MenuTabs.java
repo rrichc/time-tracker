@@ -52,7 +52,8 @@ public class MenuTabs implements ActionListener {
     static final String TEXTPANEL = "Placeholder";
     static final int extraWindowWidth = 100;
     JPanel clientMenuTab;
-    JSplitPane clientSplitPane;
+    JSplitPane addClientSplitPane;
+    JSplitPane editClientSplitPane;
     //TODO: Also need to keep track in here what is the global (ie. active client, category, timeEntry)
     CardLayout cardLayout;
     JPanel clientMainPanel;
@@ -73,15 +74,11 @@ public class MenuTabs implements ActionListener {
 
         cardLayout = new CardLayout();
         clientMainPanel = new JPanel(cardLayout);
-
-        //Create the "cards".
-        clientMenuTab = new ClientMenuOptions(this).getClientMenuOptions();
-        clientSplitPane = new ClientListFormSplitPane(this, this.clientBook).getClientSplitPane();
-
         clientMainPanel.add(clientMenuTab, "clientMenuOptions");
-        clientMainPanel.add(clientSplitPane, "clientSplitPane");
+        clientMainPanel.add(addClientSplitPane, "addClientSplitPane");
+        clientMainPanel.add(editClientSplitPane, "editClientSplitPane");
 
-
+        //TODO: Temp - remove later
         JPanel card2 = new JPanel();
         card2.add(new JTextField("TextField", 20));
 
@@ -102,12 +99,39 @@ public class MenuTabs implements ActionListener {
         this.clientBook = new ClientBook();
         this.jsonReader = new JsonReader();
         this.jsonWriter = new JsonWriter();
+
+        initMenuOptions();
+        initSplitPanes();
+    }
+
+    private void initMenuOptions() {
+        clientMenuTab = new ClientMenuOptions(this).getClientMenuOptions();
+    }
+
+    //Create the "cards".
+    private void initSplitPanes() {
+        addClientSplitPane = new ClientSplitPane(this,
+                this.clientBook, this.masterTimeLog, ActionState.ADD).getClientSplitPane();
+        editClientSplitPane = new ClientSplitPane(this,
+                this.clientBook, this.masterTimeLog, ActionState.EDIT).getClientSplitPane();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        System.out.println("test");
         System.out.println(e.getActionCommand());
-        cardLayout.show(clientMainPanel, "clientSplitPane");
+        switch (e.getActionCommand()) {
+            case "Add client":
+                cardLayout.show(clientMainPanel, "addClientSplitPane");
+//                addClientSplitPane.updateListModel();
+                break;
+            case "Edit client":
+                cardLayout.show(clientMainPanel, "editClientSplitPane");
+
+                break;
+        }
+    }
+
+    public void displayClientMenuOptions() {
+        cardLayout.show(clientMainPanel, "clientMenuOptions");
     }
 }

@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 //Class modified from https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html
-public class ClientMenuOptions extends JPanel {
+public class ClientMenuOptions {
     static final int extraWindowWidth = 100;
     private MenuTabs menuTabs;
     protected JPanel clientMenuOptions;
@@ -28,16 +28,23 @@ public class ClientMenuOptions extends JPanel {
     }
 
     private void initMenuButtons() {
-        JButton selectClientButton = new JButton(new AbstractAction("Select client") {
+        clientMenuOptions.add(new JButton("Select client"));
+        JButton addClientButton = new JButton(new AbstractAction("Add client") {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // switch panels
                 menuTabs.actionPerformed(e);
             }
         });
-        clientMenuOptions.add(selectClientButton);
-        clientMenuOptions.add(new JButton("Add client"));
-        clientMenuOptions.add(new JButton("Edit client"));
+        clientMenuOptions.add(addClientButton);
+        JButton editClientButton = new JButton(new AbstractAction("Edit client") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // switch panels
+                menuTabs.actionPerformed(e);
+            }
+        });
+        clientMenuOptions.add(editClientButton);
     }
 
     public JPanel getClientMenuOptions() {

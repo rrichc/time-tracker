@@ -33,69 +33,125 @@ package ui;
 
 import model.Client;
 import model.ClientBook;
+import model.MasterTimeLog;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
-import java.util.ArrayList;
 
 //SplitPaneDemo itself is not a visible component.
 //Class based off the https://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html sample project provided
-public class ClientListFormSplitPane extends JPanel
-                          implements ListSelectionListener {
+public class ClientSplitPane implements ListSelectionListener {
     private JList list;
     private JSplitPane splitPane;
     private ClientBook clientBook;
+    private MasterTimeLog masterTimeLog;
     private MenuTabs menuTabs;
-    private DefaultListModel clientNames;
+    public DefaultListModel clientNames;
+    private JPanel secondPanel;
+    private ActionState state;
+    private JScrollPane listScrollPane;
+    private String[] labels = {"Client Name: ", "Remove: "}; //TODO: Fix fields
+    private String currentSelectedClient;
 
-    public ClientListFormSplitPane(MenuTabs menuTabs, ClientBook clientBook) {
+
+    public ClientSplitPane(MenuTabs menuTabs, ClientBook clientBook, MasterTimeLog masterTimeLog, ActionState state) {
         this.menuTabs = menuTabs;
         this.clientBook = clientBook;
+        this.masterTimeLog = masterTimeLog;
+        this.state = state;
         clientNames = new DefaultListModel();
+
+        buildClientList();
+        createSecondPanel();
+        createSplitPane();
+
+    }
+
+    private void addNamesToListModel() {
+        //Create the list of client names and put it in a scroll pane.
         if (clientBook.getClients().isEmpty()) {
             this.clientNames.addElement("Empty");
-            this.clientNames.addElement("Empty 2"); //TODO: Remove later
         } else {
+            currentSelectedClient = clientBook.getClients().get(0).getName(); //TODO: Change to Client object instead of just name string?
             for (Client client : clientBook.getClients()) {
                 this.clientNames.addElement(client.getName());
             }
         }
+    }
 
-        //Create the list of client names and put it in a scroll pane.
+    private void buildClientList() {
+        addNamesToListModel();
         list = new JList(this.clientNames);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
-        JScrollPane listScrollPane = new JScrollPane(list);
+        listScrollPane = new JScrollPane(list);
+    }
 
-        String[] labels = {"Client Name: ", "Remove: "};
-        JPanel springForm = new SpringForm(labels).getSpringForm();
+    private void createSecondPanel() {
+        switch (state) {
+            case ADD:
+                secondPanel = new SpringForm(this.labels, ActionState.ADD, this).getSpringForm();
+                break;
+            case EDIT:
+                secondPanel = new SpringForm(labels, ActionState.EDIT, this).getSpringForm();
+                break;
+        }
+    }
 
+    private void createSplitPane() {
         //Create a split pane with the two scroll panes in it.
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
-                                   listScrollPane, springForm);
+                listScrollPane, secondPanel);
         splitPane.setOneTouchExpandable(true);
         splitPane.setDividerLocation(150);
 
         //Provide minimum sizes for the two components in the split pane.
         Dimension minimumSize = new Dimension(100, 50);
         listScrollPane.setMinimumSize(minimumSize);
-        springForm.setMinimumSize(minimumSize);
+        secondPanel.setMinimumSize(minimumSize);
 
         //Provide a preferred size for the split pane.
         splitPane.setPreferredSize(new Dimension(400, 200));
-//        updateLabel(imageNames[list.getSelectedIndex()]);
     }
     
     //Listens to the list
     public void valueChanged(ListSelectionEvent e) {
-        JList list = (JList)e.getSource();
-        System.out.println(list.getSelectedIndex());
+        if (!e.getValueIsAdjusting()) { //This line prevents double events
+            JList list = (JList)e.getSource();
+            if (list.getSelectedValue() != null) {
+                currentSelectedClient =  list.getSelectedValue().toString();
+                System.out.println(currentSelectedClient);
+            }
+        }
     }
 
     public JSplitPane getClientSplitPane() {
         return splitPane;
     }
+
+    public String getCurrentSelectedClient() {
+        return currentSelectedClient;
+    }
+
+    public ClientBook getClientBook() {
+        return clientBook;
+    }
+
+    public MasterTimeLog getMasterTimeLog() {
+        return masterTimeLog;
+    }
+
+    public void updateListModel() {
+        this.clientNames.clear();
+        addNamesToListModel();
+    }
+
+    public void showClientMenuOptions() {
+        menuTabs.displayClientMenuOptions();
+    }
 }
+
+

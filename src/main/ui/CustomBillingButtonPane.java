@@ -1,5 +1,6 @@
 package ui;
 
+import model.BillingCategories;
 import model.ClientBook;
 import model.MasterTimeLog;
 
@@ -7,17 +8,19 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-abstract class CustomButtonPane {
+abstract class CustomBillingButtonPane {
 
     protected JPanel panel;
     protected ClientBook clientBook;
+    protected BillingCategories billingCategories;
     protected MasterTimeLog masterTimeLog;
-    protected ClientSplitPane splitPane;
+    protected BillingSplitPane splitPane;
 
-    public CustomButtonPane(ClientSplitPane splitPane) {
+    public CustomBillingButtonPane(BillingSplitPane splitPane) {
 
         this.splitPane = splitPane;
         this.clientBook = splitPane.getClientBook();
+        this.billingCategories = splitPane.getBillingCategories();
         this.masterTimeLog = splitPane.getMasterTimeLog();
         this.panel = new JPanel();
         createPrimaryButton();
@@ -32,7 +35,7 @@ abstract class CustomButtonPane {
         panel.add(backButton);
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                splitPane.showClientMenuOptions();
+                splitPane.showBillingMenuOptions();
             }
         });
     }

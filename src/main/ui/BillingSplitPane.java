@@ -31,59 +31,61 @@
 
 package ui;
 
-import model.Client;
-import model.ClientBook;
-import model.MasterTimeLog;
+import model.*;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
+import java.util.ArrayList;
 
 //SplitPaneDemo itself is not a visible component.
 //Class based off the https://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html sample project provided
-public class ClientSplitPane implements ListSelectionListener {
+public class BillingSplitPane implements ListSelectionListener {
     private JList list;
     private JSplitPane splitPane;
     private ClientBook clientBook;
+    private BillingCategories billingCategories;
     private MasterTimeLog masterTimeLog;
     private MenuTabs menuTabs;
-    public DefaultListModel clientNames;
+    public DefaultListModel categoryNames;
     private JPanel secondPanel;
     private ActionState state;
     private JScrollPane listScrollPane;
-    private String[] labels = {"Client Name: "};
-    private String listSelectedClient;
+    private String[] labels = {"Category Name: ", "Rate per hour: "};
+    private String listSelectedCategory;
 
 
-    public ClientSplitPane(MenuTabs menuTabs, ClientBook clientBook, MasterTimeLog masterTimeLog, ActionState state) {
+    public BillingSplitPane(MenuTabs menuTabs, ClientBook clientBook, BillingCategories billingCategories, MasterTimeLog masterTimeLog, ActionState state) {
         this.menuTabs = menuTabs;
         this.clientBook = clientBook;
+        this.billingCategories = billingCategories;
         this.masterTimeLog = masterTimeLog;
         this.state = state;
-        clientNames = new DefaultListModel();
+        categoryNames = new DefaultListModel();
 
-        buildClientList();
+        buildCategoryList();
         createSecondPanel();
         createSplitPane();
 
     }
 
     private void addNamesToListModel() {
-        //Create the list of client names and put it in a scroll pane.
-        if (clientBook.getClients().isEmpty()) {
-            this.clientNames.addElement("Empty");
+        //Create the list of category names and put it in a scroll pane.
+        ArrayList<BillingCategory> categoriesForClient = billingCategories.getBillingCategoriesForClient(menuTabs.getCurrentClient());
+        if (categoriesForClient.isEmpty()) {
+            this.categoryNames.addElement("Empty");
         } else {
-            listSelectedClient = clientBook.getClients().get(0).getName();
-            for (Client client : clientBook.getClients()) {
-                this.clientNames.addElement(client.getName());
+            listSelectedCategory = categoriesForClient.get(0).getName();
+            for (BillingCategory category : categoriesForClient) {
+                this.categoryNames.addElement(category.getName());
             }
         }
     }
 
-    private void buildClientList() {
+    private void buildCategoryList() {
         addNamesToListModel();
-        list = new JList(this.clientNames);
+        list = new JList(this.categoryNames);
         list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         list.setSelectedIndex(0);
         list.addListSelectionListener(this);
@@ -93,16 +95,16 @@ public class ClientSplitPane implements ListSelectionListener {
     private void createSecondPanel() {
         switch (state) {
             case SELECT:
-                secondPanel = new SelectClientButtonPane(this).getPanel();
+                secondPanel = new SelectBillingButtonPane(this).getPanel();
                 break;
             case ADD:
-                secondPanel = new ClientForm(this.labels, ActionState.ADD, this).getSpringForm();
+                secondPanel = new BillingForm(this.labels, ActionState.ADD, this).getSpringForm();
                 break;
             case EDIT:
-                secondPanel = new ClientForm(labels, ActionState.EDIT, this).getSpringForm();
+                secondPanel = new BillingForm(labels, ActionState.EDIT, this).getSpringForm();
                 break;
             case REMOVE:
-                secondPanel = new RemoveClientButtonPane(this).getPanel();
+                secondPanel = new RemoveBillingButtonPane(this).getPanel();
                 break;
         }
     }
@@ -128,22 +130,26 @@ public class ClientSplitPane implements ListSelectionListener {
         if (!e.getValueIsAdjusting()) { //This line prevents double events
             JList list = (JList)e.getSource();
             if (list.getSelectedValue() != null) {
-                listSelectedClient =  list.getSelectedValue().toString();
-                System.out.println(listSelectedClient);
+                listSelectedCategory =  list.getSelectedValue().toString();
+                System.out.println(listSelectedCategory);
             }
         }
     }
 
-    public JSplitPane getClientSplitPane() {
+    public JSplitPane getBillingSplitPane() {
         return splitPane;
     }
 
-    public String getListSelectedClient() {
-        return listSelectedClient;
+    public String getListSelectedCategory() {
+        return listSelectedCategory;
     }
 
     public ClientBook getClientBook() {
         return clientBook;
+    }
+
+    public BillingCategories getBillingCategories() {
+        return billingCategories;
     }
 
     public MasterTimeLog getMasterTimeLog() {
@@ -151,16 +157,21 @@ public class ClientSplitPane implements ListSelectionListener {
     }
 
     public void updateListModel() {
-        this.clientNames.clear();
+        this.categoryNames.clear();
         addNamesToListModel();
     }
 
-    public void showClientMenuOptions() {
-        menuTabs.displayClientMenuOptions();
+    public void showBillingMenuOptions() {
+        menuTabs.displayBillingMenuOptions();
     }
 
-    public void setCurrentClient(String currentClient) {
-        menuTabs.setCurrentClient(clientBook.getAClient(currentClient));
+    public void setCurrentCategory(String currentCategory) {
+        menuTabs.setCurrentCategory(billingCategories
+                .getABillingCategory(currentCategory, menuTabs.getCurrentClient()));
+    }
+
+    public MenuTabs getMenuTabs() {
+        return menuTabs;
     }
 }
 

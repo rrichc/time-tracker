@@ -35,10 +35,7 @@ package ui;
  * Class modified from https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html
  */
 
-import model.BillingCategories;
-import model.Client;
-import model.ClientBook;
-import model.MasterTimeLog;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -51,24 +48,34 @@ import java.awt.event.ActionListener;
 import java.util.Scanner;
 
 public class MenuTabs implements ActionListener {
-    static final String CLIENTMENU = "Client Menu";
-    static final String TEXTPANEL = "Placeholder";
     static final int extraWindowWidth = 100;
+    CardLayout cardLayout;
+
+    //Client UI fields
+    static final String CLIENTMENU = "Client Menu";
     JPanel clientMenuTab;
     ClientSplitPane selectClientSplitPane;
     ClientSplitPane addClientSplitPane;
     ClientSplitPane editClientSplitPane;
     ClientSplitPane removeClientSplitPane;
-    CardLayout cardLayout;
     JPanel clientMainPanel;
+
+    //Billing UI fields
+    static final String BILLINGMENU = "Billing Menu";
+    JPanel billingMenuTab;
+    BillingSplitPane selectBillingSplitPane;
+    BillingSplitPane addBillingSplitPane;
+    BillingSplitPane editBillingSplitPane;
+    BillingSplitPane removeBillingSplitPane;
+    JPanel billingMainPanel;
 
     //TODO: Also need to keep track in here what is the global (ie. active client, category, timeEntry)
     private Client currentClient;
+    private BillingCategory currentCategory;
 
     public static final String CLIENT_JSON_STORE = "./data/clientBook.json";
     public static final String BILLING_JSON_STORE = "./data/billingCategories.json";
     public static final String TIME_JSON_STORE = "./data/masterTimeLog.json";
-    private Scanner input;
     private MasterTimeLog masterTimeLog;
     private BillingCategories billingCategories;
     private ClientBook clientBook;
@@ -80,13 +87,10 @@ public class MenuTabs implements ActionListener {
         JTabbedPane tabbedPane = new JTabbedPane();
         cardLayout = new CardLayout();
         clientPanelSetUp();
-
-        //TODO: Temp - Add the Billing and TimeEntry Tabs here later
-        JPanel card2 = new JPanel();
-        card2.add(new JTextField("TextField", 20));
+        billingPanelSetUp();
 
         tabbedPane.addTab(CLIENTMENU, clientMainPanel);
-        tabbedPane.addTab(TEXTPANEL, card2);
+        tabbedPane.addTab(BILLINGMENU, billingMainPanel);
 
         //TODO: Tab change listener code - use this to refresh all client, billing, time entry splitplanes with updateListModel
         //http://www.java2s.com/Tutorial/Java/0240__Swing/ListeningforSelectedTabChanges.htm
@@ -108,7 +112,6 @@ public class MenuTabs implements ActionListener {
      * EFFECTS: Initializes dependencies needed by the Client, Billing, and Time Entry menu down the line
      */
     private void init() {
-        this.input = new Scanner(System.in);
         this.masterTimeLog = new MasterTimeLog();
         this.billingCategories = new BillingCategories();
         this.clientBook = new ClientBook();
@@ -117,13 +120,15 @@ public class MenuTabs implements ActionListener {
 
         initMenuOptions();
         initClientSplitPanes();
+        initBillingSplitPanes();
     }
 
     private void initMenuOptions() {
         clientMenuTab = new ClientMenuOptions(this).getClientMenuOptions();
+        billingMenuTab = new BillingMenuOptions(this).getBillingMenuOptions();
     }
 
-    //Create the "cards".
+    //Create the client "cards".
     private void initClientSplitPanes() {
         selectClientSplitPane = new ClientSplitPane(this,
                 this.clientBook, this.masterTimeLog, ActionState.SELECT);
@@ -135,6 +140,7 @@ public class MenuTabs implements ActionListener {
                 this.clientBook, this.masterTimeLog, ActionState.REMOVE);
     }
 
+
     private void clientPanelSetUp() {
         clientMainPanel = new JPanel(cardLayout);
         clientMainPanel.add(clientMenuTab, "clientMenuOptions");
@@ -144,10 +150,33 @@ public class MenuTabs implements ActionListener {
         clientMainPanel.add(removeClientSplitPane.getClientSplitPane(), "removeClientSplitPane");
     }
 
+    //Create the billing "cards".
+    private void initBillingSplitPanes() {
+        selectBillingSplitPane = new BillingSplitPane(this,
+                this.clientBook, this.billingCategories, this.masterTimeLog, ActionState.SELECT);
+        addBillingSplitPane = new BillingSplitPane(this,
+                this.clientBook, this.billingCategories, this.masterTimeLog, ActionState.ADD);
+        editBillingSplitPane = new BillingSplitPane(this,
+                this.clientBook, this.billingCategories, this.masterTimeLog, ActionState.EDIT);
+        removeBillingSplitPane = new BillingSplitPane(this,
+                this.clientBook, this.billingCategories, this.masterTimeLog, ActionState.REMOVE);
+    }
+
+
+    private void billingPanelSetUp() {
+        billingMainPanel = new JPanel(cardLayout);
+        billingMainPanel.add(billingMenuTab, "billingMenuOptions");
+        billingMainPanel.add(selectBillingSplitPane.getBillingSplitPane(), "selectBillingSplitPane");
+        billingMainPanel.add(addBillingSplitPane.getBillingSplitPane(), "addBillingSplitPane");
+        billingMainPanel.add(editBillingSplitPane.getBillingSplitPane(), "editBillingSplitPane");
+        billingMainPanel.add(removeBillingSplitPane.getBillingSplitPane(), "removeBillingSplitPane");
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println(e.getActionCommand());
         clientActions(e.getActionCommand());
+        billingActions(e.getActionCommand());
     }
 
     private void clientActions(String command) {
@@ -171,8 +200,33 @@ public class MenuTabs implements ActionListener {
         }
     }
 
+    private void billingActions(String command) {
+        switch (command) {
+            case "Select billing":
+                cardLayout.show(billingMainPanel, "selectBillingSplitPane");
+                selectBillingSplitPane.updateListModel();
+                break;
+            case "Add billing":
+                cardLayout.show(billingMainPanel, "addBillingSplitPane");
+                addBillingSplitPane.updateListModel();
+                break;
+            case "Edit billing":
+                cardLayout.show(billingMainPanel, "editBillingSplitPane");
+                editBillingSplitPane.updateListModel();
+                break;
+            case "Remove billing":
+                cardLayout.show(billingMainPanel, "removeBillingSplitPane");
+                removeBillingSplitPane.updateListModel();
+                break;
+        }
+    }
+
     public void displayClientMenuOptions() {
         cardLayout.show(clientMainPanel, "clientMenuOptions");
+    }
+
+    public void displayBillingMenuOptions() {
+        cardLayout.show(billingMainPanel, "billingMenuOptions");
     }
 
     public Client getCurrentClient() {
@@ -183,4 +237,11 @@ public class MenuTabs implements ActionListener {
         this.currentClient = currentClient;
     }
 
+    public BillingCategory getCurrentCategory() {
+        return currentCategory;
+    }
+
+    public void setCurrentCategory(BillingCategory currentCategory) {
+        this.currentCategory = currentCategory;
+    }
 }

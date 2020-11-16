@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SelectClientButtonPane extends CustomClientButtonPane {
+public class SelectBillingButtonPane extends CustomBillingButtonPane {
 
-    public SelectClientButtonPane(ClientSplitPane splitPane) {
+    public SelectBillingButtonPane(BillingSplitPane splitPane) {
         super(splitPane);
     }
 
@@ -17,12 +17,12 @@ public class SelectClientButtonPane extends CustomClientButtonPane {
         panel.add(selectButton);
         selectButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String selectedClient = splitPane.getListSelectedClient();
-                if (selectedClient == null || selectedClient.equals("Empty") || selectedClient.equals("")) {
+                String selectedCategory = splitPane.getListSelectedCategory();
+                if (selectedCategory == null || selectedCategory.equals("Empty") || selectedCategory.equals("")) {
                     return;
                 } else {
-                    splitPane.setCurrentClient(selectedClient);
-                    System.out.println(selectedClient);
+                    splitPane.setCurrentCategory(selectedCategory);
+                    System.out.println(selectedCategory);
                 }
             }
         });

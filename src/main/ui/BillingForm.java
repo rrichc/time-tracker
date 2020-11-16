@@ -1,5 +1,6 @@
 package ui;
 
+import model.BillingCategories;
 import model.ClientBook;
 import model.MasterTimeLog;
 
@@ -8,20 +9,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
-public class ClientForm {
+public class BillingForm {
     private JPanel springForm;
     private ActionState state;
     private ClientBook clientBook;
+    private BillingCategories billingCategories;
     private MasterTimeLog masterTimeLog;
-    private ClientSplitPane splitPane;
+    private BillingSplitPane splitPane;
     private int labelsLength;
     private String[] labels;
     private JTextField[] textField;
 
-    public ClientForm(String[] labels, ActionState state, ClientSplitPane splitPane) {
+    public BillingForm(String[] labels, ActionState state, BillingSplitPane splitPane) {
         this.state = state;
         this.splitPane = splitPane;
         this.clientBook = splitPane.getClientBook();
+        this.billingCategories = splitPane.getBillingCategories();
         this.masterTimeLog = splitPane.getMasterTimeLog();
         this.labels = labels;
         this.labelsLength = labels.length;
@@ -38,7 +41,6 @@ public class ClientForm {
 
         createSubmitButton();
         createBackButton();
-
         layoutPanel();
     }
 
@@ -48,7 +50,7 @@ public class ClientForm {
         springForm.add(backButton);
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                splitPane.showClientMenuOptions();
+                splitPane.showBillingMenuOptions();
             }
         });
     }
@@ -60,6 +62,7 @@ public class ClientForm {
         submitButton.addActionListener(createActionListener());
     }
 
+    //TODO: Add Exception handling for empty strings and number format exceptions
     private ActionListener createActionListener() {
         return new ActionListener() {
             HashMap<String, String> userInput = new HashMap<>();
@@ -67,17 +70,20 @@ public class ClientForm {
                 for (int i = 0; i < labelsLength; i++) {
                     userInput.put(labels[i], textField[i].getText());
                 }
-                String clientName = userInput.get("Client Name: ");
+                String categoryName = userInput.get("Category Name: ");
+                String ratePerHour = userInput.get("Rate per hour: ");
+
                 switch (state) {
                     case ADD: //TODO: Add pop-up/checking for duplicate name
-                        clientBook.createClient(clientName);
-                        masterTimeLog.createTimeLog(clientBook.getAClient(clientName));
-                        System.out.println(clientName);
+                        billingCategories.createBillingCategory(
+                                categoryName, ratePerHour, splitPane.getMenuTabs().getCurrentClient());
+                        System.out.println(categoryName);
                         break;
                     case EDIT: //TODO: Add pop-up/checking for duplicate name
-                        clientBook.editClient(splitPane.getListSelectedClient(), clientName);
-                        System.out.println(splitPane.getListSelectedClient());
-                        System.out.println(clientName);
+                        billingCategories.editBillingCategory(
+                                splitPane.getListSelectedCategory(), categoryName,
+                                ratePerHour, splitPane.getMenuTabs().getCurrentClient());
+                        System.out.println(categoryName);
                         break;
                 }
                 splitPane.updateListModel();

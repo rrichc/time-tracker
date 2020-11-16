@@ -5,15 +5,15 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 //Class modified from https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html
-public class ClientMenuOptions {
+public class BillingMenuOptions {
     static final int extraWindowWidth = 100;
     private MenuTabs menuTabs;
-    protected JPanel clientMenuOptions;
+    protected JPanel billingMenuOptions;
 
     //actionPerformed syntax from https://stackoverflow.com/questions/5911565/how-to-add-multiple-actionlisteners-for-multiple-buttons-in-java-swing
-    public ClientMenuOptions(MenuTabs menuTabs) {
+    public BillingMenuOptions(MenuTabs menuTabs) {
         this.menuTabs = menuTabs;
-        clientMenuOptions = new JPanel() {
+        billingMenuOptions = new JPanel() {
             //Make the panel wider than it really needs, so
             //the window's wide enough for the tabs to stay
             //in one row.
@@ -24,18 +24,18 @@ public class ClientMenuOptions {
             }
         };
         initMenuButtons();
-        clientMenuOptions.setLayout(new BoxLayout(clientMenuOptions, BoxLayout.PAGE_AXIS));
+        billingMenuOptions.setLayout(new BoxLayout(billingMenuOptions, BoxLayout.PAGE_AXIS));
     }
 
     private void initMenuButtons() {
-        JButton selectClientButton = constructButton("Select client");
-        clientMenuOptions.add(selectClientButton);
-        JButton addClientButton = constructButton("Add client");
-        clientMenuOptions.add(addClientButton);
-        JButton editClientButton = constructButton("Edit client");
-        clientMenuOptions.add(editClientButton);
-        JButton removeClientButton = constructButton("Remove client");
-        clientMenuOptions.add(removeClientButton);
+        JButton selectBillingButton = constructButton("Select billing");
+        billingMenuOptions.add(selectBillingButton);
+        JButton addBillingButton = constructButton("Add billing");
+        billingMenuOptions.add(addBillingButton);
+        JButton editBillingButton = constructButton("Edit billing");
+        billingMenuOptions.add(editBillingButton);
+        JButton removeBillingButton = constructButton("Remove billing");
+        billingMenuOptions.add(removeBillingButton);
     }
 
     public JButton constructButton(String actionName) {
@@ -49,7 +49,7 @@ public class ClientMenuOptions {
         return button;
     }
 
-    public JPanel getClientMenuOptions() {
-        return clientMenuOptions;
+    public JPanel getBillingMenuOptions() {
+        return billingMenuOptions;
     }
 }

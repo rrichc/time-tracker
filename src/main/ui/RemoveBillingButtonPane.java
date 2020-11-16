@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class RemoveClientButtonPane extends CustomClientButtonPane {
+public class RemoveBillingButtonPane extends CustomBillingButtonPane {
 
-    public RemoveClientButtonPane(ClientSplitPane splitPane) {
+    public RemoveBillingButtonPane(BillingSplitPane splitPane) {
         super(splitPane);
     }
 
@@ -17,14 +17,14 @@ public class RemoveClientButtonPane extends CustomClientButtonPane {
         panel.add(removeButton);
         removeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String selectedClient = splitPane.getListSelectedClient();
-                if (selectedClient == null || selectedClient.equals("Empty") || selectedClient.equals("")) {
+                String selectedCategory = splitPane.getListSelectedCategory();
+                if (selectedCategory == null || selectedCategory.equals("Empty") || selectedCategory.equals("")) {
                     return;
                 } else {
-                    clientBook.removeClient(selectedClient);
-                    masterTimeLog.removeTimeLog(selectedClient);
+                    billingCategories.removeBillingCategory(
+                            selectedCategory, splitPane.getMenuTabs().getCurrentClient());
                     splitPane.updateListModel();
-                    System.out.println(selectedClient);
+                    System.out.println(selectedCategory);
                 }
             }
         });

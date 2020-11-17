@@ -28,7 +28,7 @@ public class RemoveTimeButtonPane extends CustomTimeButtonPane {
                     BillingCategory currentCategory = splitPane.getMenuTabs().getCurrentCategory();
                     masterTimeLog.getTimeLogForClient(currentClient)
                             .removeTimeEntry(selectedTimeEntry, currentCategory);
-                    splitPane.updateListModel();
+                    splitPane.updateModels();
                     System.out.println(selectedTimeEntry);
                 }
             }

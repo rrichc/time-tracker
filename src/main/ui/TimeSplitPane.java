@@ -160,9 +160,20 @@ public class TimeSplitPane implements ListSelectionListener {
         return masterTimeLog;
     }
 
-    public void updateListModel() {
+    public void updateModels() {
+        updateListModel();
+        updateTableModel();
+    }
+
+    private void updateListModel() {
         this.entryNames.clear();
         addNamesToListModel();
+    }
+
+    private void updateTableModel() {
+//        if (state == ActionState.SELECT) {
+//            secondPanel.
+//        }
     }
 
     public void showTimeMenuOptions() {

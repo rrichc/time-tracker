@@ -45,7 +45,6 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Scanner;
 
 public class MenuTabs implements ActionListener {
     static final int extraWindowWidth = 100;
@@ -262,19 +261,19 @@ public class MenuTabs implements ActionListener {
             //TODO: Change Select time entry to view time entries
             case "View time entries":
                 cardLayout.show(timeMainPanel, "selectTimeSplitPane");
-                selectTimeSplitPane.updateListModel();
+                selectTimeSplitPane.updateModels();
                 break;
             case "Add time entry":
                 cardLayout.show(timeMainPanel, "addTimeSplitPane");
-                addTimeSplitPane.updateListModel();
+                addTimeSplitPane.updateModels();
                 break;
             case "Edit time entry":
                 cardLayout.show(timeMainPanel, "editTimeSplitPane");
-                editTimeSplitPane.updateListModel();
+                editTimeSplitPane.updateModels();
                 break;
             case "Remove time entry":
                 cardLayout.show(timeMainPanel, "removeTimeSplitPane");
-                removeTimeSplitPane.updateListModel();
+                removeTimeSplitPane.updateModels();
                 break;
         }
     }

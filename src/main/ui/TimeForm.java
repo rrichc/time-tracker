@@ -88,7 +88,7 @@ public class TimeForm {
                         System.out.println(entryName);
                         break;
                 }
-                splitPane.updateListModel();
+                splitPane.updateModels();
             }
         };
     }

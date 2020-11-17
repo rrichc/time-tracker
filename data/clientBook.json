@@ -1,1 +1,4 @@
-{"clients": [{"clientName": "Richard"}]}
+{"clients": [
+    {"clientName": "Richard"},
+    {"clientName": "Bob"}
+]}

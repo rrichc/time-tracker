@@ -1,10 +1,22 @@
-{"masterTimeLog": [{
-    "timeEntries": [{
-        "startDateTime": "2020-10-14 12:30",
-        "description": "desc",
-        "timeEntry": "TimeEntry1",
-        "endDateTime": "2020-10-14 16:30",
-        "category": "Coding"
-    }],
-    "clientTimeLog": "Richard"
-}]}
+{"masterTimeLog": [
+    {
+        "timeEntries": [{
+            "startDateTime": "2020-10-14 12:30",
+            "description": "desc",
+            "timeEntry": "TimeEntry1",
+            "endDateTime": "2020-10-14 16:30",
+            "category": "Coding"
+        }],
+        "clientTimeLog": "Richard"
+    },
+    {
+        "timeEntries": [{
+            "startDateTime": "2020-11-17 17:00",
+            "description": "Edit desc",
+            "timeEntry": "Task1Edit",
+            "endDateTime": "2020-11-17 19:00",
+            "category": "Category1"
+        }],
+        "clientTimeLog": "Bob"
+    }
+]}

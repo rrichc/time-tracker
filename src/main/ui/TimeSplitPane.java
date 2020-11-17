@@ -161,19 +161,9 @@ public class TimeSplitPane implements ListSelectionListener {
     }
 
     public void updateModels() {
-        updateListModel();
-        updateTableModel();
-    }
-
-    private void updateListModel() {
         this.entryNames.clear();
         addNamesToListModel();
-    }
-
-    private void updateTableModel() {
-//        if (state == ActionState.SELECT) {
-//            secondPanel.
-//        }
+        //TODO: Figure out how to update the TimeTable from here?
     }
 
     public void showTimeMenuOptions() {

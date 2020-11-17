@@ -137,4 +137,8 @@ public class BillingCategories implements Writable {
         json.put("billingCategories", jsonArray);
         return json;
     }
+
+    public void setBillingCategories(ArrayList<BillingCategory> billingCategories) {
+        this.billingCategories = billingCategories;
+    }
 }

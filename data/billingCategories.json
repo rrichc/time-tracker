@@ -1,5 +1,17 @@
-{"billingCategories": [{
-    "ratePerHour": "10.0",
-    "client": "Richard",
-    "category": "Coding"
-}]}
+{"billingCategories": [
+    {
+        "ratePerHour": "10.0",
+        "client": "Richard",
+        "category": "Coding"
+    },
+    {
+        "ratePerHour": "17.0",
+        "client": "Bob",
+        "category": "Category1"
+    },
+    {
+        "ratePerHour": "18.0",
+        "client": "Bob",
+        "category": "Category2"
+    }
+]}

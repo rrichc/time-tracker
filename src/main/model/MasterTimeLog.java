@@ -74,4 +74,8 @@ public class MasterTimeLog implements Writable {
         json.put("masterTimeLog", jsonArray);
         return json;
     }
+
+    public void setMasterTimeLog(ArrayList<TimeLog> masterTimeLog) {
+        this.masterTimeLog = masterTimeLog;
+    }
 }

@@ -36,6 +36,10 @@ public class ClientMenuOptions {
         clientMenuOptions.add(editClientButton);
         JButton removeClientButton = constructButton("Remove client");
         clientMenuOptions.add(removeClientButton);
+        JButton saveButton = constructButton("Save");
+        clientMenuOptions.add(saveButton);
+        JButton loadButton = constructButton("Load save");
+        clientMenuOptions.add(loadButton);
     }
 
     public JButton constructButton(String actionName) {

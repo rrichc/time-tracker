@@ -102,6 +102,10 @@ public class ClientBook implements Writable {
         }
         return null;
     }
+    
+    public void setClients(ArrayList<Client> clients) {
+        this.clients = clients;
+    }
 
     /*
      * EFFECTS:  Returns an representation of the ClientBook as a JSONObject

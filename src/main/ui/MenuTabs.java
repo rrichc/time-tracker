@@ -45,6 +45,8 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class MenuTabs implements ActionListener {
     static final int extraWindowWidth = 100;
@@ -232,6 +234,12 @@ public class MenuTabs implements ActionListener {
                 cardLayout.show(clientMainPanel, "removeClientSplitPane");
                 removeClientSplitPane.updateListModel();
                 break;
+            case "Save":
+                save();
+                break;
+            case "Load save":
+                loadSave();
+                break;
         }
     }
 
@@ -275,6 +283,71 @@ public class MenuTabs implements ActionListener {
                 cardLayout.show(timeMainPanel, "removeTimeSplitPane");
                 removeTimeSplitPane.updateModels();
                 break;
+        }
+    }
+
+    // EFFECTS: loads ClientBook, BillingCategories, MasterTimeLog from JSON file
+    private void loadSave() {
+        loadClientBook();
+        loadBillingCategories();
+        loadMasterTimeLog();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads ClientBook from file
+    private void loadClientBook() {
+        try {
+            //this.clientBook = jsonReader.readClientBook(MenuTabs.CLIENT_JSON_STORE);
+            this.clientBook.setClients(jsonReader.readClientBook(MenuTabs.CLIENT_JSON_STORE).getClients());
+            System.out.println("Loaded client book from last save.");
+        } catch (IOException e) {
+            System.out.println("Unable to read client book from file.");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads BillingCategories from file
+    private void loadBillingCategories() {
+        try {
+            //this.billingCategories = jsonReader.readBillingCategories(MenuTabs.BILLING_JSON_STORE, this.clientBook);
+            this.billingCategories.setBillingCategories(
+                    jsonReader.readBillingCategories(
+                            MenuTabs.BILLING_JSON_STORE, this.clientBook).getAllBillingCategories());
+            System.out.println("Loaded billing categories from last save.");
+        } catch (IOException e) {
+            System.out.println("Unable to read billing categories from file.");
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads MasterTimeLog from file
+    private void loadMasterTimeLog() {
+        try {
+//            this.masterTimeLog = jsonReader.readMasterTimeLog(MenuTabs.TIME_JSON_STORE,
+//                    this.clientBook, this.billingCategories);
+            this.masterTimeLog.setMasterTimeLog(jsonReader.readMasterTimeLog(MenuTabs.TIME_JSON_STORE,
+                    this.clientBook, this.billingCategories).getMasterTimeLog());
+            System.out.println("Loaded time entries from last save.");
+        } catch (IOException e) {
+            System.out.println("Unable to read time entries from file.");
+        }
+    }
+
+    // EFFECTS: saves the workroom to file
+    private void save() {
+        try {
+            jsonWriter.open(MenuTabs.CLIENT_JSON_STORE);
+            jsonWriter.write(this.clientBook);
+            jsonWriter.close();
+            jsonWriter.open(MenuTabs.BILLING_JSON_STORE);
+            jsonWriter.write(this.billingCategories);
+            jsonWriter.close();
+            jsonWriter.open(MenuTabs.TIME_JSON_STORE);
+            jsonWriter.write(this.masterTimeLog);
+            jsonWriter.close();
+            System.out.println("Saved");
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file.");
         }
     }
 

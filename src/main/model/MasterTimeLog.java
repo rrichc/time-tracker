@@ -42,7 +42,7 @@ public class MasterTimeLog implements Writable {
 
     /*
      * REQUIRES: client must have non-empty fields
-     * EFFECTS: Returns the TimeLog for that client, otherwise returns null
+     * EFFECTS: Returns the TimeLog for that client, otherwise returns a blank TimeLog
      */
     public TimeLog getTimeLogForClient(Client client) {
         for (TimeLog log : masterTimeLog) {
@@ -51,7 +51,7 @@ public class MasterTimeLog implements Writable {
             }
 
         }
-        return null;
+        return new TimeLog(new Client(""));
     }
 
     /*

@@ -69,6 +69,15 @@ public class MenuTabs implements ActionListener {
     BillingSplitPane removeBillingSplitPane;
     JPanel billingMainPanel;
 
+    //Time UI fields
+    static final String TIMEMENU = "Time Menu";
+    JPanel timeMenuTab;
+    TimeSplitPane selectTimeSplitPane;
+    TimeSplitPane addTimeSplitPane;
+    TimeSplitPane editTimeSplitPane;
+    TimeSplitPane removeTimeSplitPane;
+    JPanel timeMainPanel;
+
     //TODO: Also need to keep track in here what is the global (ie. active client, category, timeEntry)
     private Client currentClient;
     private BillingCategory currentCategory;
@@ -88,9 +97,11 @@ public class MenuTabs implements ActionListener {
         cardLayout = new CardLayout();
         clientPanelSetUp();
         billingPanelSetUp();
+        timePanelSetUp();
 
         tabbedPane.addTab(CLIENTMENU, clientMainPanel);
         tabbedPane.addTab(BILLINGMENU, billingMainPanel);
+        tabbedPane.addTab(TIMEMENU, timeMainPanel);
 
         //TODO: Tab change listener code - use this to refresh all client, billing, time entry splitplanes with updateListModel
         //http://www.java2s.com/Tutorial/Java/0240__Swing/ListeningforSelectedTabChanges.htm
@@ -121,11 +132,13 @@ public class MenuTabs implements ActionListener {
         initMenuOptions();
         initClientSplitPanes();
         initBillingSplitPanes();
+        initTimeSplitPanes();
     }
 
     private void initMenuOptions() {
         clientMenuTab = new ClientMenuOptions(this).getClientMenuOptions();
         billingMenuTab = new BillingMenuOptions(this).getBillingMenuOptions();
+        timeMenuTab = new TimeMenuOptions(this).getTimeMenuOptions();
     }
 
     //Create the client "cards".
@@ -172,11 +185,34 @@ public class MenuTabs implements ActionListener {
         billingMainPanel.add(removeBillingSplitPane.getBillingSplitPane(), "removeBillingSplitPane");
     }
 
+    //Create the time "cards".
+    private void initTimeSplitPanes() {
+        selectTimeSplitPane = new TimeSplitPane(this,
+                this.clientBook, this.billingCategories, this.masterTimeLog, ActionState.SELECT);
+        addTimeSplitPane = new TimeSplitPane(this,
+                this.clientBook, this.billingCategories, this.masterTimeLog, ActionState.ADD);
+        editTimeSplitPane = new TimeSplitPane(this,
+                this.clientBook, this.billingCategories, this.masterTimeLog, ActionState.EDIT);
+        removeTimeSplitPane = new TimeSplitPane(this,
+                this.clientBook, this.billingCategories, this.masterTimeLog, ActionState.REMOVE);
+    }
+
+
+    private void timePanelSetUp() {
+        timeMainPanel = new JPanel(cardLayout);
+        timeMainPanel.add(timeMenuTab, "timeMenuOptions");
+        timeMainPanel.add(selectTimeSplitPane.getTimeSplitPane(), "selectTimeSplitPane");
+        timeMainPanel.add(addTimeSplitPane.getTimeSplitPane(), "addTimeSplitPane");
+        timeMainPanel.add(editTimeSplitPane.getTimeSplitPane(), "editTimeSplitPane");
+        timeMainPanel.add(removeTimeSplitPane.getTimeSplitPane(), "removeTimeSplitPane");
+    }
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println(e.getActionCommand());
         clientActions(e.getActionCommand());
         billingActions(e.getActionCommand());
+        timeActions(e.getActionCommand());
     }
 
     private void clientActions(String command) {
@@ -221,12 +257,38 @@ public class MenuTabs implements ActionListener {
         }
     }
 
+    private void timeActions(String command) {
+        switch (command) {
+            //TODO: Change Select time entry to view time entries
+            case "View time entries":
+                cardLayout.show(timeMainPanel, "selectTimeSplitPane");
+                selectTimeSplitPane.updateListModel();
+                break;
+            case "Add time entry":
+                cardLayout.show(timeMainPanel, "addTimeSplitPane");
+                addTimeSplitPane.updateListModel();
+                break;
+            case "Edit time entry":
+                cardLayout.show(timeMainPanel, "editTimeSplitPane");
+                editTimeSplitPane.updateListModel();
+                break;
+            case "Remove time entry":
+                cardLayout.show(timeMainPanel, "removeTimeSplitPane");
+                removeTimeSplitPane.updateListModel();
+                break;
+        }
+    }
+
     public void displayClientMenuOptions() {
         cardLayout.show(clientMainPanel, "clientMenuOptions");
     }
 
     public void displayBillingMenuOptions() {
         cardLayout.show(billingMainPanel, "billingMenuOptions");
+    }
+
+    public void displayTimeMenuOptions() {
+        cardLayout.show(timeMainPanel, "timeMenuOptions");
     }
 
     public Client getCurrentClient() {

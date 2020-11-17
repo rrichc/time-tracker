@@ -59,6 +59,6 @@ class MasterTimeLogTest {
         Client client2 = new Client(clientName2);
         masterTimeLog.createTimeLog(client);
         TimeLog returnedLog = masterTimeLog.getTimeLogForClient(client2);
-        assertEquals(null, returnedLog);
+        assertEquals("", returnedLog.getClient().getName());
     }
 }

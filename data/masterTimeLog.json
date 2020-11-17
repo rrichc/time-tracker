@@ -10,13 +10,22 @@
         "clientTimeLog": "Richard"
     },
     {
-        "timeEntries": [{
-            "startDateTime": "2020-11-17 17:00",
-            "description": "Edit desc",
-            "timeEntry": "Task1Edit",
-            "endDateTime": "2020-11-17 19:00",
-            "category": "Category1"
-        }],
+        "timeEntries": [
+            {
+                "startDateTime": "2020-11-17 17:00",
+                "description": "Edit desc",
+                "timeEntry": "Task1Edit",
+                "endDateTime": "2020-11-17 19:00",
+                "category": "Category1"
+            },
+            {
+                "startDateTime": "2020-11-16 18:25",
+                "description": "asdasdsdasd",
+                "timeEntry": "TestEntry1",
+                "endDateTime": "2020-11-16 20:25",
+                "category": "Category2"
+            }
+        ],
         "clientTimeLog": "Bob"
     }
 ]}

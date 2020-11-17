@@ -33,6 +33,7 @@ abstract class CustomClientButtonPane {
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 splitPane.showClientMenuOptions();
+                splitPane.setTabVisibility();
             }
         });
     }

@@ -51,6 +51,7 @@ import java.io.IOException;
 public class MenuTabs implements ActionListener {
     static final int extraWindowWidth = 100;
     CardLayout cardLayout;
+    JTabbedPane tabbedPane;
 
     //Client UI fields
     static final String CLIENTMENU = "Client Menu";
@@ -79,7 +80,7 @@ public class MenuTabs implements ActionListener {
     TimeSplitPane removeTimeSplitPane;
     JPanel timeMainPanel;
 
-    //TODO: Also need to keep track in here what is the global (ie. active client, category, timeEntry)
+    //Tracks current select client and category
     private Client currentClient;
     private BillingCategory currentCategory;
 
@@ -94,7 +95,7 @@ public class MenuTabs implements ActionListener {
 
     public void addMenuTabsToPane(Container pane) {
         init();
-        JTabbedPane tabbedPane = new JTabbedPane();
+        tabbedPane = new JTabbedPane();
         cardLayout = new CardLayout();
         clientPanelSetUp();
         billingPanelSetUp();
@@ -104,6 +105,8 @@ public class MenuTabs implements ActionListener {
         tabbedPane.addTab(BILLINGMENU, billingMainPanel);
         tabbedPane.addTab(TIMEMENU, timeMainPanel);
 
+        tabbedPane.setEnabledAt(1, false);
+        tabbedPane.setEnabledAt(2, false);
         //TODO: Tab change listener code - use this to refresh all client, billing, time entry splitplanes with updateListModel
         //http://www.java2s.com/Tutorial/Java/0240__Swing/ListeningforSelectedTabChanges.htm
         ChangeListener changeListener = new ChangeListener() {
@@ -210,10 +213,25 @@ public class MenuTabs implements ActionListener {
     
     @Override
     public void actionPerformed(ActionEvent e) {
+        setTabVisibility();
         System.out.println(e.getActionCommand());
         clientActions(e.getActionCommand());
         billingActions(e.getActionCommand());
         timeActions(e.getActionCommand());
+    }
+
+    public void setTabVisibility() {
+        if (this.currentClient == null) {
+            tabbedPane.setEnabledAt(1, false);
+            tabbedPane.setEnabledAt(2, false);
+        } else if (this.currentClient != null) {
+            tabbedPane.setEnabledAt(1, true);
+        }
+        if (this.currentCategory == null) {
+            tabbedPane.setEnabledAt(2, false);
+        } else if (this.currentClient != null && this.currentCategory != null) {
+            tabbedPane.setEnabledAt(2, true);
+        }
     }
 
     private void clientActions(String command) {
@@ -221,6 +239,7 @@ public class MenuTabs implements ActionListener {
             case "Select client":
                 cardLayout.show(clientMainPanel, "selectClientSplitPane");
                 selectClientSplitPane.updateListModel();
+                this.currentCategory = null;
                 break;
             case "Add client":
                 cardLayout.show(clientMainPanel, "addClientSplitPane");

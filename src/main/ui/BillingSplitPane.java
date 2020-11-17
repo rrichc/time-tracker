@@ -173,6 +173,10 @@ public class BillingSplitPane implements ListSelectionListener {
     public MenuTabs getMenuTabs() {
         return menuTabs;
     }
+
+    public void setTabVisibility() {
+        menuTabs.setTabVisibility();
+    }
 }
 
 

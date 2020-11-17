@@ -36,6 +36,7 @@ abstract class CustomBillingButtonPane {
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 splitPane.showBillingMenuOptions();
+                splitPane.setTabVisibility();
             }
         });
     }

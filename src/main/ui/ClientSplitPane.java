@@ -162,6 +162,10 @@ public class ClientSplitPane implements ListSelectionListener {
     public void setCurrentClient(String currentClient) {
         menuTabs.setCurrentClient(clientBook.getAClient(currentClient));
     }
+
+    public void setTabVisibility() {
+        menuTabs.setTabVisibility();
+    }
 }
 
 

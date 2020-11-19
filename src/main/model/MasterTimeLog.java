@@ -49,7 +49,6 @@ public class MasterTimeLog implements Writable {
             if (log.getClient().getName().equals(client.getName())) {
                 return log;
             }
-
         }
         return new TimeLog(new Client(""));
     }

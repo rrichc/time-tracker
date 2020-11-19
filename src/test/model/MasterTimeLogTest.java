@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MasterTimeLogTest {
@@ -60,5 +62,17 @@ class MasterTimeLogTest {
         masterTimeLog.createTimeLog(client);
         TimeLog returnedLog = masterTimeLog.getTimeLogForClient(client2);
         assertEquals("", returnedLog.getClient().getName());
+    }
+
+    @Test
+    void testSetMasterTimeLog() {
+        TimeLog timeLog1 = new TimeLog(new Client("Log1"));
+        TimeLog timeLog2 = new TimeLog(new Client("Log2"));
+        ArrayList<TimeLog> newMasterTimeLog = new ArrayList<>();
+        newMasterTimeLog.add(timeLog1);
+        newMasterTimeLog.add(timeLog2);
+        assertEquals(0, masterTimeLog.getMasterTimeLog().size());
+        masterTimeLog.setMasterTimeLog(newMasterTimeLog);
+        assertEquals(2, masterTimeLog.getMasterTimeLog().size());
     }
 }

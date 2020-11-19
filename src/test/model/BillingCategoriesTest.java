@@ -250,4 +250,18 @@ class BillingCategoriesTest {
         BillingCategory category = billingCategories.getABillingCategory(categoryName1, client2);
         assertEquals(null, category);
     }
+
+    @Test
+    void testSetBillingCategories() {
+        Client client1 = new Client("Client1");
+        Client client2 = new Client("Client2");
+        BillingCategory category1 = new BillingCategory("Cat1", "14", client1);
+        BillingCategory category2 = new BillingCategory("Cat2", "17", client2);
+        ArrayList<BillingCategory> newBillingCategories = new ArrayList<>();
+        newBillingCategories.add(category1);
+        newBillingCategories.add(category2);
+        assertEquals(0, billingCategories.getAllBillingCategories().size());
+        billingCategories.setBillingCategories(newBillingCategories);
+        assertEquals(2, billingCategories.getAllBillingCategories().size());
+    }
 }

@@ -108,16 +108,6 @@ public class MenuTabs implements ActionListener {
         tabbedPane.setEnabledAt(1, false);
         tabbedPane.setEnabledAt(2, false);
 
-//        //http://www.java2s.com/Tutorial/Java/0240__Swing/ListeningforSelectedTabChanges.htm
-//        ChangeListener changeListener = new ChangeListener() {
-//            public void stateChanged(ChangeEvent changeEvent) {
-//                JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
-//                int index = sourceTabbedPane.getSelectedIndex();
-//                System.out.println("Tab changed to: " + sourceTabbedPane.getTitleAt(index));
-//            }
-//        };
-//        tabbedPane.addChangeListener(changeListener);
-
         pane.add(tabbedPane, BorderLayout.CENTER);
     }
 

@@ -3,6 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClientBookTest {
@@ -137,5 +139,17 @@ class ClientBookTest {
         clientBook.createClient(differentName2);
         Client client1 = clientBook.getAClient(nameNotInList);
         assertEquals(null, client1);
+    }
+
+    @Test
+    void testSetClientBook() {
+        Client client1 = new Client("Client1");
+        Client client2 = new Client("Client2");
+        ArrayList<Client> newClientBook = new ArrayList<>();
+        newClientBook.add(client1);
+        newClientBook.add(client2);
+        assertEquals(0, clientBook.getClients().size());
+        clientBook.setClients(newClientBook);
+        assertEquals(2, clientBook.getClients().size());
     }
 }

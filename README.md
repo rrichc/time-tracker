@@ -50,3 +50,9 @@ Phase 2
 - As a user, I want to be able to load my client book.
 - As a user, I want to be able to load my billing categories.
 - As a user, I want to be able to load my time entries.
+
+Phase 3
+- As a user, I want to be able to view clients added, edited, removed in a GUI panel.
+- As a user, I want to be able to view billing categories added, edited, removed in a GUI panel.
+- As a user, I want to be able to view time entries added, edited, removed in a GUI panel.
+- As a user, I want to be able to load and save the state of the application.

@@ -22,6 +22,7 @@ public class SelectBillingButtonPane extends CustomBillingButtonPane {
                     return;
                 } else {
                     splitPane.setCurrentCategory(selectedCategory);
+                    UserInterfaceSound.playSelectSound();
                     System.out.println(selectedCategory);
                 }
             }

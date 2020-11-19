@@ -107,16 +107,16 @@ public class MenuTabs implements ActionListener {
 
         tabbedPane.setEnabledAt(1, false);
         tabbedPane.setEnabledAt(2, false);
-        //TODO: Tab change listener code - use this to refresh all client, billing, time entry splitplanes with updateListModel
-        //http://www.java2s.com/Tutorial/Java/0240__Swing/ListeningforSelectedTabChanges.htm
-        ChangeListener changeListener = new ChangeListener() {
-            public void stateChanged(ChangeEvent changeEvent) {
-                JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
-                int index = sourceTabbedPane.getSelectedIndex();
-                System.out.println("Tab changed to: " + sourceTabbedPane.getTitleAt(index));
-            }
-        };
-        tabbedPane.addChangeListener(changeListener);
+
+//        //http://www.java2s.com/Tutorial/Java/0240__Swing/ListeningforSelectedTabChanges.htm
+//        ChangeListener changeListener = new ChangeListener() {
+//            public void stateChanged(ChangeEvent changeEvent) {
+//                JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+//                int index = sourceTabbedPane.getSelectedIndex();
+//                System.out.println("Tab changed to: " + sourceTabbedPane.getTitleAt(index));
+//            }
+//        };
+//        tabbedPane.addChangeListener(changeListener);
 
         pane.add(tabbedPane, BorderLayout.CENTER);
     }
@@ -285,7 +285,6 @@ public class MenuTabs implements ActionListener {
 
     private void timeActions(String command) {
         switch (command) {
-            //TODO: Change Select time entry to view time entries
             case "View time entries":
                 cardLayout.show(timeMainPanel, "selectTimeSplitPane");
                 selectTimeSplitPane.updateModels();

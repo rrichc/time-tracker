@@ -56,7 +56,9 @@ public class BillingSplitPane implements ListSelectionListener {
     private String listSelectedCategory;
 
 
-    public BillingSplitPane(MenuTabs menuTabs, ClientBook clientBook, BillingCategories billingCategories, MasterTimeLog masterTimeLog, ActionState state) {
+    public BillingSplitPane(MenuTabs menuTabs, ClientBook clientBook,
+                            BillingCategories billingCategories, MasterTimeLog masterTimeLog,
+                            ActionState state) {
         this.menuTabs = menuTabs;
         this.clientBook = clientBook;
         this.billingCategories = billingCategories;
@@ -72,7 +74,8 @@ public class BillingSplitPane implements ListSelectionListener {
 
     private void addNamesToListModel() {
         //Create the list of category names and put it in a scroll pane.
-        ArrayList<BillingCategory> categoriesForClient = billingCategories.getBillingCategoriesForClient(menuTabs.getCurrentClient());
+        ArrayList<BillingCategory> categoriesForClient = billingCategories
+                .getBillingCategoriesForClient(menuTabs.getCurrentClient());
         if (categoriesForClient.isEmpty()) {
             this.categoryNames.addElement("Empty");
         } else {
@@ -131,7 +134,6 @@ public class BillingSplitPane implements ListSelectionListener {
             JList list = (JList)e.getSource();
             if (list.getSelectedValue() != null) {
                 listSelectedCategory =  list.getSelectedValue().toString();
-                System.out.println(listSelectedCategory);
             }
         }
     }

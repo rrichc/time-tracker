@@ -129,7 +129,6 @@ public class ClientSplitPane implements ListSelectionListener {
             JList list = (JList)e.getSource();
             if (list.getSelectedValue() != null) {
                 listSelectedClient =  list.getSelectedValue().toString();
-                System.out.println(listSelectedClient);
             }
         }
     }

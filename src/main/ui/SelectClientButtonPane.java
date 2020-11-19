@@ -23,7 +23,6 @@ public class SelectClientButtonPane extends CustomClientButtonPane {
                 } else {
                     splitPane.setCurrentClient(selectedClient);
                     UserInterfaceSound.playSelectSound();
-                    System.out.println(selectedClient);
                 }
             }
         });

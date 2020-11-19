@@ -24,7 +24,6 @@ public class RemoveClientButtonPane extends CustomClientButtonPane {
                     clientBook.removeClient(selectedClient);
                     masterTimeLog.removeTimeLog(selectedClient);
                     splitPane.updateListModel();
-                    System.out.println(selectedClient);
                 }
             }
         });

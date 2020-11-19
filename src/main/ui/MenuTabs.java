@@ -214,7 +214,6 @@ public class MenuTabs implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         setTabVisibility();
-        System.out.println(e.getActionCommand());
         clientActions(e.getActionCommand());
         billingActions(e.getActionCommand());
         timeActions(e.getActionCommand());
@@ -235,23 +234,24 @@ public class MenuTabs implements ActionListener {
     }
 
     private void clientActions(String command) {
+        updateClientListModels();
         switch (command) {
             case "Select client":
                 cardLayout.show(clientMainPanel, "selectClientSplitPane");
-                selectClientSplitPane.updateListModel();
+                //selectClientSplitPane.updateListModel();
                 this.currentCategory = null;
                 break;
             case "Add client":
                 cardLayout.show(clientMainPanel, "addClientSplitPane");
-                addClientSplitPane.updateListModel();
+                //addClientSplitPane.updateListModel();
                 break;
             case "Edit client":
                 cardLayout.show(clientMainPanel, "editClientSplitPane");
-                editClientSplitPane.updateListModel();
+                //editClientSplitPane.updateListModel();
                 break;
             case "Remove client":
                 cardLayout.show(clientMainPanel, "removeClientSplitPane");
-                removeClientSplitPane.updateListModel();
+                //removeClientSplitPane.updateListModel();
                 break;
             case "Save":
                 save();
@@ -260,6 +260,13 @@ public class MenuTabs implements ActionListener {
                 loadSave();
                 break;
         }
+    }
+
+    private void updateClientListModels() {
+        selectClientSplitPane.updateListModel();
+        addClientSplitPane.updateListModel();
+        editClientSplitPane.updateListModel();
+        removeClientSplitPane.updateListModel();
     }
 
     private void billingActions(String command) {
@@ -317,9 +324,8 @@ public class MenuTabs implements ActionListener {
         try {
             //this.clientBook = jsonReader.readClientBook(MenuTabs.CLIENT_JSON_STORE);
             this.clientBook.setClients(jsonReader.readClientBook(MenuTabs.CLIENT_JSON_STORE).getClients());
-            System.out.println("Loaded client book from last save.");
         } catch (IOException e) {
-            System.out.println("Unable to read client book from file.");
+            //
         }
     }
 
@@ -331,9 +337,8 @@ public class MenuTabs implements ActionListener {
             this.billingCategories.setBillingCategories(
                     jsonReader.readBillingCategories(
                             MenuTabs.BILLING_JSON_STORE, this.clientBook).getAllBillingCategories());
-            System.out.println("Loaded billing categories from last save.");
         } catch (IOException e) {
-            System.out.println("Unable to read billing categories from file.");
+            //
         }
     }
 
@@ -345,9 +350,8 @@ public class MenuTabs implements ActionListener {
 //                    this.clientBook, this.billingCategories);
             this.masterTimeLog.setMasterTimeLog(jsonReader.readMasterTimeLog(MenuTabs.TIME_JSON_STORE,
                     this.clientBook, this.billingCategories).getMasterTimeLog());
-            System.out.println("Loaded time entries from last save.");
         } catch (IOException e) {
-            System.out.println("Unable to read time entries from file.");
+            //
         }
     }
 
@@ -363,9 +367,8 @@ public class MenuTabs implements ActionListener {
             jsonWriter.open(MenuTabs.TIME_JSON_STORE);
             jsonWriter.write(this.masterTimeLog);
             jsonWriter.close();
-            System.out.println("Saved");
         } catch (FileNotFoundException e) {
-            System.out.println("Unable to write to file.");
+            //
         }
     }
 

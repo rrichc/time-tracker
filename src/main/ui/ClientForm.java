@@ -72,12 +72,9 @@ public class ClientForm {
                     case ADD: //TODO: Add pop-up/checking for duplicate name
                         clientBook.createClient(clientName);
                         masterTimeLog.createTimeLog(clientBook.getAClient(clientName));
-                        System.out.println(clientName);
                         break;
                     case EDIT: //TODO: Add pop-up/checking for duplicate name
                         clientBook.editClient(splitPane.getListSelectedClient(), clientName);
-                        System.out.println(splitPane.getListSelectedClient());
-                        System.out.println(clientName);
                         break;
                 }
                 splitPane.updateListModel();

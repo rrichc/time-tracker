@@ -72,18 +72,15 @@ public class BillingForm {
                 }
                 String categoryName = userInput.get("Category Name: ");
                 String ratePerHour = userInput.get("Rate per hour: ");
-
                 switch (state) {
                     case ADD: //TODO: Add pop-up/checking for duplicate name
                         billingCategories.createBillingCategory(
                                 categoryName, ratePerHour, splitPane.getMenuTabs().getCurrentClient());
-                        System.out.println(categoryName);
                         break;
                     case EDIT: //TODO: Add pop-up/checking for duplicate name
                         billingCategories.editBillingCategory(
                                 splitPane.getListSelectedCategory(), categoryName,
                                 ratePerHour, splitPane.getMenuTabs().getCurrentClient());
-                        System.out.println(categoryName);
                         break;
                 }
                 splitPane.updateListModel();

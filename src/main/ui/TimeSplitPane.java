@@ -57,7 +57,9 @@ public class TimeSplitPane implements ListSelectionListener {
     private String listSelectedTimeEntry;
 
 
-    public TimeSplitPane(MenuTabs menuTabs, ClientBook clientBook, BillingCategories billingCategories, MasterTimeLog masterTimeLog, ActionState state) {
+    public TimeSplitPane(MenuTabs menuTabs, ClientBook clientBook,
+                         BillingCategories billingCategories,
+                         MasterTimeLog masterTimeLog, ActionState state) {
         this.menuTabs = menuTabs;
         this.clientBook = clientBook;
         this.billingCategories = billingCategories;
@@ -135,7 +137,6 @@ public class TimeSplitPane implements ListSelectionListener {
             JList list = (JList)e.getSource();
             if (list.getSelectedValue() != null) {
                 listSelectedTimeEntry =  list.getSelectedValue().toString();
-                System.out.println(listSelectedTimeEntry);
             }
         }
     }

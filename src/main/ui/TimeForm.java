@@ -74,23 +74,28 @@ public class TimeForm {
                 String endDateTime = userInput.get("End date & 24H time as yyyy-MM-dd HH:mm : ");
                 Client currentClient = splitPane.getMenuTabs().getCurrentClient();
                 BillingCategory currentCategory = splitPane.getMenuTabs().getCurrentCategory();
-
-                switch (state) {
-                    case ADD: //TODO: Add pop-up/checking for duplicate name
-                        masterTimeLog.getTimeLogForClient(currentClient)
-                                .createTimeEntry(entryName, desc, startDateTime, endDateTime, currentCategory);
-                        System.out.println(entryName);
-                        break;
-                    case EDIT: //TODO: Add pop-up/checking for duplicate name
-                        masterTimeLog.getTimeLogForClient(currentClient)
-                                .editTimeEntry(
-                                        splitPane.getListSelectedTimeEntry(), entryName, desc, startDateTime, endDateTime, currentCategory);
-                        System.out.println(entryName);
-                        break;
-                }
+                performAddEditAction(entryName, desc, startDateTime, endDateTime, currentClient, currentCategory);
                 splitPane.updateModels();
             }
         };
+    }
+
+    private void performAddEditAction(String entryName, String desc, String startDateTime,
+                                      String endDateTime, Client currentClient,
+                                      BillingCategory currentCategory) {
+        switch (state) {
+            case ADD: //TODO: Add pop-up/checking for duplicate name
+                masterTimeLog.getTimeLogForClient(currentClient)
+                        .createTimeEntry(entryName, desc, startDateTime, endDateTime, currentCategory);
+                break;
+            case EDIT: //TODO: Add pop-up/checking for duplicate name
+                masterTimeLog.getTimeLogForClient(currentClient)
+                        .editTimeEntry(
+                                splitPane.getListSelectedTimeEntry(),
+                                entryName, desc, startDateTime,
+                                endDateTime, currentCategory);
+                break;
+        }
     }
 
     private void layoutPanel() {

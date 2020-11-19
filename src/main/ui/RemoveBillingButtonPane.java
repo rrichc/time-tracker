@@ -24,7 +24,6 @@ public class RemoveBillingButtonPane extends CustomBillingButtonPane {
                     billingCategories.removeBillingCategory(
                             selectedCategory, splitPane.getMenuTabs().getCurrentClient());
                     splitPane.updateListModel();
-                    System.out.println(selectedCategory);
                 }
             }
         });

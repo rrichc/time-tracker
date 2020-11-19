@@ -29,7 +29,6 @@ public class RemoveTimeButtonPane extends CustomTimeButtonPane {
                     masterTimeLog.getTimeLogForClient(currentClient)
                             .removeTimeEntry(selectedTimeEntry, currentCategory);
                     splitPane.updateModels();
-                    System.out.println(selectedTimeEntry);
                 }
             }
         });

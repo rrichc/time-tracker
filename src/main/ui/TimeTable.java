@@ -46,6 +46,7 @@ public class TimeTable {
         BillingCategory currentCategory = splitPane.getMenuTabs().getCurrentCategory();
         ArrayList<TimeEntry> timeEntries = masterTimeLog.getTimeLogForClient(currentClient)
                 .getTimeEntriesForBillingCategory(currentCategory);
+        removeAllRows();
         for (TimeEntry entry : timeEntries) {
             tableModel.insertRow(tableModel.getRowCount(), new Object[] {
                     entry.getName(),
@@ -56,6 +57,13 @@ public class TimeTable {
                     entry.getCategory().getName(),
                     Double.toString(entry.getCategory().getRatePerHour())
             });
+        }
+    }
+
+    private void removeAllRows() {
+        int numRows = tableModel.getRowCount();
+        for (int i = 0; i < numRows; i++) {
+            tableModel.removeRow(i);
         }
     }
 

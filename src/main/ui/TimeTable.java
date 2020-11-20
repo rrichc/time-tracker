@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+//Represents the time table that displays all the time entries for a given category for a client
 public class TimeTable {
     private ClientBook clientBook;
     private BillingCategories billingCategories;
@@ -17,6 +18,9 @@ public class TimeTable {
     private TimeSplitPane splitPane;
     private JPanel panel;
 
+    /*
+     * EFFECTS: Creates a TimeTable object and initializes the table
+     */
     public TimeTable(TimeSplitPane splitPane) {
         this.splitPane = splitPane;
         this.clientBook = splitPane.getClientBook();
@@ -27,6 +31,10 @@ public class TimeTable {
 
     // https://www.tutorialspoint.com/how-to-add-a-new-row-to-jtable-with-insertrow-in-java-swing
     // https://www.tutorialspoint.com/how-can-we-disable-the-cell-editing-inside-a-jtable-in-java
+    /*
+     * MODIFIES: this
+     * EFFECTS: initializes the table with a new JPanel and TableModel
+     */
     private void initTable() {
         panel = new JPanel();
         tableModel = new DefaultTableModel();
@@ -41,6 +49,10 @@ public class TimeTable {
         updateTable();
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: clears and updates the table based on the current client, billing categories, and master time log
+     */
     private void updateTable() {
         Client currentClient = splitPane.getMenuTabs().getCurrentClient();
         BillingCategory currentCategory = splitPane.getMenuTabs().getCurrentCategory();
@@ -60,6 +72,10 @@ public class TimeTable {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: removes all rows from the DefaultTableModel
+     */
     private void removeAllRows() {
         int numRows = tableModel.getRowCount();
         for (int i = 0; i < numRows; i++) {
@@ -67,6 +83,10 @@ public class TimeTable {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Adds columns to the table
+     */
     private void initColumns() {
         tableModel.addColumn("Entry");
         tableModel.addColumn("Description");
@@ -77,6 +97,10 @@ public class TimeTable {
         tableModel.addColumn("Rate");
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a back button to go back to the time entry menu
+     */
     private void createBackButton() {
         JButton backButton = new JButton("Back");
         panel.add(new JLabel());
@@ -88,6 +112,10 @@ public class TimeTable {
         });
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates an update button to refresh the table
+     */
     private void createUpdateButton() {
         JButton updateButton = new JButton("Update");
         panel.add(new JLabel());
@@ -102,6 +130,10 @@ public class TimeTable {
         });
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Returns the table in a new JScrollPane
+     */
     public JPanel getTable() {
         panel.add(new JScrollPane(this.table));
         panel.setVisible(true);

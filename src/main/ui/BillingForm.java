@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+//This class represents the input form for a billing categories
 public class BillingForm {
     private JPanel springForm;
     private ActionState state;
@@ -20,6 +21,10 @@ public class BillingForm {
     private String[] labels;
     private JTextField[] textField;
 
+    /*
+     * REQUIRES: labels should not be empty
+     * EFFECTS: Creates an instance of BillingForm to be displayed in the splitpane
+     */
     public BillingForm(String[] labels, ActionState state, BillingSplitPane splitPane) {
         this.state = state;
         this.splitPane = splitPane;
@@ -44,6 +49,10 @@ public class BillingForm {
         layoutPanel();
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a back button to move back to the actions billing menu
+     */
     private void createBackButton() {
         JButton backButton = new JButton("Back");
         springForm.add(new JLabel());
@@ -55,6 +64,10 @@ public class BillingForm {
         });
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a submit button
+     */
     private void createSubmitButton() {
         JButton submitButton = new JButton("Submit");
         springForm.add(new JLabel());
@@ -62,6 +75,11 @@ public class BillingForm {
         submitButton.addActionListener(createActionListener());
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a listener for the submit button to handle add and edit actions,
+     *          to add user input to billing categories
+     */
     //TODO: Add Exception handling for empty strings and number format exceptions
     private ActionListener createActionListener() {
         return new ActionListener() {
@@ -88,6 +106,9 @@ public class BillingForm {
         };
     }
 
+    /*
+     * EFFECTS: Creates a layout for the form panel
+     */
     private void layoutPanel() {
         //Lay out the panel.
         SpringUtilities.makeCompactGrid(springForm,

@@ -48,6 +48,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+//MenuTabs manages the display of all Client tab, Billing tab, Time tab
 public class MenuTabs implements ActionListener {
     static final int extraWindowWidth = 100;
     CardLayout cardLayout;
@@ -93,6 +94,10 @@ public class MenuTabs implements ActionListener {
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Adds each menu tab to the Tab Pane
+     */
     public void addMenuTabsToPane(Container pane) {
         init();
         tabbedPane = new JTabbedPane();
@@ -114,7 +119,7 @@ public class MenuTabs implements ActionListener {
 
     /*
      * MODIFIES: this
-     * EFFECTS: Initializes dependencies needed by the Client, Billing, and Time Entry menu down the line
+     * EFFECTS: Initializes dependencies needed by the Client, Billing, and Time Entry menus
      */
     private void init() {
         this.masterTimeLog = new MasterTimeLog();
@@ -129,13 +134,20 @@ public class MenuTabs implements ActionListener {
         initTimeSplitPanes();
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Initializes the menu options for Client, Billing, Time
+     */
     private void initMenuOptions() {
         clientMenuTab = new ClientMenuOptions(this).getClientMenuOptions();
         billingMenuTab = new BillingMenuOptions(this).getBillingMenuOptions();
         timeMenuTab = new TimeMenuOptions(this).getTimeMenuOptions();
     }
 
-    //Create the client "cards".
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates the client split panes to be displayed in the client tab
+     */
     private void initClientSplitPanes() {
         selectClientSplitPane = new ClientSplitPane(this,
                 this.clientBook, this.masterTimeLog, ActionState.SELECT);
@@ -147,7 +159,10 @@ public class MenuTabs implements ActionListener {
                 this.clientBook, this.masterTimeLog, ActionState.REMOVE);
     }
 
-
+    /*
+     * MODIFIES: this
+     * EFFECTS: Sets up the client panels and adds them to a Card Layout to be able to be switched in and out on demand
+     */
     private void clientPanelSetUp() {
         clientMainPanel = new JPanel(cardLayout);
         clientMainPanel.add(clientMenuTab, "clientMenuOptions");
@@ -157,7 +172,10 @@ public class MenuTabs implements ActionListener {
         clientMainPanel.add(removeClientSplitPane.getClientSplitPane(), "removeClientSplitPane");
     }
 
-    //Create the billing "cards".
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates the billing split panes to be displayed in the billing tab
+     */
     private void initBillingSplitPanes() {
         selectBillingSplitPane = new BillingSplitPane(this,
                 this.clientBook, this.billingCategories, this.masterTimeLog, ActionState.SELECT);
@@ -169,7 +187,10 @@ public class MenuTabs implements ActionListener {
                 this.clientBook, this.billingCategories, this.masterTimeLog, ActionState.REMOVE);
     }
 
-
+    /*
+     * MODIFIES: this
+     * EFFECTS: Sets up the billing panels and adds them to a Card Layout to be able to be switched in and out on demand
+     */
     private void billingPanelSetUp() {
         billingMainPanel = new JPanel(cardLayout);
         billingMainPanel.add(billingMenuTab, "billingMenuOptions");
@@ -179,7 +200,10 @@ public class MenuTabs implements ActionListener {
         billingMainPanel.add(removeBillingSplitPane.getBillingSplitPane(), "removeBillingSplitPane");
     }
 
-    //Create the time "cards".
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates the time split panes to be displayed in the time tab
+     */
     private void initTimeSplitPanes() {
         selectTimeSplitPane = new TimeSplitPane(this,
                 this.clientBook, this.billingCategories, this.masterTimeLog, ActionState.SELECT);
@@ -192,6 +216,10 @@ public class MenuTabs implements ActionListener {
     }
 
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Sets up the time panels and adds them to a Card Layout to be able to be switched in and out on demand
+     */
     private void timePanelSetUp() {
         timeMainPanel = new JPanel(cardLayout);
         timeMainPanel.add(timeMenuTab, "timeMenuOptions");
@@ -200,7 +228,11 @@ public class MenuTabs implements ActionListener {
         timeMainPanel.add(editTimeSplitPane.getTimeSplitPane(), "editTimeSplitPane");
         timeMainPanel.add(removeTimeSplitPane.getTimeSplitPane(), "removeTimeSplitPane");
     }
-    
+
+    /*
+     * MODIFIES: this
+     * EFFECTS: Performs the associated client, billing, or time actions on an action event
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         setTabVisibility();
@@ -209,6 +241,10 @@ public class MenuTabs implements ActionListener {
         timeActions(e.getActionCommand());
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Determines which tabs to show depending on whether a client and/or category has been selected
+     */
     public void setTabVisibility() {
         if (this.currentClient == null) {
             tabbedPane.setEnabledAt(1, false);
@@ -223,6 +259,10 @@ public class MenuTabs implements ActionListener {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Shows the according split pane depending on client action
+     */
     private void clientActions(String command) {
         updateClientListModels();
         switch (command) {
@@ -252,6 +292,10 @@ public class MenuTabs implements ActionListener {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Updates the JList models in each of the split panes
+     */
     private void updateClientListModels() {
         selectClientSplitPane.updateListModel();
         addClientSplitPane.updateListModel();
@@ -259,6 +303,10 @@ public class MenuTabs implements ActionListener {
         removeClientSplitPane.updateListModel();
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Shows the according split pane depending on billing action
+     */
     private void billingActions(String command) {
         switch (command) {
             case "Select billing":
@@ -280,6 +328,10 @@ public class MenuTabs implements ActionListener {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Shows the according split pane depending on time entry action
+     */
     private void timeActions(String command) {
         switch (command) {
             case "View time entries":
@@ -362,14 +414,26 @@ public class MenuTabs implements ActionListener {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Shows the client menu options
+     */
     public void displayClientMenuOptions() {
         cardLayout.show(clientMainPanel, "clientMenuOptions");
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Shows the billing menu options
+     */
     public void displayBillingMenuOptions() {
         cardLayout.show(billingMainPanel, "billingMenuOptions");
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Shows the time menu options
+     */
     public void displayTimeMenuOptions() {
         cardLayout.show(timeMainPanel, "timeMenuOptions");
     }

@@ -38,38 +38,18 @@ import java.awt.*;
 /**
  * Note from CPSC 210 Student: This class was taken as is from the Oracle Documentation https://docs.oracle.com/javase/tutorial/uiswing/examples/layout/SpringGridProject/src/layout/SpringUtilities.java
  *
+ *
  * A 1.4 file that provides utility methods for
  * creating form- or grid-style layouts with SpringLayout.
  * These utilities are used by several programs, such as
  * SpringBox and SpringCompactGrid.
  */
 public class SpringUtilities {
-    /**
-     * A debugging utility that prints to stdout the component's
-     * minimum, preferred, and maximum sizes.
-     */
-    public static void printSizes(Component c) {
-//        System.out.println("minimumSize = " + c.getMinimumSize());
-//        System.out.println("preferredSize = " + c.getPreferredSize());
-//        System.out.println("maximumSize = " + c.getMaximumSize());
-    }
-
-    /**
-     * Aligns the first <code>rows</code> * <code>cols</code>
-     * components of <code>parent</code> in
-     * a grid. Each component is as big as the maximum
-     * preferred width and height of the components.
-     * The parent is made just big enough to fit them all.
-     *
-     * @param rows     number of rows
-     * @param cols     number of columns
-     * @param initialX x location to start the grid at
-     * @param initialY y location to start the grid at
-     * @param padX     x padding between cells
-     * @param padY     y padding between cells
-     */
 
     /* Used by makeCompactGrid. */
+    /*
+     * EFFECTS: Returns the restraints of a SpringLayout
+     */
     private static SpringLayout.Constraints getConstraintsForCell(
             int row, int col,
             Container parent,
@@ -80,6 +60,7 @@ public class SpringUtilities {
     }
 
     /**
+     * EFFECTS:
      * Aligns the first <code>rows</code> * <code>cols</code>
      * components of <code>parent</code> in
      * a grid. Each component in a column is as wide as the maximum
@@ -118,6 +99,9 @@ public class SpringUtilities {
         consP.setConstraint(SpringLayout.EAST, x);
     }
 
+    /*
+     * EFFECTS: Align all cells in each row and make them the same height.
+     */
     private static Spring alignRowCells(Container parent, int rows, int cols, int initialY, int padY) {
         Spring y = Spring.constant(initialY);
         for (int r = 0; r < rows; r++) {
@@ -137,6 +121,9 @@ public class SpringUtilities {
         return y;
     }
 
+    /*
+     * EFFECTS: Align all cells in each column and make them the same width.
+     */
     private static Spring alignColumnCells(Container parent, int rows, int cols, int initialX, int padX) {
         Spring x = Spring.constant(initialX);
         for (int c = 0; c < cols; c++) {

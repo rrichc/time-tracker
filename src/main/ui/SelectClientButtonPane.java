@@ -4,12 +4,19 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//Represents a selection button pane for clients
 public class SelectClientButtonPane extends CustomClientButtonPane {
 
+    /*
+     * EFFECTS: Initializes the selection button pane for clients
+     */
     public SelectClientButtonPane(ClientSplitPane splitPane) {
         super(splitPane);
     }
 
+    /*
+     * EFFECTS: Create a select button to select the active client being worked on
+     */
     @Override
     protected void createPrimaryButton() {
         JButton selectButton = new JButton("Select");

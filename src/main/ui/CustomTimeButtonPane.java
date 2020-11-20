@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//Represents a Time Entry Button pane used for selecting or removing Time Entries
 abstract class CustomTimeButtonPane {
 
     protected JPanel panel;
@@ -16,6 +17,9 @@ abstract class CustomTimeButtonPane {
     protected MasterTimeLog masterTimeLog;
     protected TimeSplitPane splitPane;
 
+    /*
+     * EFFECTS: Initializes and creates the back button and primary button depending on the child's implementation
+     */
     public CustomTimeButtonPane(TimeSplitPane splitPane) {
 
         this.splitPane = splitPane;
@@ -27,8 +31,14 @@ abstract class CustomTimeButtonPane {
         createBackButton();
     }
 
+    /*
+     * EFFECTS: To create either a select or remove button depending on the child's implementation
+     */
     protected abstract void createPrimaryButton();
 
+    /*
+     * EFFECTS: Creates a back button the shows the time entry menu
+     */
     protected void createBackButton() {
         JButton backButton = new JButton("Back");
         panel.add(new JLabel());

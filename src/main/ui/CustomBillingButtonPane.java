@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//Represents a Billing Category Button pane used for selecting or removing Billing Categories
 abstract class CustomBillingButtonPane {
 
     protected JPanel panel;
@@ -16,6 +17,9 @@ abstract class CustomBillingButtonPane {
     protected MasterTimeLog masterTimeLog;
     protected BillingSplitPane splitPane;
 
+    /*
+     * EFFECTS: Initializes and creates the back button and primary button depending on the child's implementation
+     */
     public CustomBillingButtonPane(BillingSplitPane splitPane) {
 
         this.splitPane = splitPane;
@@ -27,8 +31,14 @@ abstract class CustomBillingButtonPane {
         createBackButton();
     }
 
+    /*
+     * EFFECTS: To create either a select or remove button depending on the child's implementation
+     */
     protected abstract void createPrimaryButton();
 
+    /*
+     * EFFECTS: Creates a back button the shows the billing menu
+     */
     protected void createBackButton() {
         JButton backButton = new JButton("Back");
         panel.add(new JLabel());

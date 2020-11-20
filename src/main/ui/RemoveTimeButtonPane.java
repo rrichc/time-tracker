@@ -7,12 +7,19 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//Represents a Time Entry Button pane used for removing time entries
 public class RemoveTimeButtonPane extends CustomTimeButtonPane {
 
+    /*
+     * EFFECTS: Initializes the removal button pane for time entries
+     */
     public RemoveTimeButtonPane(TimeSplitPane splitPane) {
         super(splitPane);
     }
 
+    /*
+     * EFFECTS: Create a remove button to remove the time entry currently selected
+     */
     @Override
     protected void createPrimaryButton() {
         JButton removeButton = new JButton("Remove");

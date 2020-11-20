@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+//This class represents the input form for clients
 public class ClientForm {
     private JPanel springForm;
     private ActionState state;
@@ -18,6 +19,10 @@ public class ClientForm {
     private String[] labels;
     private JTextField[] textField;
 
+    /*
+     * REQUIRES: labels should not be empty
+     * EFFECTS: Creates an instance of ClientForm to be displayed in the splitpane
+     */
     public ClientForm(String[] labels, ActionState state, ClientSplitPane splitPane) {
         this.state = state;
         this.splitPane = splitPane;
@@ -38,10 +43,13 @@ public class ClientForm {
 
         createSubmitButton();
         createBackButton();
-
         layoutPanel();
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a back button to move back to the actions billing menu
+     */
     private void createBackButton() {
         JButton backButton = new JButton("Back");
         springForm.add(new JLabel());
@@ -53,6 +61,10 @@ public class ClientForm {
         });
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a submit button
+     */
     private void createSubmitButton() {
         JButton submitButton = new JButton("Submit");
         springForm.add(new JLabel());
@@ -60,6 +72,11 @@ public class ClientForm {
         submitButton.addActionListener(createActionListener());
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a listener for the submit button to handle add and edit actions,
+     *          to add user input to client books
+     */
     private ActionListener createActionListener() {
         return new ActionListener() {
             HashMap<String, String> userInput = new HashMap<>();
@@ -82,6 +99,9 @@ public class ClientForm {
         };
     }
 
+    /*
+     * EFFECTS: Creates a layout for the form panel
+     */
     private void layoutPanel() {
         //Lay out the panel.
         SpringUtilities.makeCompactGrid(springForm,

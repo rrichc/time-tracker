@@ -44,8 +44,7 @@ public class TimeTracker {
 
     /**
      * Method taken from https://docs.oracle.com/javase/tutorial/uiswing/components/tabbedpane.html
-     * Create the GUI and show it.  For thread safety,
-     * this method should be invoked from the
+     * EFFECTS: Create the GUI and show it.  For thread safety, this method should be invoked from the
      * event dispatch thread.
      */
     private static void createAndShowGUI() {

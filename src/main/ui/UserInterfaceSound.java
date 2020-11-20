@@ -5,11 +5,15 @@ import java.io.File;
 import java.io.IOException;
 
 //https://stackoverflow.com/questions/15526255/best-way-to-get-sound-on-button-press-for-a-java-calculator
+//This class handles UserInterfaceSounds to be played
 public class UserInterfaceSound {
     public static final String SELECT_SOUND = "./data/Ding.wav";
     public static AudioInputStream audioInputStream;
     public static Clip clip;
 
+    /*
+     * EFFECTS: Plays the ding sound
+     */
     public static void playSelectSound() {
         try {
             audioInputStream = AudioSystem.getAudioInputStream(new File(SELECT_SOUND).getAbsoluteFile());

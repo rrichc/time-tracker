@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 
+//This class represents the input form for Time Entries
 public class TimeForm {
     private JPanel springForm;
     private ActionState state;
@@ -18,6 +19,10 @@ public class TimeForm {
     private String[] labels;
     private JTextField[] textField;
 
+    /*
+     * REQUIRES: labels should not be empty
+     * EFFECTS: Creates an instance of TimeForm to be displayed in the splitpane
+     */
     public TimeForm(String[] labels, ActionState state, TimeSplitPane splitPane) {
         this.state = state;
         this.splitPane = splitPane;
@@ -42,6 +47,10 @@ public class TimeForm {
         layoutPanel();
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a back button to move back to the actions time entry menu
+     */
     private void createBackButton() {
         JButton backButton = new JButton("Back");
         springForm.add(new JLabel());
@@ -53,6 +62,10 @@ public class TimeForm {
         });
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a submit button
+     */
     private void createSubmitButton() {
         JButton submitButton = new JButton("Submit");
         springForm.add(new JLabel());
@@ -60,6 +73,11 @@ public class TimeForm {
         submitButton.addActionListener(createActionListener());
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates a listener for the submit button to handle add and edit actions,
+     *          to add user input to mastertimelog
+     */
     //TODO: Add Exception handling for empty strings and number format exceptions
     private ActionListener createActionListener() {
         return new ActionListener() {
@@ -80,6 +98,10 @@ public class TimeForm {
         };
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Performs the add and edit actions that adds user input to mastertimelog
+     */
     private void performAddEditAction(String entryName, String desc, String startDateTime,
                                       String endDateTime, Client currentClient,
                                       BillingCategory currentCategory) {
@@ -98,6 +120,9 @@ public class TimeForm {
         }
     }
 
+    /*
+     * EFFECTS: Creates a layout for the form panel
+     */
     private void layoutPanel() {
         //Lay out the panel.
         SpringUtilities.makeCompactGrid(springForm,

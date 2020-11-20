@@ -39,8 +39,8 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.util.ArrayList;
 
-//SplitPaneDemo itself is not a visible component.
-//Class based off the https://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html sample project provided
+//Class based off the https://docs.oracle.com/javase/tutorial/uiswing/components/splitpane.html sample project provided\
+//Class represents a splitpane for the Billing tab
 public class BillingSplitPane implements ListSelectionListener {
     private JList list;
     private JSplitPane splitPane;
@@ -56,6 +56,9 @@ public class BillingSplitPane implements ListSelectionListener {
     private String listSelectedCategory;
 
 
+    /*
+     * EFFECTS: Constructs the split pane for the Billing tab
+     */
     public BillingSplitPane(MenuTabs menuTabs, ClientBook clientBook,
                             BillingCategories billingCategories, MasterTimeLog masterTimeLog,
                             ActionState state) {
@@ -72,6 +75,10 @@ public class BillingSplitPane implements ListSelectionListener {
 
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Adds the names of categories to be displayed in the JList, or empty if billingcateogies is empty
+     */
     private void addNamesToListModel() {
         //Create the list of category names and put it in a scroll pane.
         ArrayList<BillingCategory> categoriesForClient = billingCategories
@@ -86,6 +93,10 @@ public class BillingSplitPane implements ListSelectionListener {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Builds the JList and the scroll pane for it
+     */
     private void buildCategoryList() {
         addNamesToListModel();
         list = new JList(this.categoryNames);
@@ -95,6 +106,10 @@ public class BillingSplitPane implements ListSelectionListener {
         listScrollPane = new JScrollPane(list);
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates the second panel to be displayed in the split pane depending on desired user action
+     */
     private void createSecondPanel() {
         switch (state) {
             case SELECT:
@@ -112,6 +127,10 @@ public class BillingSplitPane implements ListSelectionListener {
         }
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Creates the splitpane with the JList in the scrollpane and second panel
+     */
     private void createSplitPane() {
         //Create a split pane with the two scroll panes in it.
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
@@ -127,8 +146,11 @@ public class BillingSplitPane implements ListSelectionListener {
         //Provide a preferred size for the split pane.
         splitPane.setPreferredSize(new Dimension(400, 200));
     }
-    
-    //Listens to the list
+
+    /*
+     * MODIFIES: this
+     * EFFECTS: Determines what item in the JList is currently selected
+     */
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) { //This line prevents double events
             JList list = (JList)e.getSource();
@@ -158,15 +180,26 @@ public class BillingSplitPane implements ListSelectionListener {
         return masterTimeLog;
     }
 
+    /*
+     * MODIFIES: this
+     * EFFECTS: Updates the list model to reflect the current state of BillingCategories
+     */
     public void updateListModel() {
         this.categoryNames.clear();
         addNamesToListModel();
     }
 
+    /*
+     * EFFECTS: Switches back to displaying the menu options
+     */
     public void showBillingMenuOptions() {
         menuTabs.displayBillingMenuOptions();
     }
 
+    /*
+     * MODIFIES: menuTabs
+     * EFFECTS: Sets the current billing category that has been selected by the user
+     */
     public void setCurrentCategory(String currentCategory) {
         menuTabs.setCurrentCategory(billingCategories
                 .getABillingCategory(currentCategory, menuTabs.getCurrentClient()));
@@ -176,6 +209,9 @@ public class BillingSplitPane implements ListSelectionListener {
         return menuTabs;
     }
 
+    /*
+     * EFFECTS: Changes the visibility of the tabs
+     */
     public void setTabVisibility() {
         menuTabs.setTabVisibility();
     }

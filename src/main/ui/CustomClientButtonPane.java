@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+//Represents a Client Button pane used for selecting or removing Clients
 abstract class CustomClientButtonPane {
 
     protected JPanel panel;
@@ -14,6 +15,9 @@ abstract class CustomClientButtonPane {
     protected MasterTimeLog masterTimeLog;
     protected ClientSplitPane splitPane;
 
+    /*
+     * EFFECTS: Initializes and creates the back button and primary button depending on the child's implementation
+     */
     public CustomClientButtonPane(ClientSplitPane splitPane) {
 
         this.splitPane = splitPane;
@@ -24,8 +28,14 @@ abstract class CustomClientButtonPane {
         createBackButton();
     }
 
+    /*
+     * EFFECTS: To create either a select or remove button depending on the child's implementation
+     */
     protected abstract void createPrimaryButton();
 
+    /*
+     * EFFECTS: Creates a back button the shows the client menu
+     */
     protected void createBackButton() {
         JButton backButton = new JButton("Back");
         panel.add(new JLabel());

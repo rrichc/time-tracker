@@ -30,7 +30,8 @@ public class JsonReader {
 
     // EFFECTS: reads BillCategories from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public BillingCategories readBillingCategories(String source, ClientBook clientBook) throws IOException {
+    public BillingCategories readBillingCategories(String source, ClientBook clientBook)
+            throws IOException, NegativeRateException, EmptyNameException {
         this.clientBook = clientBook;
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
@@ -89,7 +90,8 @@ public class JsonReader {
 
     //Start of BillingCategories loading methods
     // EFFECTS: parses BillingCategories from JSON object and returns it
-    private BillingCategories parseBillingCategories(JSONObject jsonObject) {
+    private BillingCategories parseBillingCategories(JSONObject jsonObject)
+            throws NegativeRateException, EmptyNameException {
         BillingCategories billingCategories = new BillingCategories();
         addCategories(billingCategories, jsonObject);
         return billingCategories;
@@ -97,7 +99,8 @@ public class JsonReader {
 
     // MODIFIES: billingCategories
     // EFFECTS: parses BillingCategories from JSON object and adds them to BillingCategories
-    private void addCategories(BillingCategories billingCategories, JSONObject jsonObject) {
+    private void addCategories(BillingCategories billingCategories, JSONObject jsonObject)
+            throws NegativeRateException, EmptyNameException {
         JSONArray jsonArray = jsonObject.getJSONArray("billingCategories");
         for (Object json : jsonArray) {
             JSONObject nextCategory = (JSONObject) json;
@@ -107,7 +110,8 @@ public class JsonReader {
 
     // MODIFIES: billingCategories
     // EFFECTS: parses individual categories from JSON object and adds it to BillingCategories
-    private void addCategory(BillingCategories billingCategories, JSONObject jsonObject) {
+    private void addCategory(BillingCategories billingCategories, JSONObject jsonObject)
+            throws NegativeRateException, EmptyNameException {
         String name = jsonObject.getString("category");
         String ratePerHour = jsonObject.getString("ratePerHour");
         String clientName = jsonObject.getString("client");

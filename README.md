@@ -56,3 +56,9 @@ Phase 3
 - As a user, I want to be able to view billing categories added, edited, removed in a GUI panel.
 - As a user, I want to be able to view time entries added, edited, removed in a GUI panel.
 - As a user, I want to be able to load and save the state of the application.
+
+Phase 4: Task 2
+- Option 1: Test and design a class in your model package that is robust
+- BillingCategory was made robust: in particular - the constructor and setName(), and setRatePerHour() methods.
+- The methods throwing checked exceptions are tested in BillingCategoryTest
+    

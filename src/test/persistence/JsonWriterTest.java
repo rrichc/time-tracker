@@ -61,7 +61,7 @@ class JsonWriterTest extends JsonTest {
             assertEquals(0, billingCategories.getAllBillingCategories().size());
             MasterTimeLog masterTimeLog = reader.readMasterTimeLog(timePath, this.clientBook, this.billingCategories);
             assertEquals(0, masterTimeLog.getMasterTimeLog().size());
-        } catch (IOException e) {
+        } catch (IOException | NegativeRateException | EmptyNameException e) {
             fail("Exception should not have been thrown");
         }
     }
@@ -81,7 +81,7 @@ class JsonWriterTest extends JsonTest {
             checkBillingCategoriesItems(billingCategories);
             this.masterTimeLog = reader.readMasterTimeLog(timePath, clientBook, billingCategories);
             checkMasterTimeLog(masterTimeLog);
-        } catch (IOException e) {
+        } catch (IOException | NegativeRateException | EmptyNameException e) {
             fail("Exception should not have been thrown");
         }
     }
@@ -92,8 +92,16 @@ class JsonWriterTest extends JsonTest {
         clientBook.createClient("Client2");
         Client client1 = clientBook.getAClient("Client1");
         Client client2 = clientBook.getAClient("Client2");
-        billingCategories.createBillingCategory("Category1", "18.00", client1);
-        billingCategories.createBillingCategory("Category2", "11.00", client2);
+        try {
+            billingCategories.createBillingCategory("Category1", "18.00", client1);
+        } catch (NegativeRateException | EmptyNameException e) {
+            fail();
+        }
+        try {
+            billingCategories.createBillingCategory("Category2", "11.00", client2);
+        } catch (NegativeRateException | EmptyNameException e) {
+            fail();
+        }
         masterTimeLog.createTimeLog(clientBook.getAClient("Client1"));
         masterTimeLog.createTimeLog(clientBook.getAClient("Client2"));
         TimeLog timeLog1 = masterTimeLog.getTimeLogForClient(client1);

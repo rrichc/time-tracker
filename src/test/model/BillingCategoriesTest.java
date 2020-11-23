@@ -35,7 +35,15 @@ class BillingCategoriesTest {
         String categoryName1 = "Name 1";
         String categoryName2 = "Name 2";
         String ratePerHour1 = "3.50";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         boolean nameCheck = billingCategories.duplicateNameCheck(categoryName2, client1);
         assertFalse(nameCheck);
     }
@@ -45,7 +53,15 @@ class BillingCategoriesTest {
         String categoryName1 = "Name 1";
         String categoryName2 = "Name 1";
         String ratePerHour1 = "3.50";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         boolean nameCheck = billingCategories.duplicateNameCheck(categoryName2, client1);
         assertTrue(nameCheck);
     }
@@ -56,9 +72,17 @@ class BillingCategoriesTest {
         String categoryName2 = "Name 2";
         String ratePerHour1 = "3.50";
         String ratePerHour2 = "100";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
-        boolean creationSuccess = billingCategories.createBillingCategory(categoryName2, ratePerHour2, client1);
-        assertTrue(creationSuccess);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+            boolean creationSuccess = billingCategories.createBillingCategory(categoryName2, ratePerHour2, client1);
+            assertTrue(creationSuccess);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         assertEquals(2, billingCategories.getBillingCategoriesForClient(client1).size());
         assertEquals(categoryName1, billingCategories.getBillingCategoriesForClient(client1).get(0).getName());
         assertEquals(categoryName2, billingCategories.getBillingCategoriesForClient(client1).get(1).getName());
@@ -70,9 +94,17 @@ class BillingCategoriesTest {
         String categoryName2 = "Name 1";
         String ratePerHour1 = "3.50";
         String ratePerHour2 = "100";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
-        boolean creationSuccess = billingCategories.createBillingCategory(categoryName2, ratePerHour2, client1);
-        assertFalse(creationSuccess);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+            boolean creationSuccess = billingCategories.createBillingCategory(categoryName2, ratePerHour2, client1);
+            assertFalse(creationSuccess);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         assertEquals(1, billingCategories.getBillingCategoriesForClient(client1).size());
         assertEquals(categoryName1, billingCategories.getBillingCategoriesForClient(client1).get(0).getName());
     }
@@ -84,7 +116,15 @@ class BillingCategoriesTest {
         String categoryName1 = "Name 1";
         String categoryName2 = "Name 2";
         String ratePerHour1 = "3.50";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         boolean removalSuccess = billingCategories.removeBillingCategory(categoryName2, client1);
         assertFalse(removalSuccess);
         assertEquals(1, billingCategories.getBillingCategoriesForClient(client1).size());
@@ -98,7 +138,15 @@ class BillingCategoriesTest {
         String categoryName1 = "Name 1";
         String categoryName2 = "Name 1";
         String ratePerHour1 = "3.50";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         boolean removalSuccess = billingCategories.removeBillingCategory(categoryName2, client1);
         assertTrue(removalSuccess);
         assertEquals(0, billingCategories.getBillingCategoriesForClient(client1).size());
@@ -111,7 +159,15 @@ class BillingCategoriesTest {
         String categoryName1 = "Name 1";
         String categoryName2 = "Name 2";
         String ratePerHour1 = "3.50";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         boolean removalSuccess = billingCategories.removeBillingCategory(categoryName2, client2);
         assertFalse(removalSuccess);
         assertEquals(1, billingCategories.getBillingCategoriesForClient(client1).size());
@@ -125,7 +181,15 @@ class BillingCategoriesTest {
         String categoryName1 = "Name 1";
         String categoryName2 = "Name 1";
         String ratePerHour1 = "3.50";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         boolean removalSuccess = billingCategories.removeBillingCategory(categoryName2, client2);
         assertFalse(removalSuccess);
         assertEquals(1, billingCategories.getBillingCategoriesForClient(client1).size());
@@ -141,9 +205,17 @@ class BillingCategoriesTest {
         String newName = "New Name";
         String ratePerHour1 = "3.50";
         String ratePerHour2 = "7.00";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
-        boolean editSuccess = billingCategories.editBillingCategory(categoryName2, newName, ratePerHour2 ,client1);
-        assertFalse(editSuccess);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+            boolean editSuccess = billingCategories.editBillingCategory(categoryName2, newName, ratePerHour2 ,client1);
+            assertFalse(editSuccess);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         assertEquals(categoryName1, billingCategories.getBillingCategoriesForClient(client1).get(0).getName());
     }
 
@@ -156,9 +228,17 @@ class BillingCategoriesTest {
         String newName = "New Name";
         String ratePerHour1 = "3.50";
         String ratePerHour2 = "7.00";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
-        boolean editSuccess = billingCategories.editBillingCategory(categoryName2, newName, ratePerHour2 ,client1);
-        assertTrue(editSuccess);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+            boolean editSuccess = billingCategories.editBillingCategory(categoryName2, newName, ratePerHour2 ,client1);
+            assertTrue(editSuccess);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         assertEquals(newName, billingCategories.getBillingCategoriesForClient(client1).get(0).getName());
     }
 
@@ -171,9 +251,17 @@ class BillingCategoriesTest {
         String newName = "New Name";
         String ratePerHour1 = "3.50";
         String ratePerHour2 = "7.00";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
-        boolean editSuccess = billingCategories.editBillingCategory(categoryName2, newName, ratePerHour2 ,client2);
-        assertFalse(editSuccess);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+            boolean editSuccess = billingCategories.editBillingCategory(categoryName2, newName, ratePerHour2 ,client2);
+            assertFalse(editSuccess);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         assertEquals(categoryName1, billingCategories.getBillingCategoriesForClient(client1).get(0).getName());
     }
 
@@ -186,9 +274,17 @@ class BillingCategoriesTest {
         String newName = "New Name";
         String ratePerHour1 = "3.50";
         String ratePerHour2 = "7.00";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
-        boolean editSuccess = billingCategories.editBillingCategory(categoryName2, newName, ratePerHour2 ,client2);
-        assertFalse(editSuccess);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+            boolean editSuccess = billingCategories.editBillingCategory(categoryName2, newName, ratePerHour2 ,client2);
+            assertFalse(editSuccess);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         assertEquals(categoryName1, billingCategories.getBillingCategoriesForClient(client1).get(0).getName());
     }
 
@@ -198,9 +294,17 @@ class BillingCategoriesTest {
         String newName = "Name 1";
         String ratePerHour1 = "3.50";
         String ratePerHour2 = "7.00";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
-        boolean editSuccess = billingCategories.editBillingCategory(categoryName1, newName, ratePerHour2 ,client1);
-        assertFalse(editSuccess);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+            boolean editSuccess = billingCategories.editBillingCategory(categoryName1, newName, ratePerHour2 ,client1);
+            assertFalse(editSuccess);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         assertEquals(categoryName1, billingCategories.getBillingCategoriesForClient(client1).get(0).getName());
     }
 
@@ -208,7 +312,15 @@ class BillingCategoriesTest {
     void getBillingCategoryForClientMatchExists() {
         String categoryName1 = "Name 1";
         String ratePerHour1 = "3.50";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         ArrayList<BillingCategory> categoriesForClient = billingCategories.getBillingCategoriesForClient(client1);
         assertEquals(1, categoriesForClient.size());
         assertEquals(categoryName1, categoriesForClient.get(0).getName());
@@ -218,7 +330,15 @@ class BillingCategoriesTest {
     void getBillingCategoryForClientNoMatchExists() {
         String categoryName1 = "Name 1";
         String ratePerHour1 = "3.50";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         ArrayList<BillingCategory> categoriesForClient = billingCategories.getBillingCategoriesForClient(client2);
         assertEquals(0, categoriesForClient.size());
     }
@@ -227,7 +347,15 @@ class BillingCategoriesTest {
     void getBillingACategoryMatchExists() {
         String categoryName1 = "Name 1";
         String ratePerHour1 = "3.50";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         BillingCategory category = billingCategories.getABillingCategory(categoryName1, client1);
         assertEquals(categoryName1, category.getName());
     }
@@ -237,7 +365,15 @@ class BillingCategoriesTest {
         String categoryName1 = "Name 1";
         String noMatch = "Not a matching name";
         String ratePerHour1 = "3.50";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         BillingCategory category = billingCategories.getABillingCategory(noMatch, client1);
         assertEquals(null, category);
     }
@@ -246,7 +382,15 @@ class BillingCategoriesTest {
     void getBillingACategoryNoMatchExistsNotAClientMatch() {
         String categoryName1 = "Name 1";
         String ratePerHour1 = "3.50";
-        billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        try {
+            billingCategories.createBillingCategory(categoryName1, ratePerHour1, client1);
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
         BillingCategory category = billingCategories.getABillingCategory(categoryName1, client2);
         assertEquals(null, category);
     }
@@ -255,13 +399,22 @@ class BillingCategoriesTest {
     void testSetBillingCategories() {
         Client client1 = new Client("Client1");
         Client client2 = new Client("Client2");
-        BillingCategory category1 = new BillingCategory("Cat1", "14", client1);
-        BillingCategory category2 = new BillingCategory("Cat2", "17", client2);
-        ArrayList<BillingCategory> newBillingCategories = new ArrayList<>();
-        newBillingCategories.add(category1);
-        newBillingCategories.add(category2);
-        assertEquals(0, billingCategories.getAllBillingCategories().size());
-        billingCategories.setBillingCategories(newBillingCategories);
-        assertEquals(2, billingCategories.getAllBillingCategories().size());
+        BillingCategory category1 = null;
+        try {
+            category1 = new BillingCategory("Cat1", "14", client1);
+            BillingCategory category2 = new BillingCategory("Cat2", "17", client2);
+            ArrayList<BillingCategory> newBillingCategories = new ArrayList<>();
+            newBillingCategories.add(category1);
+            newBillingCategories.add(category2);
+            assertEquals(0, billingCategories.getAllBillingCategories().size());
+            billingCategories.setBillingCategories(newBillingCategories);
+            assertEquals(2, billingCategories.getAllBillingCategories().size());
+        } catch (NumberFormatException e) {
+            fail();
+        } catch (NegativeRateException e) {
+            fail();
+        } catch (EmptyNameException e) {
+            fail();
+        }
     }
 }

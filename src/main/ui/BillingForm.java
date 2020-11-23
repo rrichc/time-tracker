@@ -1,8 +1,6 @@
 package ui;
 
-import model.BillingCategories;
-import model.ClientBook;
-import model.MasterTimeLog;
+import model.*;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -80,7 +78,6 @@ public class BillingForm {
      * EFFECTS: Creates a listener for the submit button to handle add and edit actions,
      *          to add user input to billing categories
      */
-    //TODO: Add Exception handling for empty strings and number format exceptions
     private ActionListener createActionListener() {
         return new ActionListener() {
             HashMap<String, String> userInput = new HashMap<>();
@@ -92,18 +89,42 @@ public class BillingForm {
                 String ratePerHour = userInput.get("Rate per hour: ");
                 switch (state) {
                     case ADD: //TODO: Add pop-up/checking for duplicate name
-                        billingCategories.createBillingCategory(
-                                categoryName, ratePerHour, splitPane.getMenuTabs().getCurrentClient());
+                        addActionHelper(categoryName, ratePerHour);
                         break;
                     case EDIT: //TODO: Add pop-up/checking for duplicate name
-                        billingCategories.editBillingCategory(
-                                splitPane.getListSelectedCategory(), categoryName,
-                                ratePerHour, splitPane.getMenuTabs().getCurrentClient());
+                        editActionHelper(categoryName, ratePerHour);
                         break;
                 }
                 splitPane.updateListModel();
             }
         };
+    }
+
+    private void editActionHelper(String categoryName, String ratePerHour) {
+        try {
+            billingCategories.editBillingCategory(
+                    splitPane.getListSelectedCategory(), categoryName,
+                    ratePerHour, splitPane.getMenuTabs().getCurrentClient());
+        } catch (EmptyNameException error) {
+            JOptionPane.showMessageDialog(springForm, "Please enter a name with at least 1 character.");
+        } catch (NumberFormatException error) {
+            JOptionPane.showMessageDialog(springForm, "Please enter a number.");
+        } catch (NegativeRateException error) {
+            JOptionPane.showMessageDialog(springForm, error.getMessage());
+        }
+    }
+
+    private void addActionHelper(String categoryName, String ratePerHour) {
+        try {
+            billingCategories.createBillingCategory(
+                    categoryName, ratePerHour, splitPane.getMenuTabs().getCurrentClient());
+        } catch (EmptyNameException error) {
+            JOptionPane.showMessageDialog(springForm, "Please enter a name with at least 1 character.");
+        } catch (NumberFormatException error) {
+            JOptionPane.showMessageDialog(springForm, "Please enter a number.");
+        } catch (NegativeRateException error) {
+            JOptionPane.showMessageDialog(springForm, error.getMessage());
+        }
     }
 
     /*

@@ -381,6 +381,10 @@ public class MenuTabs implements ActionListener {
                             MenuTabs.BILLING_JSON_STORE, this.clientBook).getAllBillingCategories());
         } catch (IOException e) {
             //
+        } catch (NegativeRateException e) {
+            JOptionPane.showMessageDialog(clientMainPanel, e.getMessage());
+        } catch (EmptyNameException e) {
+            JOptionPane.showMessageDialog(clientMainPanel, e.getMessage());
         }
     }
 

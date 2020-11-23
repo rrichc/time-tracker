@@ -25,7 +25,8 @@ public class BillingCategories implements Writable {
      *           and adds it to the collection. Returns true if the adding operation was successful,
      *           otherwise returns false
      */
-    public boolean createBillingCategory(String name, String ratePerHour, Client client) {
+    public boolean createBillingCategory(String name, String ratePerHour, Client client)
+            throws NegativeRateException, NumberFormatException, EmptyNameException {
         boolean nameAlreadyExists = duplicateNameCheck(name, client);
         if (!nameAlreadyExists) {
             this.billingCategories.add(new BillingCategory(name, ratePerHour, client));
@@ -60,7 +61,8 @@ public class BillingCategories implements Writable {
      *          AND the category belongs to the currently selected client.
      *          Returns true if the removing operation was successful, otherwise returns false
      */
-    public boolean editBillingCategory(String oldName, String name, String ratePerHour, Client selectedClient) {
+    public boolean editBillingCategory(String oldName, String name, String ratePerHour, Client selectedClient)
+            throws NegativeRateException, NumberFormatException, EmptyNameException {
         boolean nameAlreadyExists = duplicateNameCheck(name, selectedClient);
         if (!nameAlreadyExists) {
             for (BillingCategory category : billingCategories) {

@@ -11,14 +11,22 @@ public class BillingCategory implements Writable {
     private Client client;      //the client this category falls under
 
     /*
-    * REQUIRES: name must be a non-empty String, raterPerHour must be a non-negative number in String representation,
-    *           client must contain non-empty fields
     * EFFECTS: name, ratePerHour, and client is assigned to the fields in the class object.
     *          ratePerHour is converted from string to double format.
+    *          throws a NegativeRateException if the rate is < 0
+    *          throws an EmptyNameException is the name is length 0
+    *
     */
-    public BillingCategory(String name, String ratePerHour, Client client) {
+    public BillingCategory(String name, String ratePerHour, Client client)
+            throws NumberFormatException, NegativeRateException, EmptyNameException {
+        if (name.length() < 1) {
+            throw new EmptyNameException("Please enter a name with at least 1 character.");
+        }
         this.name = name;
         this.ratePerHour = Double.parseDouble(ratePerHour);
+        if (this.ratePerHour < 0) {
+            throw new NegativeRateException("Please enter a positive rate.");
+        }
         this.client = client;
     }
 
@@ -30,11 +38,14 @@ public class BillingCategory implements Writable {
     }
 
     /*
-     * REQUIRES: name must be a non-empty String
      * MODIFIES: this
      * EFFECTS: sets the name of the billing category to be name
+     *          throws an EmptyNameException is the name is length 0
      */
-    public void setName(String name) {
+    public void setName(String name) throws EmptyNameException {
+        if (name.length() < 1) {
+            throw new EmptyNameException("Please enter a name with at least 1 character.");
+        }
         this.name = name;
     }
 
@@ -46,11 +57,15 @@ public class BillingCategory implements Writable {
     }
 
     /*
-     * REQUIRES: Rate must be a non-negative number in String representation,
      * EFFECTS:  ratePerHour is converted from string to double format.
+     *          throws a NegativeRateException if the rate is < 0
+
      */
-    public void setRatePerHour(String ratePerHour) {
+    public void setRatePerHour(String ratePerHour) throws NegativeRateException, NumberFormatException {
         this.ratePerHour = Double.parseDouble(ratePerHour);
+        if (this.ratePerHour < 0) {
+            throw new NegativeRateException("Please enter a positive rate.");
+        }
     }
 
     /*

@@ -33,7 +33,7 @@ class JsonReaderTest extends JsonTest {
             BillingCategories billingCategories = reader.readBillingCategories(filePath, clientBook);
             MasterTimeLog masterTimeLog = reader.readMasterTimeLog(filePath, clientBook, billingCategories);
             fail("IOException expected");
-        } catch (IOException e) {
+        } catch (IOException | NegativeRateException | EmptyNameException e) {
             // pass
         }
     }
@@ -50,7 +50,7 @@ class JsonReaderTest extends JsonTest {
             assertEquals(0, billingCategories.getAllBillingCategories().size());
             MasterTimeLog masterTimeLog = reader.readMasterTimeLog(timePath, this.clientBook, this.billingCategories);
             assertEquals(0, masterTimeLog.getMasterTimeLog().size());
-        } catch (IOException e) {
+        } catch (IOException | NegativeRateException | EmptyNameException e) {
             fail("Couldn't read from file");
         }
     }
@@ -69,7 +69,7 @@ class JsonReaderTest extends JsonTest {
             checkBillingCategoriesItems(billingCategories);
             this.masterTimeLog = reader.readMasterTimeLog(timePath, clientBook, billingCategories);
             checkMasterTimeLog(masterTimeLog);
-        } catch (IOException e) {
+        } catch (IOException | NegativeRateException | EmptyNameException e) {
             fail("Couldn't read from file");
         }
     }

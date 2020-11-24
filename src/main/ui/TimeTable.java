@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 //Represents the time table that displays all the time entries for a given category for a client
 public class TimeTable {
-    private ClientBook clientBook;
-    private BillingCategories billingCategories;
     private MasterTimeLog masterTimeLog;
     private JTable table;
     private DefaultTableModel tableModel;
@@ -23,8 +21,6 @@ public class TimeTable {
      */
     public TimeTable(TimeSplitPane splitPane) {
         this.splitPane = splitPane;
-        this.clientBook = splitPane.getClientBook();
-        this.billingCategories = splitPane.getBillingCategories();
         this.masterTimeLog = splitPane.getMasterTimeLog();
         initTable();
     }

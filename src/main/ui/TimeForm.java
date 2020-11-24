@@ -11,8 +11,6 @@ import java.util.HashMap;
 public class TimeForm {
     private JPanel springForm;
     private ActionState state;
-    private ClientBook clientBook;
-    private BillingCategories billingCategories;
     private MasterTimeLog masterTimeLog;
     private TimeSplitPane splitPane;
     private int labelsLength;
@@ -26,8 +24,6 @@ public class TimeForm {
     public TimeForm(String[] labels, ActionState state, TimeSplitPane splitPane) {
         this.state = state;
         this.splitPane = splitPane;
-        this.clientBook = splitPane.getClientBook();
-        this.billingCategories = splitPane.getBillingCategories();
         this.masterTimeLog = splitPane.getMasterTimeLog();
         this.labels = labels;
         this.labelsLength = labels.length;

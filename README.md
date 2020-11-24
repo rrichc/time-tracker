@@ -62,3 +62,10 @@ Phase 4: Task 2
 - BillingCategory was made robust: in particular - the constructor and setName(), and setRatePerHour() methods.
 - The methods throwing checked exceptions are tested in BillingCategoryTest
     
+Phase 4: Task 3
+
+At present, it is clear from the UML diagram that there is a great deal of coupling. Part of this is due to the passing of dependencies between a number of classes that then in turn store them as fields, before passing them again. There are 3 primary data collections that are responsible for this, the ClientBook, BillingCategories, and MasterTimeLog ArrayLists that drive the entire application. Currently these live at the top level inside the MenuTabs object which then passes a reference to the ArrayLists down to every other part of the application that needs them. 
+
+Instead, given more time, I would choose to implement a Model View Controller pattern with the Observer pattern as the basis. This would increase the separation of concerns between the model package and UI. It would also result in cleaner code such that MenuTab wouldn't need to pass around ClientBook, BillingCategories, and MasterTimeLog. Instead, these objects can be made into subjects that observers in the UI package can register themselves to listen to.
+
+There is also a great deal of redundant code in many of the classes that behave similarly, but regarding different issues. This indicates low cohesion. Examples of this can be seen when looking at the different SplitPanes (Client, Billing, Time). As they have many similar operations, instead - they should all inherit from an Abstract super class that stores the common code, and declares abstract methods for anything the children need to override to provide unique behaviour. A similar issue is seen when looking at the MenuOptions for (Client, Billing, Time), and can be similarly solved using the same resolution.

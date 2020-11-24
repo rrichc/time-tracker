@@ -11,9 +11,7 @@ import java.util.HashMap;
 public class BillingForm {
     private JPanel springForm;
     private ActionState state;
-    private ClientBook clientBook;
     private BillingCategories billingCategories;
-    private MasterTimeLog masterTimeLog;
     private BillingSplitPane splitPane;
     private int labelsLength;
     private String[] labels;
@@ -26,9 +24,7 @@ public class BillingForm {
     public BillingForm(String[] labels, ActionState state, BillingSplitPane splitPane) {
         this.state = state;
         this.splitPane = splitPane;
-        this.clientBook = splitPane.getClientBook();
         this.billingCategories = splitPane.getBillingCategories();
-        this.masterTimeLog = splitPane.getMasterTimeLog();
         this.labels = labels;
         this.labelsLength = labels.length;
         this.textField = new JTextField[labels.length];

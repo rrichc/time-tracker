@@ -95,6 +95,13 @@ public class MenuTabs implements ActionListener {
     private JsonWriter jsonWriter;
 
     /*
+     * EFFECTS: Constructs the object
+     */
+    public MenuTabs() {
+        //Empty constructor
+    }
+
+    /*
      * MODIFIES: this
      * EFFECTS: Adds each menu tab to the Tab Pane
      */

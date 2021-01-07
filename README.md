@@ -1,4 +1,4 @@
-# My Personal Project
+# CPSC 210 "Personal Project"
 
 ## Billable Hour Tracker
 

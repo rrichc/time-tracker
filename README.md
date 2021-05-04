@@ -1,5 +1,8 @@
 ## Billable Hour Tracker
 
+![image](https://user-images.githubusercontent.com/9119721/117067103-732d5500-acde-11eb-890c-720559cec61c.png)
+
+
 **What will the application do?**
 As the name suggests, the application will track time spent on tasks attributable to clients through time entries. 
 Tasks can put under distinct categories, and each category can have its own billing rate.

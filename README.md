@@ -9,7 +9,7 @@ Clients, billing categories, and time entries can be added, edited, and removed 
 By the end of the four phases of this project, my goal is to have a robust application that will be capable of recording time entries,
 but also display comprehensive reports based on those time entries.
 
-In the future roadmap after CPSC 210, my plan is to include automatic time tracking based on the user's active window, upon being able to upgrade the project to a more recent version of Java.
+In the future roadmap, my plan is to include automatic time tracking based on the user's active window, upon being able to upgrade the project to a more recent version of Java.
 
 
 **Who will use it?**

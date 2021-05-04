@@ -1,5 +1,3 @@
-# CPSC 210 "Personal Project"
-
 ## Billable Hour Tracker
 
 **What will the application do?**
